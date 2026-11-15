@@ -1,5 +1,5 @@
 {
-  "_file": "gis/cvfr-patch-2025-10.json · v1.00.004 · AirNotam-ISR · built by eligrt",
+  "_file": "gis/cvfr-patch-2025-10.json · v1.00.005 · AirNotam-ISR · built by eligrt",
   "_readme": [
     "WHY THIS FILE EXISTS (three sources, one answer per point) - same rules as gis/sport-patch-2025-10.json:",
     "1. BASE = IAA GIS 2023a (gis/cvfr.json). The only machine-readable source: points, route lines, status. It is never edited.",
@@ -14,6 +14,7 @@
     "NAMING: the chart's code and Hebrew name are the official ones; other codes are kept as aliases.",
     "WITHDRAWN (not deleted): points / legs in the GIS but no longer on the 2025 chart are hidden wherever a pilot plans or",
     "   looks (map layers, route drawing, waypoint names); a NOTAM that names one is still DRAWN and FLAGGED 'לבדיקה'.",
+    "2026-11-15 FIX (build 005): Tzomet Yaar (ZYAAR). The chart draws SHARO-ZYAAR 5.2 NM and ZYAAR-HADRA 3.3 NM; the GIS has one straight SHARO-HADRA leg that misses the point. Two legs added, the old one withdrawn. Checked by Eli against the chart.",
     "PRIORITY: where this file and the GIS both hold a point, this file wins. Drop this file when the IAA publishes a new GIS.",
     "Separate from the sport patch on purpose: separate chart, separate date, and the same code can differ between the",
     "   two charts (HATRU here = TZHTR on the sport chart; DUGIT sits 780 m apart on the two official charts).",
@@ -61,10 +62,13 @@
           [32.49542, 35.53335]
         ] },
       { "leg": "KOYAR-EITAN", "status": "OPEN · CIVIL", "nm": 6.2, "chart": "green solid" },
-      { "leg": "EITAN-TIRAT", "status": "OPEN · CIVIL", "nm": 4.1, "chart": "green solid" }
+      { "leg": "EITAN-TIRAT", "status": "OPEN · CIVIL", "nm": 4.1, "chart": "green solid" },
+      { "leg": "SHARO-ZYAAR", "status": "OPEN · CIVIL", "nm": 5.2, "chart": "green solid (Oct 2025 chart: the route passes through Tzomet Yaar)" },
+      { "leg": "ZYAAR-HADRA", "status": "OPEN · CIVIL", "nm": 3.3, "chart": "green solid (Oct 2025 chart: the route passes through Tzomet Yaar)" }
     ],
     "withdraw": [
-      { "leg": "TIRAT-KOYAR", "note": "replaced on the 2025 chart by KOYAR-EITAN-TIRAT (the route now passes through נווה איתן)" }
+      { "leg": "TIRAT-KOYAR", "note": "replaced on the 2025 chart by KOYAR-EITAN-TIRAT (the route now passes through נווה איתן)" },
+      { "leg": "SHARO-HADRA", "note": "replaced on the 2025 chart by SHARO-ZYAAR-HADRA (5.2 + 3.3 NM = the old 8.5 NM; the GIS point ZYAAR sat 0.5 km off the old straight leg)" }
     ]
   },
   "_status_note": [
