@@ -1,19 +1,4 @@
 {
-  "_readme": "Hand corrections of one NOTAM's text, made by us after checking by eye. A correction applies ONLY when the NOTAM number matches AND the 'wrong' text is found exactly in Item E. The stored NOTAM is never changed; only the text the map shape is read from. If Rata re-issues the NOTAM with other text, nothing is applied and the normal flag comes up. Each entry: id, wrong, right, date, why.",
-  "corrections": [
-    {
-      "id": "C2202/26",
-      "wrong": "315832E0344954E",
-      "right": "315832N0344954E",
-      "date": "2026-10-31",
-      "why": "UAS air show at Rishon LeZion: the latitude was typed with E instead of N. The corrected point is Rishon LeZion, as the NOTAM text says. The Q circle in the header is about 4 NM west of it, so both are drawn and linked (issue #14)."
-    },
-    {
-      "id": "C2335/26",
-      "wrong": "311105N343147E",
-      "right": "311105N0343147E",
-      "date": "2026-11-02",
-      "why": "Area at Tzeelim: the longitude of the third point lost its leading zero (343147E instead of 0343147E). The other three points use 0343..., and with the zero all four corners lie 2.0 to 2.8 NM from the centre of the 3 NM Q circle (issue #22)."
-    }
-  ]
+  "_readme": "Hand corrections for typing mistakes in a NOTAM's text, checked by eye. Kept empty on purpose: no NOTAM numbers or NOTAM text are stored in the public repo. Each entry would hold: id, wrong, right, date, why.",
+  "corrections": []
 }
