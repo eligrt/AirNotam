@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.08.112 · built by eligrt
+     AirNotam-ISR · v1.08.116 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -838,6 +838,31 @@ mark.qh{background:#f1d98a;color:inherit;border-radius:2px;padding:0 1px;}
 .lsearch .lq-x:active svg{stroke:var(--ink);}
 .lsearch svg{position:absolute;right:24px;top:50%;margin-top:-4px;width:16px;height:16px;fill:none;stroke:var(--ink-faint);stroke-width:2;stroke-linecap:round;pointer-events:none;}
 .rp-m svg{display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.45));}
+.wp-ov{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:700;overflow:visible;display:none;}
+.wp-ov.on{display:block;}
+.wp-ov .wp-ring{fill:rgba(255,255,255,.28);stroke:#1f6fd0;stroke-width:3;}
+.wp-ov .wp-cross{stroke:#1f6fd0;stroke-width:1.5;fill:none;}
+.wp-ov .wp-dot{fill:#1f6fd0;}
+.wp-ov .wp-ghost{fill:none;stroke:#444;stroke-width:2;stroke-dasharray:4 3;}
+.wp-ov .wp-conn{stroke:#1f6fd0;stroke-width:1.5;stroke-dasharray:2 4;}
+.wp-ov.snap .wp-ring{stroke:#1f7a3f;}
+.wp-ov.snap .wp-cross{stroke:#1f7a3f;}
+.wp-ov.snap .wp-dot{fill:#1f7a3f;}
+.wp-ov.sel .wp-cross,.wp-ov.sel .wp-dot,.wp-ov.sel .wp-ghost,.wp-ov.sel .wp-conn{display:none;}
+.wp-chip.add{background:#1f6fd0;}
+.mb-info .mi-tf{display:flex;justify-content:center;gap:12px;align-items:center;}
+.mb-info .mi-tf[hidden]{display:none;}
+.tfi{display:inline-flex;align-items:center;gap:4px;font-style:normal;}
+.tfi svg{width:15px;height:15px;fill:none;stroke:#1c3d6e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;}
+#drawBar .dr-tf{display:flex;justify-content:center;gap:12px;align-items:center;font-size:12px;font-weight:400;color:#1c3d6e;margin-top:1px;}
+.sp-num{flex:none;display:flex;align-items:center;gap:6px;direction:ltr;}
+.sp-num input{width:64px;height:34px;border:1px solid var(--paper-edge);border-radius:6px;background:var(--paper);color:var(--ink);font-family:var(--font-ui);font-size:14px;text-align:center;box-sizing:border-box;}
+.sp-num span{font-size:12px;color:var(--ink-muted);direction:rtl;}
+.sp-tx small.bad{color:#b3261e;font-weight:700;}
+.wp-chip{position:absolute;z-index:710;transform:translateX(-50%);background:#c62828;color:#fff;font-family:var(--font-ui);font-weight:700;font-size:15px;
+  padding:11px 20px;border-radius:24px;direction:rtl;white-space:nowrap;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.35);user-select:none;-webkit-user-select:none;touch-action:manipulation;}
+.wp-hint{position:absolute;z-index:705;transform:translateX(-50%);pointer-events:none;background:var(--paper-hi);color:var(--ink-dark);border:1px solid var(--gold-lite);
+  font-family:var(--font-ui);font-weight:700;font-size:13px;padding:5px 12px;border-radius:9px;direction:rtl;white-space:nowrap;box-shadow:0 1px 4px rgba(14,35,72,.25);display:none;}
 .rt-lbm{position:relative;width:0;height:0;}
 .rt-lbm span{position:absolute;left:0;transform:translateX(-50%);white-space:nowrap;direction:rtl;
   background:var(--paper-hi);color:var(--ink-dark);border:1px solid var(--gold-lite);border-radius:5px;
@@ -2168,7 +2193,7 @@ body.wide #mbFull{display:none !important;}
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="lsa-foot sp" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver" id="splVer">AirNotam-ISR · v1.08.112 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();setReloadApp()">טען מחדש</button></div></div>
+    <div class="lsa-foot sp" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver" id="splVer">AirNotam-ISR · v1.08.116 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();setReloadApp()">טען מחדש</button></div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2195,6 +2220,8 @@ body.wide #mbFull{display:none !important;}
     <div class="sp-body"><div class="sp-ttl" id="setTtl">הגדרות</div>
       <button type="button" class="sp-row sp-irow" id="spUpd" onclick="setRefreshData()"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></span><span class="sp-tx"><b id="spUpdT">בדוק NOTAMים חדשים</b><small><span class="rt2">נבדק לאחרונה: <span class="rtime" id="refreshTime">--:--</span> · נתוני הבסיס מ-<span class="rtime" id="dataTime">--:--</span></span></small></span><span class="sp-bar"><i></i></span></button>
       <div class="sp-row sp-irow sp-static" id="rteCorrBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18"/><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/></svg></span><span class="sp-tx"><b>רוחב המסלול</b></span><div class="fgrace sp-corr" id="corrSeg"><button type="button" data-c="2">2NM</button><button type="button" data-c="3">3NM</button><button type="button" data-c="5">5NM</button></div></div>
+      <div class="sp-row sp-irow sp-static" id="rteSpdBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="sp-tx"><b>מהירות שיוט</b><small id="spdSm" data-ok="לחישוב זמן הטיסה">לחישוב זמן הטיסה</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="spdIn" aria-label="מהירות שיוט בקשר" placeholder="--"><span>קשר</span></div></div>
+      <div class="sp-row sp-irow sp-static" id="rteBurnBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M4 21h12"/><path d="M15 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/><path d="M7.5 8h5"/></svg></span><span class="sp-tx"><b>צריכת דלק</b><small id="burnSm" data-ok="לחישוב כמות הדלק. הערכה בלבד, ללא רוח">לחישוב כמות הדלק. הערכה בלבד, ללא רוח</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="burnIn" aria-label="צריכת דלק בליטרים לשעה" placeholder="--"><span>ליטר לשעה</span></div></div>
       <a class="sp-row sp-irow" href="mailto:eligrt@gmail.com?subject=AirNotam%20-%20משוב"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg></span><span class="sp-tx"><b>יש תקלה או רעיון? כתוב לי</b></span></a>
       <div class="sp-sep"></div>
       <button type="button" class="sp-row sp-irow sp-red" onclick="setFullReset()"><span class="sp-ic r"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.01"/></svg></span><span class="sp-tx"><b>איפוס מלא של האפליקציה</b></span></button>
@@ -2258,7 +2285,7 @@ body.wide #mbFull{display:none !important;}
       <div class="dr-w"><button type="button" class="dr-b big" id="dbCancel" aria-label="בטל" onclick="drawCancel()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button><span class="dr-t">CANCEL</span></div>
     </div>
     <div class="dr-col r">
-      <div class="dr-w"><button type="button" class="dr-b" id="dbUndo" aria-label="בטל נקודה אחרונה" onclick="drawUndo()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button><span class="dr-t">UNDO</span></div>
+      <div class="dr-w"><button type="button" class="dr-b" id="dbUndo" aria-label="בטל פעולה אחרונה" onclick="drawUndo()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button><span class="dr-t">UNDO</span></div>
       <div class="dr-w"><button type="button" class="dr-b big nv" id="dbDone" aria-label="סיים" onclick="drawDone(0)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button><span class="dr-t">DONE</span></div>
     </div>
   </div>
@@ -2268,7 +2295,7 @@ body.wide #mbFull{display:none !important;}
     <div id="mapEmpty" class="map-empty"></div>
     <button type="button" class="nv-pill" id="nvPill" onclick="setNvis('normal')"></button>
     <div class="mbox" id="mbox">
-      <div class="mb-info" id="mbInfo"><div class="mib"><div class="mi1" id="mi1"></div><div class="mi2" id="mi2"></div><div class="mi3" id="mi3" hidden></div><div class="mi3" id="mi4" hidden></div></div></div>
+      <div class="mb-info" id="mbInfo"><div class="mib"><div class="mi1" id="mi1"></div><div class="mi2 mi-tf" id="mi5" hidden></div><div class="mi2" id="mi2"></div><div class="mi3" id="mi3" hidden></div><div class="mi3" id="mi4" hidden></div></div></div>
       <button type="button" id="mbBell" class="mb-b mb-bell" style="right:10px;top:114px" aria-label="NOTAM חדשים ב-72 שעות האחרונות" onclick="newsOpen()" hidden><span class="bl-ic"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg></span><span class="mb-t mb-t-c">NEW</span><span class="mb-bd" id="mbBellN"></span></button>
       <button type="button" id="mbFull" class="mb-b mb-n mb-m" style="right:10px;top:10px" aria-label="מסך מלא" onclick="setFull(!document.documentElement.classList.contains('full'))"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span class="mb-t mb-t-l" id="mbFullT">FULL</span></button>
       <button type="button" id="mbList" class="mb-b mb-n" style="right:10px;top:62px" aria-label="רשימה" onclick="mbListGo()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg><span class="mb-t mb-t-l" id="mbListT">LIST</span></button>
@@ -2309,7 +2336,7 @@ body.wide #mbFull{display:none !important;}
   </div>
   </div>
 
-  <div class="lsa-foot" dir="ltr"><button type="button" class="lsa-foot-slot nt-set" onclick="toggleSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg> הגדרות</button><span class="lsa-foot-ver">AirNotam-ISR · v1.08.112 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="setReloadApp()">טען מחדש</button></div>
+  <div class="lsa-foot" dir="ltr"><button type="button" class="lsa-foot-slot nt-set" onclick="toggleSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg> הגדרות</button><span class="lsa-foot-ver">AirNotam-ISR · v1.08.116 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="setReloadApp()">טען מחדש</button></div>
 </div>
 <div id="mapside"><div id="msDim"></div></div>   <!-- v1.06.005: holds the map on a wide screen -->
 
@@ -2659,6 +2686,7 @@ function renderRte(){
     (hasR?`<button type="button" class="pp-row" onclick="closeCurtain('rte');newRoute()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>מסלול חדש</button>`:"")+
 
     `<button type="button" class="pp-row" onclick="closeCurtain('rte');pickGpx()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>טען קובץ GPX</button>`+
+    (hasR?`<button type="button" class="pp-row" onclick="closeCurtain('rte');exportGpx()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4M7 9l5-5 5 5"/><path d="M5 20h14"/></svg>ייצא קובץ GPX</button>`:"")+
     (hasR?`<button type="button" class="pp-row del" onclick="closeCurtain('rte');clearRoute()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M10 11v6M14 11v6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12"/><path d="M9 7V4h6v3"/></svg>מחק מסלול</button>`:"")+
     `<button type="button" class="pp-row cl" onclick="closeCurtain('rte')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>סגור</button>`;
   const cb=document.getElementById("rteCorrBox"); if(cb) cb.classList.toggle("dis",!hasR);
@@ -2732,6 +2760,20 @@ function closeCurtains(){ CURTAINS.forEach(closeCurtain); closeFlightDlg(); clos
 
 // ── route: tap points on the map, 3NM corridor each side ──
 const ROUTE_KEY="airnotam_route";
+// v1.08.116: cruise speed (knots) and fuel burn (litres per hour) from the settings page drive the time and fuel estimate (no wind, no reserve). An empty field switches that figure off.
+function lsNum(k,def){ try{ const v=localStorage.getItem(k); if(v===null) return def; if(v==="") return null; const n=+v; return isFinite(n)&&n>0? n : def; }catch(e){ return def; } }
+let CRZ_KT=lsNum("airnotam_spd",87), BURN_LH=lsNum("airnotam_burn",18);
+const IC_CLK='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+const IC_FUEL='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M4 21h12"/><path d="M15 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/><path d="M7.5 8h5"/></svg>';
+function fmtHM(h){ const m=Math.round(h*60); return Math.floor(m/60)+":"+String(m%60).padStart(2,"0"); }
+function routeSum(){ const k=ROUTE.length-1; return '<bdi dir="ltr">'+routeLenNm().toFixed(0)+' NM</bdi> · '+(k===1? "קטע אחד" : k+" קטעים"); }
+function routeTF(){
+  if(!CRZ_KT||ROUTE.length<2) return "";
+  const h=routeLenNm()/CRZ_KT;
+  let t='<i class="tfi">'+IC_CLK+'<bdi dir="ltr">~'+fmtHM(h)+'</bdi></i>';
+  if(BURN_LH) t+='<i class="tfi">'+IC_FUEL+'<bdi dir="ltr">~'+Math.round(h*BURN_LH)+'</bdi> ל׳</i>';
+  return t;
+}
 let CORR_NM=3; try{CORR_NM=+localStorage.getItem("airnotam_corr")||3;}catch(e){}
 let ROUTE=[], ROUTE_ONLY=false, DRAWING=false, ROUTE_LAYER=null, ROUTE_BAK=[];   // v1.08.023: ROUTE_BAK = the saved route while editing, for CANCEL
 try{ROUTE=JSON.parse(localStorage.getItem(ROUTE_KEY)||"[]")||[];}catch(e){ROUTE=[];}
@@ -2793,8 +2835,9 @@ function drawRoute(){
 }
 function drawUi(){
   const n=ROUTE.length, g=id=>document.getElementById(id);
-  g("drawTxt").innerHTML= n>=2? `<bdi dir="ltr">${routeLenNm().toFixed(0)}NM</bdi> · ${n} נקודות` : n===1? "נקודה אחת · הוסף עוד נקודה" : "הקש על המפה כדי להוסיף נקודה";
-  [["dbUndo",!n],["dbClear",!n],["dbDone",n<2]].forEach(([id,off])=>{ const b=g(id); b.disabled=off; b.closest(".dr-w").classList.toggle("off",off); });
+  const tf=n>=2? routeTF() : "";
+  g("drawTxt").innerHTML= n>=2? routeSum()+(tf?'<small class="dr-tf">'+tf+'</small>':"") : n===1? "נקודה אחת · הוסף עוד נקודה" : "הקש על המפה כדי להוסיף נקודה";
+  [["dbUndo",!ROUTE_HIST.length],["dbClear",!n],["dbDone",n<2]].forEach(([id,off])=>{ const b=g(id); b.disabled=off; b.closest(".dr-w").classList.toggle("off",off); });
   zoomRoLift();
   try{ if(DRAWING && MAP_LAYER) drawLight(); }catch(_){}
 }
@@ -2880,7 +2923,7 @@ function drawTop(){ return document.getElementById("drawBar").getBoundingClientR
 function startDraw(){
   if(RV.on) rvClose();
   closeCurtains(); setView("map");
-  ROUTE_BAK=ROUTE.map(p=>p.slice());
+  ROUTE_BAK=ROUTE.map(p=>p.slice()); ROUTE_HIST=[];
   DRAWING=true; MAP.closePopup(); MAP.doubleClickZoom.disable();
   document.getElementById("map").classList.add("drawing");
   document.getElementById("drawBar").classList.add("show");
@@ -2889,8 +2932,120 @@ function startDraw(){
   renderMap(); readLbls();   // v1.08.043: drawing shows every NOTAM faint; the ones near the route light up
   snapLoad().then(()=>{ if(DRAWING) snapShow(); });
 }
+// v1.08.113: move a route point. While drawing: press a numbered pin and slide it; a ring above the finger shows where it will land (it snaps to reporting points like a new point).
+// A plain tap on a pin offers "delete point".
+let WP_BLOCK=0, WP=null, WP_OV=null, WP_CHIP=null, WP_HINT=null, LEGP=null, ROUTE_HIST=[];
+// v1.08.114: undo. Every change (add, move, delete, insert, clear) first saves the route as it was; UNDO puts the last saved one back.
+function histPush(){ ROUTE_HIST.push(ROUTE.map(p=>p.slice())); if(ROUTE_HIST.length>60) ROUTE_HIST.shift(); }
+// v1.08.114: a tap on a leg (the line between two points) offers "add point here"
+function wpLegHit(cx,cy){
+  let best=null, bd=18;
+  for(let j=0;j<ROUTE.length-1;j++){
+    const a=MAP.latLngToContainerPoint([ROUTE[j][0],ROUTE[j][1]]), b=MAP.latLngToContainerPoint([ROUTE[j+1][0],ROUTE[j+1][1]]);
+    const dx=b.x-a.x, dy=b.y-a.y, L2=dx*dx+dy*dy; if(!L2) continue;
+    const t=Math.max(0,Math.min(1,((cx-a.x)*dx+(cy-a.y)*dy)/L2)), px=a.x+t*dx, py=a.y+t*dy, d=Math.hypot(cx-px,cy-py);
+    if(d<bd){ bd=d; best={j,x:px,y:py}; }
+  }
+  return best;
+}
+function wpLegChip(lg){
+  wpChipHide();
+  const d=document.createElement("div"); d.className="wp-chip add"; d.textContent="הוסף נקודה כאן"; d.setAttribute("role","button");
+  d.style.left=lg.x+"px"; d.style.top=(lg.y+18)+"px";
+  L.DomEvent.disableClickPropagation(d);
+  d.addEventListener("click",ev=>{
+    ev.preventDefault(); const c=WP_CHIP; wpChipHide(); if(!c||c.j==null||c.j>=ROUTE.length-1) return;
+    const ll=MAP.containerPointToLatLng([c.x,c.y]), sn= MAP.getZoom()>=9? snapNearest(ll) : null;
+    histPush();
+    ROUTE.splice(c.j+1,0, sn? [+sn.lat.toFixed(5),+sn.lon.toFixed(5),sn.name] : [+ll.lat.toFixed(5),+ll.lng.toFixed(5)]);
+    drawUi(); drawRoute();
+  });
+  MAP.getContainer().appendChild(d); WP_CHIP={el:d,i:-1,j:lg.j,x:lg.x,y:lg.y};
+  const s=wpOv(); s.setAttribute("class","wp-ov on sel"); s.querySelector(".wp-r").setAttribute("transform","translate("+lg.x+","+lg.y+")");
+}
+const WP_OFF=70;   // touch: the ring rides this many pixels above the finger
+function wpHit(cx,cy){
+  let best=-1, bd=1e9;
+  ROUTE.forEach((p,i)=>{ const q=MAP.latLngToContainerPoint([p[0],p[1]]);
+    const d=Math.min(Math.hypot(q.x-cx,q.y-cy)+6, Math.hypot(q.x-cx,q.y-22-cy));
+    if(d<=24 && d<bd){ bd=d; best=i; } });
+  return best;
+}
+function wpOv(){
+  if(WP_OV) return WP_OV;
+  const ns="http://www.w3.org/2000/svg", s=document.createElementNS(ns,"svg"); s.setAttribute("class","wp-ov");
+  s.innerHTML='<circle class="wp-ghost" r="9"/><line class="wp-conn"/><g class="wp-r"><circle class="wp-ring" r="22"/><path class="wp-cross" d="M-32 0H32M0 -32V32"/><circle class="wp-dot" r="3"/></g>';
+  MAP.getContainer().appendChild(s);
+  const h=document.createElement("div"); h.className="wp-hint"; h.textContent="גרור למיקום החדש"; MAP.getContainer().appendChild(h); WP_HINT=h;
+  WP_OV=s; return s;
+}
+function wpDraw(){
+  const s=wpOv(), w=WP; if(!w) return;
+  const t=MAP.latLngToContainerPoint([ROUTE[w.i][0],ROUTE[w.i][1]]), o=MAP.latLngToContainerPoint([w.orig[0],w.orig[1]]);
+  s.setAttribute("class","wp-ov on"+(w.snap?" snap":""));
+  s.querySelector(".wp-r").setAttribute("transform","translate("+t.x+","+t.y+")");
+  const g=s.querySelector(".wp-ghost"); g.setAttribute("cx",o.x); g.setAttribute("cy",o.y);
+  const c=s.querySelector(".wp-conn");
+  if(w.touch){ c.setAttribute("x1",t.x); c.setAttribute("y1",t.y+22); c.setAttribute("x2",w.fx); c.setAttribute("y2",w.fy); c.style.display=""; } else c.style.display="none";
+  WP_HINT.style.left=t.x+"px"; WP_HINT.style.top=(t.y+30)+"px"; WP_HINT.style.display="block";
+}
+function wpOvHide(){ if(WP_OV){ WP_OV.setAttribute("class","wp-ov"); } if(WP_HINT) WP_HINT.style.display="none"; }
+function wpChipHide(){
+  if(WP_CHIP){ WP_CHIP.el.remove(); WP_CHIP=null; wpOvHide(); }
+}
+function wpChipShow(i){
+  wpChipHide();
+  const q=MAP.latLngToContainerPoint([ROUTE[i][0],ROUTE[i][1]]), d=document.createElement("div");
+  d.className="wp-chip"; d.textContent="מחק נקודה"; d.setAttribute("role","button");
+  d.style.left=q.x+"px"; d.style.top=(q.y+18)+"px";
+  L.DomEvent.disableClickPropagation(d);
+  d.addEventListener("click",ev=>{ ev.preventDefault(); const k=WP_CHIP?WP_CHIP.i:-1; wpChipHide(); if(k>=0&&k<ROUTE.length){ histPush(); ROUTE.splice(k,1); drawUi(); drawRoute(); } });
+  MAP.getContainer().appendChild(d); WP_CHIP={el:d,i};
+  const s=wpOv(); s.setAttribute("class","wp-ov on sel"); s.querySelector(".wp-r").setAttribute("transform","translate("+q.x+","+(q.y-22)+")");
+}
+function wpInit(){
+  const el=MAP.getContainer();
+  el.addEventListener("pointerdown",e=>{
+    if(LEGP&&e.pointerId!==LEGP.id) LEGP=null;
+    if(!DRAWING||WP||(e.button>0)) return;
+    if(e.target.closest&&e.target.closest(".leaflet-control,.wp-chip")) return;
+    const r=el.getBoundingClientRect(), i=wpHit(e.clientX-r.left,e.clientY-r.top);
+    if(i<0){ const lg=wpLegHit(e.clientX-r.left,e.clientY-r.top); if(lg) LEGP={id:e.pointerId,x0:e.clientX,y0:e.clientY,moved:false,leg:lg}; return; }
+    wpChipHide();
+    WP={i,id:e.pointerId,x0:e.clientX,y0:e.clientY,moved:false,orig:ROUTE[i].slice(),pre:ROUTE.map(p=>p.slice()),touch:e.pointerType!=="mouse",drag:MAP.dragging.enabled(),snap:false,fx:0,fy:0,raf:0};
+    if(WP.drag) MAP.dragging.disable();
+    e.stopPropagation();
+  },true);
+  window.addEventListener("pointermove",e=>{
+    if(LEGP&&e.pointerId===LEGP.id&&Math.hypot(e.clientX-LEGP.x0,e.clientY-LEGP.y0)>=8) LEGP.moved=true;
+    const w=WP; if(!w||e.pointerId!==w.id) return;
+    if(!w.moved){ if(Math.hypot(e.clientX-w.x0,e.clientY-w.y0)<8) return; w.moved=true; }
+    const r=el.getBoundingClientRect(), fx=e.clientX-r.left, fy=e.clientY-r.top;
+    const ll=MAP.containerPointToLatLng([fx,fy-(w.touch?WP_OFF:0)]);
+    const sn= MAP.getZoom()>=9? snapNearest(ll) : null;
+    ROUTE[w.i]= sn? [+sn.lat.toFixed(5),+sn.lon.toFixed(5),sn.name] : [+ll.lat.toFixed(5),+ll.lng.toFixed(5)];
+    w.snap=!!sn; w.fx=fx; w.fy=fy;
+    if(!w.raf) w.raf=requestAnimationFrame(()=>{ w.raf=0; if(WP===w){ drawRoute(); wpDraw(); } });
+  });
+  const up=e=>{
+    if(LEGP&&e.pointerId===LEGP.id){ const lg=LEGP; LEGP=null; if(e.type==="pointerup"&&!lg.moved&&!WP){ WP_BLOCK=Date.now()+450; wpLegChip(lg.leg); } return; }
+    const w=WP; if(!w||e.pointerId!==w.id) return;
+    WP=null; if(w.raf) cancelAnimationFrame(w.raf);
+    if(w.drag) MAP.dragging.enable();
+    WP_BLOCK=Date.now()+450;
+    wpOvHide();
+    if(e.type==="pointercancel"){ ROUTE[w.i]=w.orig; drawRoute(); return; }
+    if(w.moved){ ROUTE_HIST.push(w.pre); if(ROUTE_HIST.length>60) ROUTE_HIST.shift(); drawUi(); drawRoute(); }
+    else wpChipShow(w.i);
+  };
+  window.addEventListener("pointerup",up); window.addEventListener("pointercancel",up);
+  MAP.on("movestart zoomstart",wpChipHide);
+}
 function drawClick(ev){
   if(!DRAWING) return;
+  if(Date.now()<WP_BLOCK) return;   // v1.08.113: the tap that ended a point move / opened the delete button adds nothing
+  if(WP_CHIP){ wpChipHide(); return; }
+  histPush();
   const o= MAP.getZoom()>=9? snapNearest(ev.latlng) : null;   // v1.08.023: near a reporting point it snaps; elsewhere (and zoomed out) the point stays where tapped
   if(o){ ROUTE.push([+o.lat.toFixed(5),+o.lon.toFixed(5),o.name]); snapShow(); }
   else ROUTE.push([+ev.latlng.lat.toFixed(5),+ev.latlng.lng.toFixed(5)]);
@@ -2906,7 +3061,7 @@ function drawKeepVisible(){
     if(need>0) MAP.panBy([0,need],{animate:true});
   });
 }
-function drawUndo(){ if(!ROUTE.length) return; ROUTE.pop(); drawUi(); drawRoute(); }
+function drawUndo(){ wpChipHide(); if(!ROUTE_HIST.length) return; ROUTE=ROUTE_HIST.pop(); drawUi(); drawRoute(); }
 let _amRes=null;
 function appConfirm(o){
   document.getElementById("amTtl").textContent=o.title||"";
@@ -2919,10 +3074,12 @@ function appConfirm(o){
 }
 function amodalClose(v){ document.getElementById("amodal").classList.remove("show"); if(_amRes){const r=_amRes;_amRes=null;r(v);} }
 async function drawClear(){
+  wpChipHide();
   if(ROUTE.length && !(await appConfirm({title:"למחוק את המסלול?",text:"כל הנקודות שסימנת יימחקו ותוכל לסמן מסלול חדש.",ok:"מחק מסלול"}))) return;
-  ROUTE=[]; drawUi(); drawRoute();
+  histPush(); ROUTE=[]; drawUi(); drawRoute();
 }
 function drawDone(showRes){
+  wpChipHide();
   DRAWING=false; /* v1.08.065: stays off, the one-finger zoom handles the double-tap */
   document.getElementById("map").classList.remove("drawing");
   document.getElementById("drawBar").classList.remove("show");
@@ -2934,6 +3091,7 @@ function drawDone(showRes){
 }
 // v1.08.023: CANCEL leaves the editor and puts the saved route back; it asks only when there are points on the map
 async function drawCancel(){
+  wpChipHide();
   if(ROUTE.length && !(await appConfirm({title:"לצאת בלי לשמור?",text:"המסלול שסימנת לא יישמר.",ok:"צא",no:"המשך לסמן"}))) return;
   ROUTE=ROUTE_BAK.map(p=>p.slice());
   DRAWING=false; /* v1.08.065: stays off, the one-finger zoom handles the double-tap */
@@ -2943,6 +3101,28 @@ async function drawCancel(){
   saveRoute(); render(); drawRoute();
 }
 // GPX: route (rtept) > track (trkpt) > waypoints (wpt). Tracks are thinned to ~0.5NM spacing.
+// v1.08.115: export the route as a GPX file (one route, every point named). Chrome/Edge on a computer: the browser's own Save As window; phones: the share sheet; any other browser: a normal download.
+function gpxEsc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function routeGpx(){
+  const pts=ROUTE.map((p,i)=>'<rtept lat="'+(+p[0]).toFixed(6)+'" lon="'+(+p[1]).toFixed(6)+'"><name>'+gpxEsc(p[2]||("נקודה "+(i+1)))+'</name></rtept>').join("\n    ");
+  return '<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="AirNotam-ISR" xmlns="http://www.topografix.com/GPX/1/1">\n  <metadata><name>AirNotam-ISR route</name></metadata>\n  <rte>\n    <name>AirNotam-ISR route</name>\n    '+pts+'\n  </rte>\n</gpx>\n';
+}
+async function exportGpx(){
+  if(ROUTE.length<2) return;
+  const d=new Date(), pd=n=>String(n).padStart(2,"0"), name="AirNotam-route-"+d.getFullYear()+"-"+pd(d.getMonth()+1)+"-"+pd(d.getDate())+".gpx", xml=routeGpx();
+  try{
+    if(window.showSaveFilePicker){
+      const h=await window.showSaveFilePicker({suggestedName:name,types:[{description:"GPX",accept:{"application/gpx+xml":[".gpx"]}}]});
+      const w=await h.createWritable(); await w.write(new Blob([xml],{type:"application/gpx+xml"})); await w.close(); return;
+    }
+    if(window.matchMedia&&matchMedia("(pointer:coarse)").matches&&navigator.canShare){
+      const f=new File([xml],name,{type:"application/gpx+xml"});
+      if(navigator.canShare({files:[f]})){ await navigator.share({files:[f],title:name}); return; }
+    }
+  }catch(e){ if(e&&e.name==="AbortError") return; }   // cancelled: nothing more to do; any other failure falls back to a plain download
+  const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([xml],{type:"application/gpx+xml"})); a.download=name;
+  document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },1000);
+}
 function pickGpx(){
   let inp=document.getElementById("gpxIn");
   if(!inp){ inp=document.createElement("input"); inp.type="file"; inp.id="gpxIn"; inp.accept=".gpx,application/gpx+xml,application/xml,text/xml";
@@ -3095,7 +3275,7 @@ function initMap(){
   MAP_BASES=BASES; MAP_BASE=pick;
   ROUTE_LAYER=L.layerGroup().addTo(MAP);
   MAP.on("zoomend",drawRoute);
-  MAP.on("click",drawClick);
+  MAP.on("click",drawClick); wpInit();
   const leg=L.control({position:"bottomright"});   // v1.05.015T: B2 legend lower right, above the attribution line
   leg.onAdd=()=>{const d=L.DomUtil.create("div","map-legend");
     d.innerHTML='<span><i class="lg lg-new"></i>טרם נקרא</span><span><i class="lg lg-ok"></i>קראתי</span><span><i class="lg lg-irr"></i>לא רלוונטי לי</span>';return d;};
@@ -4136,7 +4316,25 @@ function cueAdd(sc){
   sc._cue=f;
 }
 function cueAll(){ document.querySelectorAll(".fcard,.sp-body").forEach(sc=>{ if(!sc._cue) cueAdd(sc); setTimeout(sc._cue,60); setTimeout(sc._cue,520); }); }
-function renderSettings(){ try{renderRte();}catch(_){} try{spFamSync();}catch(_){} }
+function renderSettings(){ try{renderRte();}catch(_){} try{spFamSync();}catch(_){} try{spNumSync();}catch(_){} }
+function spNumSync(){ const a=document.getElementById("spdIn"), b=document.getElementById("burnIn"); if(a&&document.activeElement!==a) a.value= CRZ_KT? String(CRZ_KT) : ""; if(b&&document.activeElement!==b) b.value= BURN_LH? String(BURN_LH) : ""; }
+// v1.08.116: cruise speed and fuel burn fields: empty = that figure off; a number outside the range shows a red line and changes nothing
+function spNumInit(){
+  [["spdIn","spdSm","airnotam_spd",30,300,"הזן מהירות בין 30 ל-300 קשר",v=>{CRZ_KT=v;}],["burnIn","burnSm","airnotam_burn",1,150,"הזן מספר בין 1 ל-150 ליטר לשעה",v=>{BURN_LH=v;}]].forEach(([id,sm,key,lo,hi,msg,set])=>{
+    const inp=document.getElementById(id), sml=document.getElementById(sm); if(!inp||!sml) return;
+    const apply=()=>{
+      const t=inp.value.trim().replace(",","."), n=t===""? null : +t;
+      if(n!==null&&(!isFinite(n)||n<lo||n>hi)){ sml.textContent=msg; sml.classList.add("bad"); return; }
+      sml.textContent=sml.dataset.ok; sml.classList.remove("bad");
+      set(n); try{localStorage.setItem(key,n===null?"":String(n));}catch(e){}
+      try{ mbSync(); }catch(_){} try{ if(DRAWING) drawUi(); }catch(_){}
+    };
+    inp.addEventListener("change",apply); inp.addEventListener("input",()=>{ if(sml.classList.contains("bad")) apply(); });
+    inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); inp.blur(); } });
+  });
+  spNumSync();
+}
+try{ spNumInit(); }catch(_){}
 // ── v1.07.014: default time window in הגדרות (v1.07.043: the family box moved out; it is on the launch card every time) ──
 function spFamSync(){
   const w=document.querySelector('input[name="spwin"][value="'+(WIN_H||"all")+'"]'); if(w) w.checked=true;
@@ -5550,10 +5748,10 @@ function mbSync(){
   const N= hasR? READY.total : (typeof LAST_ITEMS!=="undefined"&&LAST_ITEMS? LAST_ITEMS.length : 0);
   let hid=0; try{ const t=Date.now(); hid=Math.max(0,ENR.filter(e=>!e.admin&&!offMap(e.id)&&!(e.end&&e.end.getTime()<=t)).length-(LAST_ITEMS||[]).length); }catch(_){}
   const cnt='<b>'+N+'</b> NOTAMים מוצגים'+(hid? ' · <span class="mi-h"><b>'+hid+'</b> מוסתרים</span>' : "");
-  if(MB_RET && hasR){ l1="מציג את המסלול האחרון שלך"; l2="מתכנן משהו אחר? הקש על DRAW"; }
-  else if(hasR){ l1=ROUTE.length+' נקודות · <bdi dir="ltr">'+routeLenNm().toFixed(0)+' NM</bdi>'; l2=cnt; }
+  if(hasR){ l1=routeSum(); l2=cnt; }   // v1.08.116: the "last route / tap DRAW" text is gone; the pill always shows the route summary
   else { l1='<span class="mt">הקש על</span><span class="mi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 12l.8-3 6.7-7 2.5 2.5-7 6.7z"/><circle cx="3.5" cy="21" r="1.8"/><path d="M4.6 19.4L7 13.5L10 19.5L13 12"/></svg></span><span class="mt">לסימון מסלול הטיסה</span>'; l2=cnt; }
   q("mi1").innerHTML=l1; q("mi1").classList.toggle("pr",l1.indexOf("mi-ic")>=0); q("mi2").innerHTML=l2;
+  { const tf=hasR? routeTF() : "", m5=q("mi5"); m5.innerHTML=tf; m5.hidden=!tf; }
   const tw=q("tlsWarn"), ins=!!(tw&&!tw.hidden);
   q("mi4").hidden=!ins; q("mi4").textContent="חיבור לא מאובטח - ייתכן שהמידע אינו מעודכן";
   const rm=hasR? ROUTE_MODE : "all", ro=rm!=="all";
