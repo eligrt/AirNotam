@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.035 · built by eligrt
+     AirNotam-ISR · v1.09.036 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2411,6 +2411,51 @@ body.demo #dmStop{display:flex;}
 body.demo .mb-leg{display:none !important;}
 #mbox.dk-c #dmStop{bottom:calc(var(--dkb,12px) + 46px);}
 .mbox:not(.rv) .mb-leg{left:50%;transform:translateX(-50%);}
+
+/* ═══ v1.09.036: Route info pill, mode name on the handle, drift marker setting, colour fade ═══ */
+.sp-grp{font:700 12px var(--font-ui);letter-spacing:.04em;color:#6b5d3f;padding:10px 4px 2px;border-top:1px dashed #cdbf98;margin-top:6px;}
+.sp-sw{position:relative;flex:none;width:50px;height:28px;direction:ltr;}
+.sp-sw input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;z-index:1;}
+.sp-sw i{position:absolute;inset:0;border-radius:14px;background:#b9b19b;transition:background .15s;}
+.sp-sw i::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .15s;box-shadow:0 1px 2px rgba(0,0,0,.3);}
+.sp-sw input:checked + i{background:#1c3d6e;}
+.sp-sw input:checked + i::after{left:25px;}
+#dkTab,#dkTabF{width:140px;margin-left:-70px;}
+#dkHnd{width:140px;margin-left:-70px;}
+.mk-tab .tl,.mk-hnd .tl{display:inline-flex;align-items:center;gap:4px;font:700 11px var(--font-mono);letter-spacing:.07em;white-space:nowrap;margin-right:4px;color:#1c3d6e;}
+.mk-tab .tl svg,.mk-hnd .tl svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.mk-tab .tl.p svg,.mk-hnd .tl.p svg{stroke-width:1.4;} .mk-tab .tl.f svg,.mk-hnd .tl.f svg{stroke-width:.6;}
+#dkTab .tl,#mbox:not(.fly) #dkHnd .tl{color:#6b4f12;}
+.mk-tab svg,.mk-hnd svg{flex:none;}
+#mdWash{position:absolute;inset:0;pointer-events:none;opacity:0;z-index:1500;}
+#mdWash.go{animation:mdw .6s ease-out;}
+@keyframes mdw{0%{opacity:1}100%{opacity:0}}
+/* Route info pill */
+#fpWrap{left:66px;right:10px;top:10px;gap:0;align-items:stretch;}
+html.full #fpWrap{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));}
+html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top,0px)));}
+#fpBox{background:rgba(251,246,232,.82);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);border:2.5px solid #1c3d6e;border-radius:18px;padding:4px 12px 6px;color:#1c3d6e;direction:ltr;box-sizing:border-box;box-shadow:0 1px 5px rgba(14,35,72,.25);pointer-events:auto;font-size:17px;}
+#fpBox[hidden]{display:none;}
+#fpBox .st{display:flex;justify-content:space-between;align-items:center;font-size:16px;font-weight:700;padding:3px 0 5px;}
+#fpBox .st b{font-size:18px;margin-right:4px;}
+#fpBox .dv{border-top:2px dashed #1c3d6e;opacity:.7;margin:0 -2px;}
+#fpBox .rw{display:flex;align-items:center;gap:8px;min-height:40px;border-bottom:1px solid #d9cba4;}
+#fpBox .rw:last-child{border-bottom:0;}
+#fpBox .rw .nm{font-size:17px;font-weight:500;color:#4d4326;flex:none;}
+#fpBox .rw.nx .nm{font-weight:800;color:#0e2348;}
+#fpBox .rw .vl{margin-left:auto;display:flex;gap:6px;align-items:center;white-space:nowrap;font-weight:600;font-size:16px;}
+#fpBox .rw.nx .vl{font-weight:800;}
+#fpBox .rw .vl small{font-size:.72em;font-weight:600;margin-left:1px;}
+#fpBox .rw .vl i{font-style:normal;opacity:.5;}
+#fpBox .cn{flex:none;width:28px;height:28px;border-radius:50%;box-sizing:border-box;border:2px solid #fff;background:#0e2348;color:#f5c518;font:800 15px var(--font-mono);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1.5px #0e2348;}
+#fpBox .cf{flex:none;width:28px;height:28px;display:block;}
+#fpBox .rw.dr{color:#7d1c33;}
+#fpBox .rw.dr .vl{font-weight:700;}
+#fpBox .rw.dr .pl{flex:none;border:2px dashed #7d1c33;border-radius:15px;padding:1px 10px;font:800 14px var(--font-mono);letter-spacing:.05em;}
+#fpBox .dn{font-weight:800;color:#0e2348;padding:6px 0;}
+#fpHnd{align-self:center;pointer-events:auto;display:flex;align-items:center;justify-content:center;gap:6px;height:30px;padding:0 14px;margin-top:-2.5px;box-sizing:border-box;border:2.5px solid #1c3d6e;border-top:0;border-radius:0 0 16px 16px;background:rgba(251,246,232,.82);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);color:#1c3d6e;font:700 12px var(--font-mono);letter-spacing:.08em;cursor:pointer;min-width:140px;}
+#fpHnd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+#fpWrap:not(.op) #fpHnd{margin-top:0;}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2450,7 +2495,7 @@ body.demo .mb-leg{display:none !important;}
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.035 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.036 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2479,7 +2524,9 @@ body.demo .mb-leg{display:none !important;}
       <div class="sp-row sp-irow sp-static" id="rteCorrBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18"/><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/></svg></span><span class="sp-tx"><b>רוחב המסלול</b></span><div class="fgrace sp-corr" id="corrSeg"><button type="button" data-c="2">2NM</button><button type="button" data-c="3">3NM</button><button type="button" data-c="5">5NM</button></div></div>
       <div class="sp-row sp-irow sp-static" id="rteSpdBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="sp-tx"><b>מהירות שיוט</b><small id="spdSm" data-ok="לחישוב זמן הטיסה">לחישוב זמן הטיסה</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="spdIn" aria-label="מהירות שיוט בקשר" placeholder="--"><span>קשר</span></div></div>
       <div class="sp-row sp-irow sp-static" id="rteBurnBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M4 21h12"/><path d="M15 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/><path d="M7.5 8h5"/></svg></span><span class="sp-tx"><b>צריכת דלק</b><small id="burnSm" data-ok="לחישוב כמות הדלק. הערכה בלבד, ללא רוח">לחישוב כמות הדלק. הערכה בלבד, ללא רוח</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="burnIn" aria-label="צריכת דלק בליטרים לשעה" placeholder="--"><span>ליטר לשעה</span></div></div>
+      <div class="sp-grp">תצוגה בטיסה</div>
       <div class="sp-row sp-irow sp-static" id="symBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l6 17-6-4-6 4z"/></svg></span><span class="sp-tx"><b>סמל מיקום</b></span><div class="fgrace sp-corr" id="symSeg"></div></div>
+      <div class="sp-row sp-irow sp-static sp-swrow" id="driftBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M7 9l-3 3 3 3M17 9l3 3-3 3"/><path d="M12 5v3M12 16v3"/></svg></span><span class="sp-tx"><b>הצג מרחק מהמסלול</b><small>קו מהמטוס אל המסלול, ובסטייה גם המרחק</small></span><label class="sp-sw"><input type="checkbox" id="driftSw" aria-label="הצג מרחק מהמסלול"><i></i></label></div>
       <a class="sp-row sp-irow" href="mailto:eligrt@gmail.com?subject=AirNotam%20-%20משוב"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg></span><span class="sp-tx"><b>יש תקלה או רעיון? כתוב לי</b></span></a>
       <div class="sp-sep"></div>
       <button type="button" class="sp-row sp-irow sp-red" onclick="setFullReset()"><span class="sp-ic r"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.01"/></svg></span><span class="sp-tx"><b>איפוס מלא של האפליקציה</b></span></button>
@@ -2487,7 +2534,7 @@ body.demo .mb-leg{display:none !important;}
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.035 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.036 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -2554,6 +2601,7 @@ body.demo .mb-leg{display:none !important;}
     <div id="mapEmpty" class="map-empty"></div>
     <button type="button" class="nv-pill" id="nvPill" onclick="setNvis('normal')"></button>
     <div class="mbox" id="mbox">
+      <div id="mdWash" aria-hidden="true"></div>
       <div class="mb-info" id="mbInfo"><div class="mib"><div class="mi1" id="mi1"></div><div class="mi2 mi-tf" id="mi5" hidden></div><div class="mi2" id="mi2"></div><div class="mi3" id="mi3" hidden></div><div class="mi3" id="mi4" hidden></div></div></div>
       <button type="button" id="mbBell" class="mb-b mb-bell" style="right:10px;top:114px" aria-label="NOTAM חדשים ב-72 שעות האחרונות" onclick="newsOpen()" hidden><span class="bl-ic"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg></span><span class="mb-t mb-t-c">NEW</span><span class="mb-bd" id="mbBellN"></span></button>
       <button type="button" id="mbFull" class="mb-b mb-n mb-m" style="right:10px;top:10px" aria-label="מסך מלא" onclick="setFull(!document.documentElement.classList.contains('full'))"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span class="mb-t mb-t-l" id="mbFullT">FULL</span></button>
@@ -2567,7 +2615,7 @@ body.demo .mb-leg{display:none !important;}
       <button type="button" class="mk-b mk-mode mb-m" id="mbMode" aria-label="מצב תכנון" onclick="modeFlip()"><svg viewBox="0 0 24 24" class="m" aria-hidden="true"><g transform="rotate(-38 12 12)"><rect x="1.5" y="8.3" width="21" height="7.4" rx="1.3"/><path d="M5.5 8.3v3M9 8.3v2M12.5 8.3v3M16 8.3v2M19.5 8.3v3" stroke-width="1.1"/></g><g transform="translate(15.5 14) rotate(38) translate(-12 -12)"><path d="M10 2.5h4V16l-2 4.5-2-4.5z" style="fill:#fbf0d2"/><path d="M10 6.5h4" stroke-width="1.1"/></g></svg><span class="mk-l">PLAN</span></button>
       <button type="button" class="mk-b" id="mbGear" aria-label="הגדרות" onclick="toggleSettings()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg><span class="mk-l">SETTINGS</span></button>
       <div class="mk-dock mb-m" id="mbDock" role="group" aria-label="תכנון">
-        <button type="button" class="mk-tab" id="dkTab" aria-label="כווץ" onclick="dkSet(false)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <button type="button" class="mk-tab" id="dkTab" aria-label="כווץ" onclick="dkSet(false)"><span class="tl" data-m="plan"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <button type="button" class="mk-b" id="dkDraw" style="left:25.5px" aria-label="מסלול" onclick="mbDrawGo()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 12l.8-3 6.7-7 2.5 2.5-7 6.7z"/><circle cx="3.5" cy="21" r="1.8"/><path d="M4.6 19.4L7 13.5L10 19.5L13 12"/></svg><span class="mk-l">DRAW</span></button>
         <button type="button" class="mk-b" id="dkPrev" style="left:87.5px" aria-label="תצוגה מקדימה" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.2v11.6a.6.6 0 0 0 .9.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.9.5z" style="fill:currentColor"/></svg><span class="mk-l">PREVIEW</span></button>
         <i class="mk-sep" style="left:157.75px"></i>
@@ -2575,7 +2623,7 @@ body.demo .mb-leg{display:none !important;}
         <button type="button" class="mk-b nr" id="dkRv" style="left:239.5px" aria-label="סקירה" onclick="slotReview()"><svg viewBox="0.5 0.5 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21M7.8 10.6l2 2 3.4-4"/></svg><span class="mk-l" id="dkRvT">REVIEW</span><span class="mk-bd" id="dkRvN" hidden></span></button>
       </div>
       <div class="mk-dock fl mb-m" id="mbDockF" role="group" aria-label="טיסה">
-        <button type="button" class="mk-tab" id="dkTabF" aria-label="כווץ" onclick="dkSet(false)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <button type="button" class="mk-tab" id="dkTabF" aria-label="כווץ" onclick="dkSet(false)"><span class="tl" data-m="fly"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <button type="button" class="mk-b" id="fyCen" style="left:8px" aria-label="מרכז" onclick="flyCenter()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4"/></svg><span class="mk-l">CENTER</span></button>
         <button type="button" class="mk-b" id="fyNor" style="left:63px" aria-label="צפון" onclick="flyNorth()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.6 21.5V11l8.8 10.5V11" style="stroke-width:2.3"/><path d="M12 1.6L9 8.2h6z" style="fill:#d23a2a;stroke:#d23a2a;stroke-width:1;stroke-linejoin:round"/></svg><span class="mk-l">NORTH</span></button>
         <i class="mk-sep" style="left:123.75px"></i>
@@ -2588,7 +2636,7 @@ body.demo .mb-leg{display:none !important;}
       <button type="button" class="gps-chip gps-f" id="gpsChipF" onclick="gpsTap()"><i></i><span>GPS</span></button>
       <i id="mbProbe" style="position:absolute;left:0;bottom:var(--dkb);width:1px;height:0;pointer-events:none"></i>
       <div class="lp-cue mb-m hide" id="lpCue"><button type="button" class="scroll-btn" id="lpCueBtn" aria-label="גלול למטה"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button></div>
-      <button type="button" class="mk-hnd mb-m" id="dkHnd" aria-label="הרחב" onclick="dkSet(true)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
+      <button type="button" class="mk-hnd mb-m" id="dkHnd" aria-label="הרחב" onclick="dkSet(true)"><span class="tl" id="dkHl" data-m="plan"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
       <div class="mb-leg mb-m" id="mbLeg"><span><i class="u"></i>טרם נקרא</span><span><i class="r"></i>נקרא</span><span><i class="x"></i>לא רלוונטי</span></div>
     </div>
 
@@ -5526,7 +5574,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.035 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.036 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6146,12 +6194,23 @@ const IC_PLAN='<g transform="rotate(-38 12 12)"><rect x="1.5" y="8.3" width="21"
 const IC_FLY='<g transform="rotate(40 12 12)" style="fill:currentColor" stroke-width="0.6"><path d="M12 2.5c.7 0 1.2.8 1.2 1.8v4.3H21a1 1 0 0 1 1 1v1.8a1 1 0 0 1-1 1h-7.8v5H16a1 1 0 0 1 1 1v.8a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-.8a1 1 0 0 1 1-1h2.8v-5H3a1 1 0 0 1-1-1V9.6a1 1 0 0 1 1-1h7.8V4.3c0-1 .5-1.8 1.2-1.8z"/><path d="M6.5 1.9h11" stroke-width="1.6"/></g>';
 function modeIsFly(){ const b=document.getElementById("mbox"); return !!(b&&b.classList.contains("fly")); }
 function modeFlip(){ modeSet(!modeIsFly()); }
+function tabNames(){   // the dock handles say which mode you are in, with the same small picture as the round button
+  const f=modeIsFly();
+  document.querySelectorAll(".mk-tab .tl,.mk-hnd .tl").forEach(e=>{
+    let k=e.dataset.m; if(e.id==="dkHl") k=f?"fly":"plan";
+    e.className="tl "+(k==="fly"?"f":"p");
+    e.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+(k==="fly"?IC_FLY:IC_PLAN)+'</svg>'+(k==="fly"?"FLY MODE":"PLAN MODE");
+  });
+}
+setTimeout(()=>{ try{ tabNames(); }catch(_){} },0);
 function modeSet(fly){
   const b=document.getElementById("mbox"); if(!b||fly===modeIsFly()) return;
   try{ if(DRAWING) drawDone(); }catch(_){}
   try{ mbPillClose(); }catch(_){}
   try{ closeCurtains(); }catch(_){}
   b.classList.toggle("fly",fly);
+  try{ const w=document.getElementById("mdWash"); if(w){ w.style.background= fly? "rgba(28,61,110,.5)" : "rgba(200,160,74,.5)"; w.classList.remove("go"); void w.offsetWidth; w.classList.add("go"); } }catch(_){}
+  try{ tabNames(); }catch(_){}
   const m=document.getElementById("mbMode");
   if(m){ const sv=m.querySelector("svg"), l=m.querySelector(".mk-l"); if(sv) sv.innerHTML= fly? IC_FLY : IC_PLAN; if(l) l.textContent= fly? "FLY" : "PLAN"; m.setAttribute("aria-label", fly? "מצב טיסה" : "מצב תכנון"); }
   if(fly){ GP.shown=true; gpsStart(); GP.zoomed=false; FLW=true; flyFollow(); }
@@ -6174,7 +6233,7 @@ function gpsErr(e){
 function gpsDist(a,b,c,d){ const R=6371000, r=Math.PI/180, x=(d-b)*r*Math.cos((a+c)/2*r), y=(c-a)*r; return Math.hypot(x,y)*R; }
 function gpsBrg(a,b,c,d){ const r=Math.PI/180, y=Math.sin((d-b)*r)*Math.cos(c*r), x=Math.cos(a*r)*Math.sin(c*r)-Math.sin(a*r)*Math.cos(c*r)*Math.cos((d-b)*r); return (Math.atan2(y,x)/r+360)%360; }
 function gpsPos(p){
-  if(typeof PVW!=="undefined"&&PVW.on&&!p._demo) return;   // v1.09.035: the demo flight ignores the real GPS
+  if(typeof PVW!=="undefined"&&PVW.on&&!p._demo) return;   // v1.09.036: the demo flight ignores the real GPS
   const c=p.coords; GP.pos={lat:c.latitude,lon:c.longitude,t:Date.now()}; GP.acc=c.accuracy;
   let gs=(c.speed!=null&&isFinite(c.speed))? c.speed*1.94384 : null, hd=(c.heading!=null&&isFinite(c.heading))? c.heading : null, src="phone";
   const now=Date.now(); GP.hist=(GP.hist||[]).filter(h=>now-h.t<15000); 
@@ -6463,9 +6522,34 @@ function cmpSvg(){
   if(!sv){ sv=document.createElementNS("http://www.w3.org/2000/svg","svg"); sv.id="cmpSvg"; sv.setAttribute("aria-hidden","true"); }
   cc.insertBefore(sv,cc.firstChild); return sv;   // inside the map's button layer, under every button
 }
+let DRIFT_ON=true; try{ DRIFT_ON=localStorage.getItem("fy_drift")!=="0"; }catch(_){}
+(function driftInit(){ const c=document.getElementById("driftSw"); if(!c) return; c.checked=DRIFT_ON; c.addEventListener("change",()=>{ DRIFT_ON=c.checked; try{ localStorage.setItem("fy_drift",DRIFT_ON?"1":"0"); }catch(_){} try{ cmpDraw(); }catch(_){} }); })();
+function driftInfo(){   // the nearest point of the route and how far off the aircraft is (null when there is nothing to show)
+  if(!DRIFT_ON||!modeIsFly()||!GP.pos||!rtGood()) return null;
+  if(NXT.i!=null&&NXT.i>=ROUTE.length) return null;
+  const P=GP.pos, kx=60*Math.cos(P.lat*Math.PI/180), px=P.lon*kx, py=P.lat*60; let best=null;
+  for(let i=0;i<ROUTE.length-1;i++){
+    const ax=ROUTE[i][1]*kx, ay=ROUTE[i][0]*60, dx=ROUTE[i+1][1]*kx-ax, dy=ROUTE[i+1][0]*60-ay, L2=dx*dx+dy*dy;
+    let u=L2>0? ((px-ax)*dx+(py-ay)*dy)/L2 : 0; u=Math.max(0,Math.min(1,u));
+    const fx=ax+dx*u, fy=ay+dy*u, d=Math.hypot(px-fx,py-fy);
+    if(!best||d<best.d) best={d,lat:fy/60,lon:fx/kx};
+  }
+  if(!best||best.d<0.1) return null;
+  const t=best.d/CORR_NM; best.col= t<=0.3? "#2fa65f" : t<=1? "#e0a100" : "#d63a3a"; best.pill= t>0.3; return best;
+}
+function driftDraw(P,BL){   // a short line from the aircraft straight across to the route, an arrowhead at each end; amber and red also show the distance
+  const D=driftInfo(); if(!D) return "";
+  const F=cmpScreenLL(D.lat,D.lon), dx=F.x-P.x, dy=F.y-P.y, len=Math.hypot(dx,dy); if(len<28) return "";
+  const ux=dx/len, uy=dy/len, sx=P.x+ux*16, sy=P.y+uy*16, ex=F.x, ey=F.y, f=v=>v.toFixed(1);
+  const head=(x,y,vx,vy)=>{ const nx=-vy, ny=vx, bx=x-vx*13, by=y-vy*13; return '<path d="M'+f(x)+' '+f(y)+' L'+f(bx+nx*6)+' '+f(by+ny*6)+' L'+f(bx-nx*6)+' '+f(by-ny*6)+'Z" fill="'+D.col+'" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>'; };
+  let o='<line x1="'+f(sx)+'" y1="'+f(sy)+'" x2="'+f(ex)+'" y2="'+f(ey)+'" stroke="#fff" stroke-opacity=".9" stroke-width="7" stroke-linecap="round"/><line x1="'+f(sx)+'" y1="'+f(sy)+'" x2="'+f(ex)+'" y2="'+f(ey)+'" stroke="'+D.col+'" stroke-width="3.4" stroke-linecap="round"/>'+head(ex,ey,ux,uy)+head(sx,sy,-ux,-uy);
+  if(D.pill){ const txt=(D.d<10? D.d.toFixed(1) : String(Math.round(D.d)))+" NM", w=txt.length*8.2+22, mx=(sx+ex)/2, my=(sy+ey)/2; try{ BL.push({x1:mx-w/2-2,x2:mx+w/2+2,y1:my-14,y2:my+14}); }catch(_){}
+    o+='<rect x="'+f(mx-w/2)+'" y="'+f(my-12)+'" width="'+f(w)+'" height="24" rx="12" fill="#fbf6e8" stroke="'+D.col+'" stroke-width="1.8"/><text x="'+f(mx)+'" y="'+f(my+4.6)+'" font-size="13" font-family="JetBrains Mono,monospace" font-weight="800" text-anchor="middle" fill="'+D.col+'">'+txt+'</text>'; }
+  return o;
+}
 function cmpDraw(){
   if(typeof MAP==="undefined"||!MAP) return; const sv=cmpSvg(); if(!sv) return;
-  const show=modeIsFly()&&GP.pos&&(RNG!=="off"||(DIR.on&&!!DIR.tgt)||CMP.on&&CMP.hdg!=null||gpsMoving());
+  const show=modeIsFly()&&GP.pos&&(RNG!=="off"||!!driftInfo()||(DIR.on&&!!DIR.tgt)||CMP.on&&CMP.hdg!=null||gpsMoving());
   if(!show){ if(sv.innerHTML) sv.innerHTML=""; return; }
   const mb=document.getElementById("mbox"), W=mb.clientWidth, H=mb.clientHeight; sv.setAttribute("viewBox","0 0 "+W+" "+H);
   const P=cmpScreen(), L0=Math.max(W,H)*2, rot=FY.on? FY.rot : 0, BL=cmpBlocks();
@@ -6499,8 +6583,8 @@ function cmpDraw(){
     if(DIR.tgt.snapped) o+='<circle cx="'+T.x.toFixed(1)+'" cy="'+T.y.toFixed(1)+'" r="11" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="5.5"/><circle cx="'+T.x.toFixed(1)+'" cy="'+T.y.toFixed(1)+'" r="11" fill="none" stroke="'+WINE+'" stroke-width="3"/>';
     else o+='<path transform="translate('+T.x.toFixed(1)+' '+T.y.toFixed(1)+')" d="M0 0 c-9 -12 -11 -16 -11 -21 a11 11 0 1 1 22 0 c0 5 -2 9 -11 21z" fill="'+WINE+'" stroke="#fff" stroke-width="1.5"/><circle cx="'+T.x.toFixed(1)+'" cy="'+(T.y-21).toFixed(1)+'" r="4" fill="#fff"/>';
   }
-  const RG=ringsDraw(P,BL,W,H);
-  sv.innerHTML=RG.o+o+pills+RG.p;
+  const DR=driftDraw(P,BL), RG=ringsDraw(P,BL,W,H);
+  sv.innerHTML=RG.o+o+DR+pills+RG.p;
 }
 (function cmpInit(){
   if(typeof MAP==="undefined"||!MAP){ setTimeout(cmpInit,400); return; }
@@ -6675,35 +6759,44 @@ const fpBrg=(a,b,c,d)=>String(Math.round(gpsBrg(a,b,c,d))%360).padStart(3,"0")+"
 function fpHours(nm){ const v=(GP.gs!=null&&GP.gs>=30)? GP.gs : CRZ_KT; return v? nm/v : null; }
 function fpTime(h){ if(h==null) return "--"; const m=Math.round(h*60); return m<60? String(m).padStart(2,"0")+"m" : Math.floor(m/60)+"h"+String(m%60).padStart(2,"0"); }
 function fpFuel(h){ return (h==null||!BURN_LH)? "" : "≈"+Math.round(h*BURN_LH)+"L"; }
+const FPO={open:false};
+const FP_FLAG='<svg class="cf" viewBox="0 0 28 28" aria-hidden="true"><defs><clipPath id="fpcp"><circle cx="14" cy="14" r="12"/></clipPath></defs><g clip-path="url(#fpcp)"><rect width="28" height="28" fill="#fff"/><g fill="#0e2348"><rect x="2" y="2" width="6" height="6"/><rect x="14" y="2" width="6" height="6"/><rect x="8" y="8" width="6" height="6"/><rect x="20" y="8" width="6" height="6"/><rect x="2" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/><rect x="8" y="20" width="6" height="6"/><rect x="20" y="20" width="6" height="6"/></g></g><circle cx="14" cy="14" r="12" fill="none" stroke="#0e2348" stroke-width="2"/></svg>';
+function fpToggle(){ FPO.open=!FPO.open; try{ flyPills(); }catch(_){} }
 function flyPills(){
   const mb=document.getElementById("mbox"); if(!mb) return;
   let w=document.getElementById("fpWrap");
-  if(!w){ w=document.createElement("div"); w.id="fpWrap"; w.innerHTML='<div class="fp d" id="fpD" hidden></div><div class="fp r" id="fpR" hidden></div>'; mb.appendChild(w); }
-  const D=document.getElementById("fpD"), R=document.getElementById("fpR");
+  if(!w){ w=document.createElement("div"); w.id="fpWrap"; mb.appendChild(w); }
+  if(!document.getElementById("fpBox")){ w.innerHTML='<div id="fpBox" hidden></div><button type="button" id="fpHnd" aria-label="מידע על המסלול" onclick="fpToggle()"><span>ROUTE INFO</span><svg viewBox="0 0 24 24" aria-hidden="true"></svg></button>'; }
+  const B=document.getElementById("fpBox"), H=document.getElementById("fpHnd");
   try{ nxtStep(); }catch(_){}
   const on=modeIsFly()&&GP.pos&&!LP_OPEN;
   const showD=on&&DIR.on&&!!DIR.tgt, showR=on&&rtGood();
-  if(showD){
-    const P=GP.pos, T=DIR.tgt, nm=gpsDist(P.lat,P.lon,T.lat,T.lon)/1852, h=fpHours(nm);
-    D.innerHTML='<div class="g"><span class="fpb">To</span><span class="fpb"><bdi>'+fpE(T.name||"Point")+'</bdi></span>'+fpC("",fpBrg(P.lat,P.lon,T.lat,T.lon))+fpC("dst",fpDist(nm))+fpC("clk",fpTime(h))+fpC("fuel",fpFuel(h))+'</div>';
-  }
+  if(!(showD||showR)){ w.style.display="none"; return; }
+  w.style.display="flex"; w.classList.toggle("op",FPO.open);
+  H.querySelector("svg").innerHTML=FPO.open?'<path d="M6 15l6-6 6 6"/>':'<path d="M6 9l6 6 6-6"/>';
+  B.hidden=!FPO.open; if(!FPO.open) return;
+  const P=GP.pos, v=(dist,h,fuel)=>'<span class="vl">'+fpDist(dist)+'<i>·</i><span>'+fpTime(h)+'</span>'+(fuel?'<i>·</i><span>'+fuel+'</span>':'')+'</span>';
+  let h="";
   if(showR){
-    const P=GP.pos, n=ROUTE.length, i=NXT.i==null? 1 : NXT.i, b=nxtNear(), gs=(GP.gs!=null&&GP.gs>=1)? Math.round(GP.gs)+" kt" : "--";
+    const n=ROUTE.length, i=NXT.i==null? 1 : NXT.i, b=nxtNear(), gs=(GP.gs!=null&&GP.gs>=1)? Math.round(GP.gs) : "--";
     let dot="#2fa65f", txt="On route";
     if(b){ const t=b.d/CORR_NM; dot= t<=0.3? "#2fa65f" : t<=1? "#f0a51e" : "#e24646"; txt= b.d<0.1? "On route" : (b.d<10? b.d.toFixed(1) : String(Math.round(b.d)))+" NM "+(b.side>0?"right":"left")+" of route"; }
-    let h='<div class="hd"><span><b style="color:'+dot+'">●</b> '+txt+'</span><span>GS '+gs+'</span></div>';
-    if(i>=n) h+='<div class="done">Route complete</div>';
+    h+='<div class="st"><span><b style="color:'+dot+'">●</b>'+txt+'</span><span>GS '+gs+' <small>KT</small></span></div><div class="dv"></div>';
+    if(i>=n) h+='<div class="dn">Route complete</div>';
     else {
       const wp=ROUTE[i], dN=gpsDist(P.lat,P.lon,wp[0],wp[1])/1852; let dE=dN;
       for(let k=i;k<n-1;k++) dE+=gpsDist(ROUTE[k][0],ROUTE[k][1],ROUTE[k+1][0],ROUTE[k+1][1])/1852;
-      const e=ROUTE[n-1], hN=fpHours(dN), hE=fpHours(dE);
-      h+='<div class="g">';
-      if(i<n-1) h+='<span class="nx">Next</span><span class="nx"><small>WP</small>&nbsp;'+(i+1)+'</span>'+fpC("",fpBrg(P.lat,P.lon,wp[0],wp[1]),"nx")+fpC("dst",fpDist(dN),"nx")+fpC("clk",fpTime(hN),"nx")+'<span></span>';
-      h+='<span class="'+(i<n-1?"en":"nx")+'">End</span><span class="'+(i<n-1?"en":"nx")+'"><small>WP</small>&nbsp;'+n+'</span>'+fpC("",fpBrg(P.lat,P.lon,e[0],e[1]),i<n-1?"en":"nx")+fpC("dst",fpDist(dE),i<n-1?"en":"nx")+fpC("clk",fpTime(hE),i<n-1?"en":"nx")+fpC("fuel",fpFuel(hE),i<n-1?"en":"nx")+'</div>';
+      const hN=fpHours(dN), hE=fpHours(dE);
+      if(i<n-1) h+='<div class="rw nx"><span class="cn">'+i+'</span><span class="nm">Next</span>'+v(dN,hN,fpFuel(hN))+'</div>';
+      h+='<div class="rw'+(i<n-1?' en':' nx')+'">'+FP_FLAG+'<span class="nm">End</span>'+v(dE,hE,fpFuel(hE))+'</div>';
     }
-    R.innerHTML=h;
   }
-  D.hidden=!showD; R.hidden=!showR;
+  if(showD){
+    const T=DIR.tgt, nm=gpsDist(P.lat,P.lon,T.lat,T.lon)/1852, hh=fpHours(nm);
+    if(showR) h+='<div class="dv"></div>';
+    h+='<div class="rw dr"><span class="pl">DIRECT</span><span class="vl">'+fpBrg(P.lat,P.lon,T.lat,T.lon)+'<i>·</i>'+fpDist(nm)+'<i>·</i><span>'+fpTime(hh)+'</span></span></div>';
+  }
+  B.innerHTML=h;
 }
 setInterval(()=>{ try{ flyPills(); }catch(_){} },1000);
 // ═══ v1.09.031: the page never stays shifted (iPhone can scroll the whole page a little, then the lower part turns white and the navy bar is out of reach) ═══
