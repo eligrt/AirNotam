@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.029 · built by eligrt
+     AirNotam-ISR · v1.09.030 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2377,6 +2377,19 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
 #symSeg button{height:56px;padding:0;display:flex;align-items:center;justify-content:center;}
 #symSeg button svg{width:44px;height:44px;overflow:visible;}
 #symSeg button.on{background:#e6ebf4;border:2px solid var(--ink);}
+/* ═══ v1.09.030: the two Fly info pills ═══ */
+#fpWrap{position:absolute;left:66px;right:10px;top:10px;z-index:1010;display:none;flex-direction:column;gap:6px;pointer-events:none;}
+#mbox.fly #fpWrap{display:flex;}
+#mbox.fly .mb-info{display:none !important;}
+.fp{background:rgba(251,246,232,.97);border-radius:16px;padding:5px 9px;font-size:12px;line-height:20px;color:#1c3d6e;box-shadow:0 1px 4px rgba(14,35,72,.25);direction:ltr;box-sizing:border-box;}
+.fp[hidden]{display:none;}
+.fp.d{border:1.5px solid #7d1c33;} .fp.r{border:1.5px solid #1c3d6e;}
+.fp .g{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto auto;column-gap:7px;}
+.fp .g span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:2px;}
+.fp .g span svg{width:11px;height:11px;flex:none;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.75;}
+.fp .fpb{font-weight:700;} .fp .nx{font-weight:800;color:#0e2348;} .fp .en{font-weight:500;color:#6b5d3f;}
+.fp .hd{display:flex;justify-content:space-between;font-weight:700;padding-bottom:2px;border-bottom:1px solid #e3d4ad;margin-bottom:3px;}
+.fp .done{font-weight:700;color:#0e2348;}
 .mbox:not(.rv) .mb-leg{left:50%;transform:translateX(-50%);}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -2417,7 +2430,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.029 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.030 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2454,7 +2467,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.029 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.030 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5493,7 +5506,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.029 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.030 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6574,10 +6587,15 @@ function flyAuto(){
   AZ.on=!AZ.on; try{ localStorage.setItem("fy_az",AZ.on?"1":"0"); }catch(_){}
   AZ.zv=null; AZ.ri=-1; azSnap(AZ.on); azUi();
   if(AZ.on){ if(!FLW){ FLW=true; flyRefresh(); }
-    if(!DIR.on||!DIR.tgt) mbToast("AUTO zoom follows your DIRECT point. Tap a point on the map."); }
+    if(!azPoint()) mbToast("AUTO zoom follows your route or your DIRECT point. Draw a route or tap a point on the map."); }
+}
+function azPoint(){   // what AUTO zoom follows: the DIRECT point if there is one, otherwise the next waypoint of the route
+  if(DIR.on&&DIR.tgt) return {lat:DIR.tgt.lat,lon:DIR.tgt.lon};
+  if(typeof ROUTE!=="undefined"&&ROUTE.length>=2&&NXT.i!=null&&NXT.i<ROUTE.length) return {lat:ROUTE[NXT.i][0],lon:ROUTE[NXT.i][1]};
+  return null;
 }
 function azTarget(){
-  const P=GP.pos, T=DIR.tgt, d=Math.hypot((T.lat-P.lat)*60,(T.lon-P.lon)*60*Math.cos(P.lat*Math.PI/180));
+  const P=GP.pos, T=azPoint(), d=Math.hypot((T.lat-P.lat)*60,(T.lon-P.lon)*60*Math.cos(P.lat*Math.PI/180));
   if(AZ.ri<0){ AZ.ri=0; while(AZ.ri<3&&d<AZ_ROWS[AZ.ri].f) AZ.ri++; }
   while(AZ.ri<3&&d<AZ_ROWS[AZ.ri].f*0.93) AZ.ri++;
   while(AZ.ri>0&&d>=AZ_ROWS[AZ.ri-1].f*1.07) AZ.ri--;
@@ -6587,7 +6605,7 @@ function azTarget(){
 }
 function azTick(){
   const now=performance.now(), dt=Math.min(0.2,(now-AZ.t)/1000||0.05); AZ.t=now;
-  if(!AZ.on||!modeIsFly()||!FLW||!GP.pos||Date.now()-GP.pos.t>12000||!DIR.on||!DIR.tgt||typeof MAP==="undefined"||!MAP){ AZ.zv=null; AZ.ri=-1; return; }
+  if(!AZ.on||!modeIsFly()||!FLW||!GP.pos||Date.now()-GP.pos.t>12000||!azPoint()||typeof MAP==="undefined"||!MAP){ AZ.zv=null; AZ.ri=-1; return; }
   const zc=MAP.getZoom(); if(AZ.zv===null||Math.abs(AZ.zv-zc)>0.3) AZ.zv=zc;
   const zt=azTarget(), st=(zt-AZ.zv)*(1-Math.exp(-dt/1.2)), mx=0.5*dt; AZ.zv+=Math.max(-mx,Math.min(mx,st));
   if(Math.abs(AZ.zv-zc)<0.003) return;
@@ -6596,9 +6614,77 @@ function azTick(){
 setInterval(azTick,50);
 (function azInit(){
   if(typeof MAP==="undefined"||!MAP){ setTimeout(azInit,400); return; }
-  MAP.on("zoomstart",()=>{ if(AZ.on&&!AZ.own&&modeIsFly()&&DIR.tgt){ AZ.on=false; try{ localStorage.setItem("fy_az","0"); }catch(_){} azSnap(false); azUi(); } });   // the pilot zooms by hand: AUTO steps aside until tapped again
+  MAP.on("zoomstart",()=>{ if(AZ.on&&!AZ.own&&modeIsFly()&&azPoint()){ AZ.on=false; try{ localStorage.setItem("fy_az","0"); }catch(_){} azSnap(false); azUi(); } });   // the pilot zooms by hand: AUTO steps aside until tapped again
   azUi(); if(AZ.on) azSnap(true);
 })();
+// ═══ v1.09.030: the next waypoint of the route, and the two Fly info pills (DIRECT and route) ═══
+const NXT={i:null,sig:"",pc:0,lastT:0};
+const rtGood=()=>typeof ROUTE!=="undefined"&&ROUTE.length>=2;
+function nxtNear(){   // the route leg nearest to the aircraft: how far off, which side, and which leg
+  const P=GP.pos, kx=60*Math.cos(P.lat*Math.PI/180), px=P.lon*kx, py=P.lat*60; let best=null;
+  for(let i=0;i<ROUTE.length-1;i++){
+    const ax=ROUTE[i][1]*kx, ay=ROUTE[i][0]*60, dx=ROUTE[i+1][1]*kx-ax, dy=ROUTE[i+1][0]*60-ay, L2=dx*dx+dy*dy;
+    let u=L2>0? ((px-ax)*dx+(py-ay)*dy)/L2 : 0; u=Math.max(0,Math.min(1,u));
+    const vx=px-(ax+dx*u), vy=py-(ay+dy*u), d=Math.hypot(vx,vy);
+    if(!best||d<best.d) best={d,i,side:(dx*vy-dy*vx)<0?1:-1};
+  }
+  return best;
+}
+function nxtStep(){   // keeps "next waypoint" up to date: it is passed when the aircraft crosses the line that stands across the route at that point
+  if(!rtGood()||!GP.pos||!modeIsFly()){ NXT.sig=""; NXT.i=null; return; }
+  const sig=ROUTE.map(p=>p[0]+","+p[1]).join("|");
+  if(sig!==NXT.sig||NXT.i==null){ NXT.sig=sig; NXT.pc=0; const b=nxtNear(); NXT.i=b? b.i+1 : 1; NXT.lastT=0; }
+  if(NXT.i>=ROUTE.length||GP.pos.t===NXT.lastT) return; NXT.lastT=GP.pos.t;
+  const k=NXT.i, w=ROUTE[k], p0=ROUTE[k-1], cl=Math.cos(w[0]*Math.PI/180)*60;
+  const u=(a,b)=>{ const x=(b[1]-a[1])*cl, y=(b[0]-a[0])*60, l=Math.hypot(x,y)||1; return [x/l,y/l]; };
+  const inc=u(p0,w); let d=inc;
+  if(k<ROUTE.length-1){ const o=u(w,ROUTE[k+1]), sx=inc[0]+o[0], sy=inc[1]+o[1], l=Math.hypot(sx,sy); if(l>=0.05) d=[sx/l,sy/l]; }
+  const dot=(GP.pos.lon-w[1])*cl*d[0]+(GP.pos.lat-w[0])*60*d[1];
+  if(dot>0.05) NXT.pc++; else NXT.pc=0;   // two fixes in a row past the line, so one noisy fix does not count
+  if(NXT.pc>=2){ NXT.i++; NXT.pc=0; }
+}
+const fpE=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const FP_IC={brg:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9l-1.8 4.2L9 15l1.8-4.2z"/></svg>',
+ dst:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg>',
+ clk:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+ fuel:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M3 21h12M6.5 8h5"/><path d="M14 9h2.5a1.5 1.5 0 0 1 1.5 1.5V16a1.5 1.5 0 0 0 3 0V8l-3-3"/></svg>'};
+const fpC=(ic,v,c)=>'<span'+(c?' class="'+c+'"':'')+'>'+(ic?FP_IC[ic]:'')+'<bdi>'+v+'</bdi></span>';
+const fpDist=n=>(n<100? n.toFixed(1) : String(Math.round(n)))+"NM";
+const fpBrg=(a,b,c,d)=>String(Math.round(gpsBrg(a,b,c,d))%360).padStart(3,"0")+"°";
+function fpHours(nm){ const v=(GP.gs!=null&&GP.gs>=30)? GP.gs : CRZ_KT; return v? nm/v : null; }
+function fpTime(h){ if(h==null) return "--"; const m=Math.round(h*60); return m<60? String(m).padStart(2,"0")+"m" : Math.floor(m/60)+"h"+String(m%60).padStart(2,"0"); }
+function fpFuel(h){ return (h==null||!BURN_LH)? "" : "≈"+Math.round(h*BURN_LH)+"L"; }
+function flyPills(){
+  const mb=document.getElementById("mbox"); if(!mb) return;
+  let w=document.getElementById("fpWrap");
+  if(!w){ w=document.createElement("div"); w.id="fpWrap"; w.innerHTML='<div class="fp d" id="fpD" hidden></div><div class="fp r" id="fpR" hidden></div>'; mb.appendChild(w); }
+  const D=document.getElementById("fpD"), R=document.getElementById("fpR");
+  try{ nxtStep(); }catch(_){}
+  const on=modeIsFly()&&GP.pos&&!LP_OPEN;
+  const showD=on&&DIR.on&&!!DIR.tgt, showR=on&&rtGood();
+  if(showD){
+    const P=GP.pos, T=DIR.tgt, nm=gpsDist(P.lat,P.lon,T.lat,T.lon)/1852, h=fpHours(nm);
+    D.innerHTML='<div class="g"><span class="fpb">To</span><span class="fpb"><bdi>'+fpE(T.name||"Point")+'</bdi></span>'+fpC("brg",fpBrg(P.lat,P.lon,T.lat,T.lon))+fpC("dst",fpDist(nm))+fpC("clk",fpTime(h))+fpC("fuel",fpFuel(h))+'</div>';
+  }
+  if(showR){
+    const P=GP.pos, n=ROUTE.length, i=NXT.i==null? 1 : NXT.i, b=nxtNear(), gs=(GP.gs!=null&&GP.gs>=1)? Math.round(GP.gs)+" kt" : "--";
+    let dot="#2fa65f", txt="On route";
+    if(b){ const t=b.d/CORR_NM; dot= t<=0.3? "#2fa65f" : t<=1? "#f0a51e" : "#e24646"; txt= b.d<0.1? "On route" : (b.d<10? b.d.toFixed(1) : String(Math.round(b.d)))+" NM "+(b.side>0?"right":"left")+" of route"; }
+    let h='<div class="hd"><span><b style="color:'+dot+'">●</b> '+txt+'</span><span>GS '+gs+'</span></div>';
+    if(i>=n) h+='<div class="done">Route complete</div>';
+    else {
+      const wp=ROUTE[i], dN=gpsDist(P.lat,P.lon,wp[0],wp[1])/1852; let dE=dN;
+      for(let k=i;k<n-1;k++) dE+=gpsDist(ROUTE[k][0],ROUTE[k][1],ROUTE[k+1][0],ROUTE[k+1][1])/1852;
+      const e=ROUTE[n-1], hN=fpHours(dN), hE=fpHours(dE);
+      h+='<div class="g">';
+      if(i<n-1) h+='<span class="nx">Next</span><span class="nx">WP '+(i+1)+'</span>'+fpC("brg",fpBrg(P.lat,P.lon,wp[0],wp[1]),"nx")+fpC("dst",fpDist(dN),"nx")+fpC("clk",fpTime(hN),"nx")+'<span></span>';
+      h+='<span class="'+(i<n-1?"en":"nx")+'">End</span><span class="'+(i<n-1?"en":"nx")+'">WP '+n+'</span>'+fpC("brg",fpBrg(P.lat,P.lon,e[0],e[1]),i<n-1?"en":"nx")+fpC("dst",fpDist(dE),i<n-1?"en":"nx")+fpC("clk",fpTime(hE),i<n-1?"en":"nx")+fpC("fuel",fpFuel(hE),i<n-1?"en":"nx")+'</div>';
+    }
+    R.innerHTML=h;
+  }
+  D.hidden=!showD; R.hidden=!showR;
+}
+setInterval(()=>{ try{ flyPills(); }catch(_){} },1000);
 </script>
 <script>(function(){var l=document.querySelector('link[rel=apple-touch-icon]');var i=document.getElementById('nIcon');if(l&&i)i.src=l.href})();</script>
 <div class="adm-wrap" id="admWrap"><div class="adm-bk" id="admBk" onclick="admClose()"></div>
