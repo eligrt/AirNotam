@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.030 · built by eligrt
+     AirNotam-ISR · v1.09.034 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2381,15 +2381,29 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
 #fpWrap{position:absolute;left:66px;right:10px;top:10px;z-index:1010;display:none;flex-direction:column;gap:6px;pointer-events:none;}
 #mbox.fly #fpWrap{display:flex;}
 #mbox.fly .mb-info{display:none !important;}
-.fp{background:rgba(251,246,232,.97);border-radius:16px;padding:5px 9px;font-size:12px;line-height:20px;color:#1c3d6e;box-shadow:0 1px 4px rgba(14,35,72,.25);direction:ltr;box-sizing:border-box;}
+.fp{background:rgba(251,246,232,.97);border-radius:16px;padding:6px 9px;font-size:15px;line-height:23px;color:#1c3d6e;box-shadow:0 1px 4px rgba(14,35,72,.25);direction:ltr;box-sizing:border-box;}
 .fp[hidden]{display:none;}
 .fp.d{border:1.5px solid #7d1c33;} .fp.r{border:1.5px solid #1c3d6e;}
-.fp .g{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto auto;column-gap:7px;}
+.fp .g{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto auto;column-gap:6px;}
 .fp .g span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:2px;}
-.fp .g span svg{width:11px;height:11px;flex:none;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.75;}
+.fp .g span svg{width:13px;height:13px;flex:none;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.75;}
 .fp .fpb{font-weight:700;} .fp .nx{font-weight:800;color:#0e2348;} .fp .en{font-weight:500;color:#6b5d3f;}
 .fp .hd{display:flex;justify-content:space-between;font-weight:700;padding-bottom:2px;border-bottom:1px solid #e3d4ad;margin-bottom:3px;}
 .fp .done{font-weight:700;color:#0e2348;}
+/* v1.09.031: COMPASS button follows the compass line colour (black, fine dashes like RINGS) */
+#fyCmp.on{--rgc:#111;border-color:transparent;}
+#fyCmp.on::before{content:"";position:absolute;inset:-2.5px;border-radius:50%;background:repeating-conic-gradient(var(--rgc) 0 9deg,transparent 9deg 15deg);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2.5px),#000 calc(100% - 2.5px));mask:radial-gradient(farthest-side,transparent calc(100% - 2.5px),#000 calc(100% - 2.5px));pointer-events:none;}
+#fyCmp.on .mk-l{background:#111;}
+
+.fp .g span{font-weight:600;} .fp .en{font-weight:600;color:#5a4d33;}
+.fp small{font-size:.72em;font-weight:600;margin-left:1px;}
+.fp .g span svg{width:12px;height:12px;}
+.fp .g{grid-template-columns:auto minmax(2.2em,1fr) auto auto auto auto;}
+@media (max-width:375px){.fp{font-size:14px;padding:6px 7px;} .fp .g{column-gap:4px;} .fp .g span svg{width:11px;height:11px;}}
+.fp .g span{overflow:visible;text-overflow:clip;flex:none;}
+.fp .g span:nth-child(2){overflow:hidden;text-overflow:ellipsis;flex:0 1 auto;min-width:0;}
+.fp .g{grid-template-columns:auto minmax(3.3em,1fr) auto auto auto auto;}
+.fp .g{column-gap:5px;grid-template-columns:auto minmax(2.9em,1fr) auto auto auto auto;}
 .mbox:not(.rv) .mb-leg{left:50%;transform:translateX(-50%);}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -2430,7 +2444,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.030 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.034 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2467,7 +2481,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.030 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.034 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5506,7 +5520,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.030 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.034 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6561,7 +6575,7 @@ function directTap(ll){   // in Fly, with DIRECT on: a tap on a reporting point 
 const SYM={
   paper:{vb:"-20 -20 40 40",pv:"-24 -24 48 48",c:"0 0",body:'<path d="M0 -19 L14 15 L3 10 L0 18 L-3 10 L-14 15Z" fill="#1c3d6e" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><path d="M0 -15 L0 9" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>',al:"מטוס נייר"},
   plane:{vb:"0 0 24 24",pv:"-2 -2 28 28",c:"12 12",body:'<g fill="#1c3d6e" stroke="#fff" stroke-width="1.3" stroke-linejoin="round" paint-order="stroke"><path d="M12 2.5c.7 0 1.2.8 1.2 1.8v4.3H21a1 1 0 0 1 1 1v1.8a1 1 0 0 1-1 1h-7.8v5H16a1 1 0 0 1 1 1v.8a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-.8a1 1 0 0 1 1-1h2.8v-5H3a1 1 0 0 1-1-1V9.6a1 1 0 0 1 1-1h7.8V4.3c0-1 .5-1.8 1.2-1.8z"/></g>',al:"מטוס"},
-  dot:{vb:"-20 -20 40 40",pv:"-26 -40 52 64",c:"0 0",body:'<path d="M0 0 L-13 -34 Q0 -40 13 -34Z" fill="#1c3d6e" opacity=".3"/><circle r="9" fill="#1c3d6e" stroke="#fff" stroke-width="3"/>',al:"נקודה עם קונוס"}
+  dot:{vb:"-20 -20 40 40",pv:"-30 -47 60 64",c:"0 -15",body:'<path d="M0 0 L-13 -34 Q0 -40 13 -34Z" fill="#1c3d6e" opacity=".3"/><circle r="9" fill="#1c3d6e" stroke="#fff" stroke-width="3"/>',al:"נקודה עם קונוס"}
 };
 let SYMK="paper"; try{ const v=localStorage.getItem("fy_sym"); if(v&&SYM[v]) SYMK=v; }catch(_){}
 function symIcon(){ const s=SYM[SYMK]; return L.divIcon({className:"gp-ac",iconSize:[40,40],iconAnchor:[20,20],html:'<svg viewBox="'+s.vb+'" aria-hidden="true">'+s.body+'</svg>'}); }
@@ -6649,7 +6663,7 @@ const FP_IC={brg:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy
  clk:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
  fuel:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M3 21h12M6.5 8h5"/><path d="M14 9h2.5a1.5 1.5 0 0 1 1.5 1.5V16a1.5 1.5 0 0 0 3 0V8l-3-3"/></svg>'};
 const fpC=(ic,v,c)=>'<span'+(c?' class="'+c+'"':'')+'>'+(ic?FP_IC[ic]:'')+'<bdi>'+v+'</bdi></span>';
-const fpDist=n=>(n<100? n.toFixed(1) : String(Math.round(n)))+"NM";
+const fpDist=n=>(n<100? n.toFixed(1) : String(Math.round(n)))+"<small>NM</small>";
 const fpBrg=(a,b,c,d)=>String(Math.round(gpsBrg(a,b,c,d))%360).padStart(3,"0")+"°";
 function fpHours(nm){ const v=(GP.gs!=null&&GP.gs>=30)? GP.gs : CRZ_KT; return v? nm/v : null; }
 function fpTime(h){ if(h==null) return "--"; const m=Math.round(h*60); return m<60? String(m).padStart(2,"0")+"m" : Math.floor(m/60)+"h"+String(m%60).padStart(2,"0"); }
@@ -6664,7 +6678,7 @@ function flyPills(){
   const showD=on&&DIR.on&&!!DIR.tgt, showR=on&&rtGood();
   if(showD){
     const P=GP.pos, T=DIR.tgt, nm=gpsDist(P.lat,P.lon,T.lat,T.lon)/1852, h=fpHours(nm);
-    D.innerHTML='<div class="g"><span class="fpb">To</span><span class="fpb"><bdi>'+fpE(T.name||"Point")+'</bdi></span>'+fpC("brg",fpBrg(P.lat,P.lon,T.lat,T.lon))+fpC("dst",fpDist(nm))+fpC("clk",fpTime(h))+fpC("fuel",fpFuel(h))+'</div>';
+    D.innerHTML='<div class="g"><span class="fpb">To</span><span class="fpb"><bdi>'+fpE(T.name||"Point")+'</bdi></span>'+fpC("",fpBrg(P.lat,P.lon,T.lat,T.lon))+fpC("dst",fpDist(nm))+fpC("clk",fpTime(h))+fpC("fuel",fpFuel(h))+'</div>';
   }
   if(showR){
     const P=GP.pos, n=ROUTE.length, i=NXT.i==null? 1 : NXT.i, b=nxtNear(), gs=(GP.gs!=null&&GP.gs>=1)? Math.round(GP.gs)+" kt" : "--";
@@ -6677,14 +6691,33 @@ function flyPills(){
       for(let k=i;k<n-1;k++) dE+=gpsDist(ROUTE[k][0],ROUTE[k][1],ROUTE[k+1][0],ROUTE[k+1][1])/1852;
       const e=ROUTE[n-1], hN=fpHours(dN), hE=fpHours(dE);
       h+='<div class="g">';
-      if(i<n-1) h+='<span class="nx">Next</span><span class="nx">WP '+(i+1)+'</span>'+fpC("brg",fpBrg(P.lat,P.lon,wp[0],wp[1]),"nx")+fpC("dst",fpDist(dN),"nx")+fpC("clk",fpTime(hN),"nx")+'<span></span>';
-      h+='<span class="'+(i<n-1?"en":"nx")+'">End</span><span class="'+(i<n-1?"en":"nx")+'">WP '+n+'</span>'+fpC("brg",fpBrg(P.lat,P.lon,e[0],e[1]),i<n-1?"en":"nx")+fpC("dst",fpDist(dE),i<n-1?"en":"nx")+fpC("clk",fpTime(hE),i<n-1?"en":"nx")+fpC("fuel",fpFuel(hE),i<n-1?"en":"nx")+'</div>';
+      if(i<n-1) h+='<span class="nx">Next</span><span class="nx"><small>WP</small>&nbsp;'+(i+1)+'</span>'+fpC("",fpBrg(P.lat,P.lon,wp[0],wp[1]),"nx")+fpC("dst",fpDist(dN),"nx")+fpC("clk",fpTime(hN),"nx")+'<span></span>';
+      h+='<span class="'+(i<n-1?"en":"nx")+'">End</span><span class="'+(i<n-1?"en":"nx")+'"><small>WP</small>&nbsp;'+n+'</span>'+fpC("",fpBrg(P.lat,P.lon,e[0],e[1]),i<n-1?"en":"nx")+fpC("dst",fpDist(dE),i<n-1?"en":"nx")+fpC("clk",fpTime(hE),i<n-1?"en":"nx")+fpC("fuel",fpFuel(hE),i<n-1?"en":"nx")+'</div>';
     }
     R.innerHTML=h;
   }
   D.hidden=!showD; R.hidden=!showR;
 }
 setInterval(()=>{ try{ flyPills(); }catch(_){} },1000);
+// ═══ v1.09.031: the page never stays shifted (iPhone can scroll the whole page a little, then the lower part turns white and the navy bar is out of reach) ═══
+(function pageLock(){
+  const els=()=>["app","stage","mbox","mapside"].map(i=>document.getElementById(i)).filter(Boolean);
+  let n=0;
+  const fix=()=>{
+    try{
+      const se=document.scrollingElement||document.documentElement;
+      if(se.scrollTop||se.scrollLeft||window.scrollY||window.scrollX){ window.scrollTo(0,0); se.scrollTop=0; se.scrollLeft=0; n++; }
+      if(document.body.scrollTop||document.body.scrollLeft){ document.body.scrollTop=0; document.body.scrollLeft=0; n++; }
+      els().forEach(e=>{ if(e.scrollTop||e.scrollLeft){ e.scrollTop=0; e.scrollLeft=0; n++; } });
+      if(n&&typeof alog==="function"){ alog("page shift undone"); n=0; }
+    }catch(_){}
+  };
+  const later=()=>{ fix(); setTimeout(fix,120); setTimeout(fix,500); };
+  ["scroll","resize","orientationchange","pageshow","focusin","focusout","touchend","visibilitychange","focus"].forEach(ev=>window.addEventListener(ev,later,{passive:true}));
+  document.addEventListener("scroll",fix,{passive:true,capture:true});
+  try{ if(window.visualViewport){ visualViewport.addEventListener("scroll",later); visualViewport.addEventListener("resize",later); } }catch(_){}
+  setInterval(fix,1500);
+})();
 </script>
 <script>(function(){var l=document.querySelector('link[rel=apple-touch-icon]');var i=document.getElementById('nIcon');if(l&&i)i.src=l.href})();</script>
 <div class="adm-wrap" id="admWrap"><div class="adm-bk" id="admBk" onclick="admClose()"></div>
