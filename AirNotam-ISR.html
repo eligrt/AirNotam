@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.018 · built by eligrt
+     AirNotam-ISR · v1.09.020 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2342,6 +2342,17 @@ html.full #mbFull{top:calc(209px + env(safe-area-inset-top,0px)) !important;}
 #mbFull svg{width:20px;height:20px;}
 .mk-mode .mk-l{padding:0 6px;line-height:12px;font-size:9px;}
 #mbox:not(.fly) .mk-mode svg{stroke-width:1.3;}
+/* ═══ v1.09.019: full screen on iPhone: the side rail, the chip and the info pill start below the notch and the faded status bar (positions are measured, see railSync) ═══ */
+#mbox #mbGear{top:calc(var(--rail-y,72px) - 58px);}
+#mbFull{top:calc(var(--rail-y,72px) + 137px) !important;}
+html.full #mbFull{top:calc(var(--rail-y,72px) + 137px) !important;}
+html.full .mb-info{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));}
+html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-top,0px)));}
+.gps-chip.gps-f{top:var(--chip-top,calc(14px + env(safe-area-inset-top,0px)));}
+/* ═══ v1.09.020: track up: labels and pins stay upright while the map turns ═══ */
+#map.fy-rot .leaflet-marker-icon:not(.gp-ac){rotate:var(--unrot,0deg);}
+#map.fy-rot .leaflet-popup,#map.fy-rot .leaflet-tooltip{rotate:var(--unrot,0deg);}
+.sp-ver{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);text-align:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--gold-deep);opacity:.8;}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2381,7 +2392,7 @@ html.full #mbFull{top:calc(209px + env(safe-area-inset-top,0px)) !important;}
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="lsa-foot sp" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver" id="splVer">AirNotam-ISR · v1.09.018 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();setReloadApp()">טען מחדש</button></div></div>
+    <div class="sp-ver" id="splVer">v1.09.020 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2417,7 +2428,7 @@ html.full #mbFull{top:calc(209px + env(safe-area-inset-top,0px)) !important;}
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.018 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.020 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -2507,7 +2518,7 @@ html.full #mbFull{top:calc(209px + env(safe-area-inset-top,0px)) !important;}
       <div class="mk-dock fl mb-m" id="mbDockF" role="group" aria-label="טיסה">
         <button type="button" class="mk-tab" id="dkTabF" aria-label="כווץ" onclick="dkSet(false)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <button type="button" class="mk-b" id="fyCen" style="left:8px" aria-label="מרכז" onclick="flyCenter()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4"/></svg><span class="mk-l">CENTER</span></button>
-        <button type="button" class="mk-b" id="fyNor" style="left:63px" aria-label="צפון" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 16-5-4-5 4z"/></svg><span class="mk-l">NORTH</span></button>
+        <button type="button" class="mk-b" id="fyNor" style="left:63px" aria-label="צפון" onclick="flyNorth()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 16-5-4-5 4z"/></svg><span class="mk-l">NORTH</span></button>
         <i class="mk-sep" style="left:126.25px"></i>
         <button type="button" class="mk-b" id="fyCmp" style="left:134px" aria-label="מצפן" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9l-1.8 4.2L9 15l1.8-4.2z"/></svg><span class="mk-l">COMPASS</span></button>
         <button type="button" class="mk-b" id="fyDir" style="left:189px" aria-label="ישר ליעד" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13"/><path d="M12.5 6.5L18 12l-5.5 5.5"/><path d="M20.5 5v14"/></svg><span class="mk-l">DIRECT</span></button>
@@ -4375,7 +4386,6 @@ function famSaved(){ try{ return !!localStorage.getItem(FAM_KEY); }catch(e){ ret
 let SPL_DONE=false, SPL_TM=[];
 function splashRun(){
   const sp=document.getElementById("spl");
-  document.getElementById("splVer").textContent=(document.querySelector(".lsa-foot-ver")||{}).textContent||"";
   sp.classList.add("show");
   const L1="Your flight. Your NOTAMs.", el=document.getElementById("splL1"), at=(ms,f)=>SPL_TM.push(setTimeout(f,ms));
   sp.addEventListener("click",splashEnd);
@@ -5457,7 +5467,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.018 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.020 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6087,7 +6097,7 @@ function modeSet(fly){
   if(m){ const sv=m.querySelector("svg"), l=m.querySelector(".mk-l"); if(sv) sv.innerHTML= fly? IC_FLY : IC_PLAN; if(l) l.textContent= fly? "FLY" : "PLAN"; m.setAttribute("aria-label", fly? "מצב טיסה" : "מצב תכנון"); }
   if(fly){ GP.shown=true; gpsStart(); GP.zoomed=false; FLW=true; flyFollow(); }
   flyRefresh();
-  gpsWake(fly&&GP.on);
+  gpsWake(fly&&GP.on); try{ flyOrient(); }catch(_){}
   MB_FITK=""; try{ mbSync(); }catch(_){}
   try{ if(LP_OPEN==="layers") lpPlace(); }catch(_){}
   gpsChip();
@@ -6105,7 +6115,7 @@ function gpsErr(e){
 function gpsPos(p){
   const c=p.coords; GP.pos={lat:c.latitude,lon:c.longitude,t:Date.now()}; GP.acc=c.accuracy;
   const gs=(c.speed!=null&&isFinite(c.speed))? c.speed*1.94384 : null;
-  if(c.heading!=null&&isFinite(c.heading)&&gs!=null&&gs>=3) GP.trk=c.heading;
+  if(c.heading!=null&&isFinite(c.heading)&&gs!=null&&gs>=3){ GP.trk=c.heading; try{ fyHead(GP.trk); }catch(_){} }
   gpsMarker();
   flyFollow();
   gpsChip();
@@ -6128,7 +6138,9 @@ function flyRefresh(){
 function flyFollow(){
   if(!modeIsFly()||!FLW||!GP.pos||typeof MAP==="undefined"||!MAP) return;
   const z=MAP.getZoom();
-  MAP.setView([GP.pos.lat,GP.pos.lon], GP.zoomed? z : Math.max(z,10), {animate:false}); GP.zoomed=true;
+  const zz=GP.zoomed? z : Math.max(z,10); let ll=L.latLng(GP.pos.lat,GP.pos.lon);
+  if(typeof FY!=="undefined"&&FY.on){ const g=fyGeo(), pt=MAP.project(ll,zz); ll=MAP.unproject(pt.subtract([g.Qx-g.D/2,g.Qy-g.D/2]),zz); }
+  MAP.setView(ll, zz, {animate:false}); GP.zoomed=true;
 }
 function flyCenter(){
   FLW=true; flyRefresh();
@@ -6174,6 +6186,128 @@ setInterval(()=>{
   if(age>5000&&!GP.poll&&navigator.geolocation){ GP.poll=true; try{ navigator.geolocation.getCurrentPosition(p=>{ GP.poll=false; gpsPos(p); },e=>{ GP.poll=false; gpsErr(e); },{enableHighAccuracy:true,maximumAge:0,timeout:8000}); }catch(e){ GP.poll=false; } }
   gpsChip();
 },2000);
+// v1.09.019: the left column (settings, level, zoom, layers, full screen) is placed from where the zoom control really is; in full screen the zoom is moved below the notch and the faded status bar
+let RAIL_PROBE=null;
+function railSync(){
+  try{
+    const mb=document.getElementById("mbox"), z=document.querySelector(".leaflet-control-zoom"); if(!mb||!z||!mb.offsetWidth) return;
+    const full=document.documentElement.classList.contains("full");
+    if(!RAIL_PROBE){ RAIL_PROBE=document.createElement("div"); RAIL_PROBE.style.cssText="position:fixed;left:0;top:0;width:1px;visibility:hidden;pointer-events:none;padding-top:env(safe-area-inset-top,0px)"; document.body.appendChild(RAIL_PROBE); }
+    const env=parseFloat(getComputedStyle(RAIL_PROBE).paddingTop)||0, mt=mb.getBoundingClientRect().top;
+    if(full){
+      const want=env+84, cur=parseFloat(getComputedStyle(z).marginTop)||0, act=z.getBoundingClientRect().top;
+      if(Math.abs(act-want)>0.5) z.style.setProperty("margin-top",(cur+want-act)+"px","important");
+    } else if(z.style.marginTop) z.style.removeProperty("margin-top");
+    const zt=z.getBoundingClientRect().top;
+    mb.style.setProperty("--rail-y",(zt-mt).toFixed(1)+"px");
+    mb.style.setProperty("--chip-top",(env+26-mt).toFixed(1)+"px");
+    mb.style.setProperty("--pill-top",(env+(GP.shown?58:26)-mt).toFixed(1)+"px");
+    const zl=document.querySelector(".zoom-tl"); if(zl&&zl.offsetParent){ const pr=zl.offsetParent.getBoundingClientRect().top; zl.style.setProperty("top",(zt-18-pr).toFixed(1)+"px","important"); }
+  }catch(_){}
+}
+setInterval(railSync,400); window.addEventListener("resize",railSync); window.addEventListener("orientationchange",railSync); setTimeout(railSync,300);
+// ═══ v1.09.020: NORTH button: north up / track up (the map turns so the direction of flight is at the top; the aircraft stays put on the screen) ═══
+const FY={trk:false,on:false,rot:0,tgt:null,raf:0,drag:null,ptrs:new Set()};
+try{ FY.trk=localStorage.getItem("fy_trk")==="1"; }catch(_){}
+const FY_AT=0.62;   // the aircraft stands at this height on the screen in track up (more map ahead)
+function fyGeo(){
+  const m=MAP.getContainer(), st=m.parentNode, VW=st.clientWidth, VH=st.clientHeight, D=Math.ceil(Math.hypot(VW,VH))+4;
+  return {m,st,VW,VH,D,Qx:D/2,Qy:(D-VH)/2+FY_AT*VH,Sx:VW/2,Sy:FY_AT*VH};
+}
+function fyLayout(){
+  if(!FY.on) return;
+  const g=fyGeo(), m=g.m, cc=m.querySelector(".leaflet-control-container");
+  g.st.style.overflow="hidden";
+  m.style.position="absolute"; m.style.flex="none"; m.style.width=g.D+"px"; m.style.height=g.D+"px"; m.style.left=((g.VW-g.D)/2)+"px"; m.style.top=((g.VH-g.D)/2)+"px"; m.style.touchAction="none";
+  if(cc){ cc.style.position="absolute"; cc.style.zIndex="1000"; cc.style.width=g.VW+"px"; cc.style.height=g.VH+"px"; cc.style.left=((g.D-g.VW)/2)+"px"; cc.style.top=((g.D-g.VH)/2)+"px"; }
+  MAP.invalidateSize({animate:false,pan:false});
+  fyApply(); fyMarkers();
+}
+function fyApply(){
+  if(!FY.on) return;
+  const g=fyGeo(), cc=g.m.querySelector(".leaflet-control-container");
+  g.m.style.transformOrigin=g.Qx+"px "+g.Qy+"px"; g.m.style.transform="rotate("+(-FY.rot).toFixed(2)+"deg)"; g.m.style.setProperty("--unrot",FY.rot.toFixed(2)+"deg");
+  if(cc){ cc.style.transformOrigin=g.Sx+"px "+g.Sy+"px"; cc.style.transform="rotate("+FY.rot.toFixed(2)+"deg)"; }
+  const a=document.querySelector("#fyNor svg"); if(a) a.style.transform="translateY(-3px) rotate("+(-FY.rot).toFixed(1)+"deg)";
+}
+function fyOrg(el){
+  if(!el||el.classList.contains("gp-ac")) return;
+  const pos=L.DomUtil.getPosition(el)||L.point(0,0);
+  el.style.transformOrigin=(pos.x-(parseFloat(el.style.marginLeft)||0))+"px "+(pos.y-(parseFloat(el.style.marginTop)||0))+"px";
+}
+function fyOrgPop(c){
+  if(!c||!c.offsetWidth) return; const pos=L.DomUtil.getPosition(c)||L.point(0,0);
+  c.style.transformOrigin=(c.offsetWidth/2+pos.x)+"px "+(c.offsetHeight+13+pos.y)+"px";
+}
+function fyMarkers(){
+  document.querySelectorAll("#map .leaflet-marker-icon").forEach(fyOrg);
+  document.querySelectorAll("#map .leaflet-popup,#map .leaflet-tooltip").forEach(fyOrgPop);
+}
+function flyOrient(){
+  const want=modeIsFly()&&FY.trk, m=(typeof MAP!=="undefined"&&MAP)? MAP.getContainer() : null; if(!m) return;
+  if(want&&!FY.on){
+    FY.on=true; FY.rot=(GP.trk!=null)? GP.trk : 0; m.classList.add("fy-rot"); try{ MAP.dragging.disable(); }catch(_){}
+    fyLayout(); setTimeout(fyLayout,350); flyFollow();
+  } else if(!want&&FY.on){
+    FY.on=false; FY.rot=0; m.classList.remove("fy-rot"); const cc=m.querySelector(".leaflet-control-container"), st=m.parentNode;
+    ["position","flex","width","height","left","top","transform","transformOrigin","touchAction"].forEach(k=>{ m.style[k]=""; }); m.style.removeProperty("--unrot");
+    if(cc) ["position","zIndex","width","height","left","top","transform","transformOrigin"].forEach(k=>{ cc.style[k]=""; });
+    st.style.overflow=""; m.querySelectorAll(".leaflet-marker-icon,.leaflet-popup,.leaflet-tooltip").forEach(el=>{ if(!el.classList.contains("gp-ac")) el.style.transformOrigin=""; });
+    try{ MAP.dragging.enable(); }catch(_){}
+    MAP.invalidateSize({animate:false,pan:false}); flyFollow();
+  }
+  flyNorthUi();
+}
+function flyNorthUi(){
+  const b=document.getElementById("fyNor"); if(!b) return; const on=FY.trk&&modeIsFly();
+  b.classList.toggle("on",on); const l=b.querySelector(".mk-l"); if(l) l.textContent= on? "TRACK" : "NORTH";
+  b.setAttribute("aria-label", on? "הכיוון שלך למעלה" : "צפון למעלה");
+  const a=b.querySelector("svg"); if(a&&!on) a.style.transform="";
+}
+function flyNorth(){
+  FY.trk=!FY.trk; try{ localStorage.setItem("fy_trk",FY.trk?"1":"0"); }catch(_){}
+  flyOrient();
+  gpsNote(FY.trk? "Track up: the map turns so your direction of flight is at the top." : "North up: north is at the top.");
+}
+function fyHead(h){
+  if(!FY.on||h==null) return; FY.tgt=h; if(!FY.raf) FY.raf=requestAnimationFrame(fyTick);
+}
+function fyTick(){
+  FY.raf=0; if(!FY.on||FY.tgt==null) return;
+  const d=((FY.tgt-FY.rot+540)%360)-180;
+  if(Math.abs(d)<0.3) FY.rot=FY.tgt; else { FY.rot=(FY.rot+d*0.12+360)%360; FY.raf=requestAnimationFrame(fyTick); }
+  fyApply();
+}
+// the map box is turned and bigger: a finger position on the screen is turned back before the map uses it
+(function fyInit(){
+  if(typeof MAP==="undefined"||!MAP){ setTimeout(fyInit,400); return; }
+  const orig=MAP.mouseEventToContainerPoint.bind(MAP);
+  MAP.mouseEventToContainerPoint=function(e){
+    if(!FY.on) return orig(e);
+    const g=fyGeo(), r=g.st.getBoundingClientRect(), vx=e.clientX-r.left-g.Sx, vy=e.clientY-r.top-g.Sy, c=Math.cos(FY.rot*Math.PI/180), n=Math.sin(FY.rot*Math.PI/180);
+    return L.point(g.Qx+vx*c-vy*n, g.Qy+vx*n+vy*c);
+  };
+  MAP.on("zoomend",()=>{ if(FY.on&&FLW) flyFollow(); });
+  MAP.on("layeradd popupopen tooltipopen zoomend moveend",()=>{ if(FY.on) setTimeout(fyMarkers,30); });
+  const mp=L.Marker.prototype._setPos; L.Marker.prototype._setPos=function(pos){ mp.call(this,pos); if(FY.on) fyOrg(this._icon); };
+  [L.Popup,L.Tooltip].forEach(C=>{ const u=C.prototype._updatePosition; C.prototype._updatePosition=function(){ u.apply(this,arguments); if(FY.on) fyOrgPop(this._container); }; });
+  const m=MAP.getContainer();
+  m.addEventListener("pointerdown",e=>{
+    if(!FY.on||(e.target.closest&&e.target.closest(".leaflet-control"))) return;
+    FY.ptrs.add(e.pointerId); FY.drag= FY.ptrs.size===1? {id:e.pointerId,x:e.clientX,y:e.clientY} : null;
+  });
+  m.addEventListener("pointermove",e=>{
+    const d=FY.drag; if(!FY.on||!d||e.pointerId!==d.id||FY.ptrs.size!==1) return;
+    const dx=e.clientX-d.x, dy=e.clientY-d.y; if(Math.abs(dx)+Math.abs(dy)<1) return;
+    if(FLW){ FLW=false; flyRefresh(); }
+    const c=Math.cos(FY.rot*Math.PI/180), n=Math.sin(FY.rot*Math.PI/180);
+    MAP.panBy([-(dx*c-dy*n),-(dx*n+dy*c)],{animate:false}); d.x=e.clientX; d.y=e.clientY;
+  });
+  const up=e=>{ FY.ptrs.delete(e.pointerId); if(FY.drag&&FY.drag.id===e.pointerId) FY.drag=null; };
+  m.addEventListener("pointerup",up); m.addEventListener("pointercancel",up);
+  window.addEventListener("resize",()=>{ if(FY.on) fyLayout(); });
+  setInterval(()=>{ if(FY.on) fyMarkers(); },1500);
+})();
 </script>
 <script>(function(){var l=document.querySelector('link[rel=apple-touch-icon]');var i=document.getElementById('nIcon');if(l&&i)i.src=l.href})();</script>
 <div class="adm-wrap" id="admWrap"><div class="adm-bk" id="admBk" onclick="admClose()"></div>
