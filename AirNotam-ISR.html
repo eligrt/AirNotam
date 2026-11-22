@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.025 · built by eligrt
+     AirNotam-ISR · v1.09.026 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2408,7 +2408,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.025 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.026 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2444,7 +2444,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.025 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.026 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -2538,7 +2538,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
         <i class="mk-sep" style="left:123.75px"></i>
         <button type="button" class="mk-b" id="fyCmp" style="left:134px" aria-label="מצפן" onclick="flyCompass()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9l-1.8 4.2L9 15l1.8-4.2z"/></svg><span class="mk-l">COMPASS</span></button>
         <button type="button" class="mk-b" id="fyDir" style="left:189px" aria-label="ישר ליעד" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13"/><path d="M12.5 6.5L18 12l-5.5 5.5"/><path d="M20.5 5v14"/></svg><span class="mk-l">DIRECT</span></button>
-        <button type="button" class="mk-b" id="fyRng" style="left:244px" aria-label="טבעות" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="9.5"/></svg><span class="mk-l">RINGS</span></button>
+        <button type="button" class="mk-b" id="fyRng" style="left:244px" aria-label="טבעות" onclick="flyRings()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="9.5"/></svg><span class="mk-l">RINGS</span></button>
         <i class="mk-sep" style="left:304.75px"></i>
         <button type="button" class="mk-b" id="fyAut" style="left:315px" aria-label="זום אוטומטי" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><circle cx="12" cy="12" r="2.4"/></svg><span class="mk-l">AUTO</span></button>
       </div>
@@ -5483,7 +5483,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.025 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.026 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6140,7 +6140,7 @@ function gpsPos(p){
       if(gs==null) gs=d/dt*1.94384;
       if(hd==null){ hd=gpsBrg(o.lat,o.lon,c.latitude,c.longitude); src="own"; } }
   }
-  GP.hist.push({lat:c.latitude,lon:c.longitude,t:now});
+  GP.hist.push({lat:c.latitude,lon:c.longitude,t:now}); GP.gs=gs; try{ rngUi(); }catch(_){}
   if(hd!=null&&gs!=null&&gs>=1.62){ GP.trk=hd; GP.mvT=now; try{ fyHead(GP.trk); }catch(_){} } else if(gs!=null&&gs<0.5) GP.mvT=0;
   try{ const mv=gpsMoving(); if(mv!==GP.lmv||now-(GP.llog||0)>10000){ GP.lmv=mv; GP.llog=now; alog("gps spd "+(gs==null?"-":(gs*1.852).toFixed(1))+" km/h · hdg "+(hd==null?"-":Math.round(hd))+" ("+src+") · track line "+(mv?"on":"off")+" · acc "+Math.round(c.accuracy||0)+" m"); } }catch(_){}
   gpsMarker();
@@ -6420,7 +6420,7 @@ function cmpSvg(){
 }
 function cmpDraw(){
   if(typeof MAP==="undefined"||!MAP) return; const sv=cmpSvg(); if(!sv) return;
-  const show=modeIsFly()&&GP.pos&&(CMP.on&&CMP.hdg!=null||gpsMoving());
+  const show=modeIsFly()&&GP.pos&&(RNG!=="off"||CMP.on&&CMP.hdg!=null||gpsMoving());
   if(!show){ if(sv.innerHTML) sv.innerHTML=""; return; }
   const mb=document.getElementById("mbox"), W=mb.clientWidth, H=mb.clientHeight; sv.setAttribute("viewBox","0 0 "+W+" "+H);
   const P=cmpScreen(), L0=Math.max(W,H)*2, rot=FY.on? FY.rot : 0, BL=cmpBlocks();
@@ -6442,7 +6442,8 @@ function cmpDraw(){
     const a=n360(GP.trk-rot), wl=Math.round((9*7.1+4*4.6+4+20)/2), ed=cmpEdge(P.x,P.y,a,W,H);
     pills+=cmpPlace(P,a,Math.max(70,Math.min(170,ed-wl-10)),34,ed-wl-10,"TRACK "+String(Math.round(GP.trk)%360).padStart(3,"0")+"\u00b0","TRUE","#1a1308",BL,W,H);
   }
-  sv.innerHTML=o+pills;
+  const RG=ringsDraw(P,BL,W,H);
+  sv.innerHTML=RG.o+o+pills+RG.p;
 }
 (function cmpInit(){
   if(typeof MAP==="undefined"||!MAP){ setTimeout(cmpInit,400); return; }
@@ -6450,9 +6451,51 @@ function cmpDraw(){
   setInterval(cmpDraw,500);
 })();
 function cmpArm(){
+  try{ rngUi(); }catch(_){}
   if(!modeIsFly()){ if(CMP.on) cmpStop(); else cmpDraw(); return; }
   if(FY.trk&&!CMP.on){ const o=()=>{ document.removeEventListener("click",o,true); if(FY.trk&&!CMP.on&&modeIsFly()) cmpStart(); }; document.addEventListener("click",o,true); }
   cmpDraw();
+}
+// ═══ v1.09.026: RINGS (distance circles around the aircraft: NM or minutes) ═══
+let RNG="nm"; try{ const v=localStorage.getItem("fy_rings"); if(v==="off"||v==="nm"||v==="min") RNG=v; }catch(_){}
+function rngUi(){
+  const b=document.getElementById("fyRng"); if(!b) return;
+  const fix=!!GP.pos&&GP.on;
+  b.classList.toggle("on",RNG!=="off"&&fix);
+  if(fix) b.removeAttribute("aria-disabled"); else b.setAttribute("aria-disabled","true");
+  b.removeAttribute("tabindex");
+  const l=b.querySelector(".mk-l"); if(l) l.textContent="RINGS "+(RNG==="off"?"OFF":RNG==="nm"?"NM":"MIN");
+  b.setAttribute("aria-label", RNG==="off"? "טבעות כבויות" : RNG==="nm"? "טבעות מרחק" : "טבעות זמן");
+}
+function flyRings(){
+  RNG= RNG==="off"? "nm" : RNG==="nm"? "min" : "off";
+  try{ localStorage.setItem("fy_rings",RNG); }catch(_){}
+  rngUi(); cmpDraw();
+  if(!GP.pos) mbToast("Rings need a GPS position. They will show when it arrives.");
+}
+function ringsDraw(P,BL,W,H){
+  let o="", pills=""; if(RNG==="off"||!GP.pos) return {o,p:pills};
+  const isMin=RNG==="min", col=isMin?"#a3207a":"#d9622b", fresh=Date.now()-GP.pos.t<=12000;
+  const mpp=40075016.686*Math.cos(GP.pos.lat*RADc)/(256*Math.pow(2,MAP.getZoom()));
+  const pill=(x,y,txt,w)=>'<rect x="'+(x-w/2).toFixed(1)+'" y="'+(y-12).toFixed(1)+'" width="'+w.toFixed(1)+'" height="24" rx="12" fill="#fbf6e8" stroke="'+col+'" stroke-width="1.8"/><text x="'+x.toFixed(1)+'" y="'+(y+4.6).toFixed(1)+'" font-size="13" font-family="JetBrains Mono,monospace" font-weight="800" text-anchor="middle" fill="'+col+'">'+txt+'</text>';
+  const circ=r=>'<circle cx="'+P.x.toFixed(1)+'" cy="'+P.y.toFixed(1)+'" r="'+r.toFixed(1)+'" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="6"/><circle cx="'+P.x.toFixed(1)+'" cy="'+P.y.toFixed(1)+'" r="'+r.toFixed(1)+'" fill="none" stroke="'+col+'" stroke-width="3" stroke-dasharray="9 6"/>';
+  const gs=GP.gs, minOk=!isMin||(gs!=null&&gs>=5&&fresh);
+  const place=(r,txt,angs)=>{
+    const w=txt.length*8.2+22;
+    for(const ad of angs){ const t=ad*RADc, x=P.x+r*Math.sin(t), y=P.y-r*Math.cos(t), b={x1:x-w/2-2,x2:x+w/2+2,y1:y-14,y2:y+14};
+      if(x-w/2<6||x+w/2>W-6||y-12<36||y+12>H-6) continue; if(BL.some(c=>cmpHit(b,c))) continue; BL.push(b); return pill(x,y,txt,w); }
+    return "";
+  };
+  if(!minOk){   // no usable ground speed: one small ring with a short note, so the screen never looks broken
+    const r0=46, txt=(!fresh)? "No GPS" : "No speed";
+    o+=circ(r0); pills+=place(r0,txt,[45,-45,90,-90,135,-135]); return {o,p:pills};
+  }
+  const u0=isMin? (1852/mpp)*gs/60 : 1852/mpp, set=(u0<=14? [5,10,20] : u0<=24? [3,5,10] : u0<=40? [2,3,5] : [1,2,3]);
+  set.forEach(v=>{
+    const nm=isMin? gs*v/60 : v, r=nm*1852/mpp; if(r<28||r>Math.max(W,H)*1.6) return;
+    o+=circ(r); pills+=place(r,v+(isMin?" min":" NM"),[0,28,-28,56,-56,84,-84,115,-115,150,-150,180]);
+  });
+  return {o,p:pills};
 }
 </script>
 <script>(function(){var l=document.querySelector('link[rel=apple-touch-icon]');var i=document.getElementById('nIcon');if(l&&i)i.src=l.href})();</script>
