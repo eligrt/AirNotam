@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.028 · built by eligrt
+     AirNotam-ISR · v1.09.029 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2373,7 +2373,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
 #fyRng.rg-nm,#fyRng.rg-min{border-color:transparent;}
 #fyRng.rg-nm::before,#fyRng.rg-min::before{content:"";position:absolute;inset:-2.5px;border-radius:50%;background:repeating-conic-gradient(var(--rgc) 0 9deg,transparent 9deg 15deg);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2.5px),#000 calc(100% - 2.5px));mask:radial-gradient(farthest-side,transparent calc(100% - 2.5px),#000 calc(100% - 2.5px));pointer-events:none;}
 #fyRng.rg-nm .mk-l{background:#d9622b;} #fyRng.rg-min .mk-l{background:#a3207a;}
-#fyDir.dr-on{border-color:#7d1c33;} #fyDir.dr-on .mk-l{background:#7d1c33;}
+#fyDir.dr-on{border-color:#7d1c33;background:#dfe8f6;} #fyDir.dr-on .mk-l{background:#7d1c33;}
 #symSeg button{height:56px;padding:0;display:flex;align-items:center;justify-content:center;}
 #symSeg button svg{width:44px;height:44px;overflow:visible;}
 #symSeg button.on{background:#e6ebf4;border:2px solid var(--ink);}
@@ -2417,7 +2417,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.028 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.029 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2454,7 +2454,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.028 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.029 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -2550,7 +2550,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
         <button type="button" class="mk-b" id="fyDir" style="left:189px" aria-label="ישר ליעד" onclick="flyDirect()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13"/><path d="M12.5 6.5L18 12l-5.5 5.5"/><path d="M20.5 5v14"/></svg><span class="mk-l">DIRECT</span></button>
         <button type="button" class="mk-b" id="fyRng" style="left:244px" aria-label="טבעות" onclick="flyRings()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="9.5"/></svg><span class="mk-l">RINGS</span></button>
         <i class="mk-sep" style="left:304.75px"></i>
-        <button type="button" class="mk-b" id="fyAut" style="left:315px" aria-label="זום אוטומטי" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><circle cx="12" cy="12" r="2.4"/></svg><span class="mk-l">AUTO</span></button>
+        <button type="button" class="mk-b" id="fyAut" style="left:315px" aria-label="זום אוטומטי" onclick="flyAuto()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><circle cx="12" cy="12" r="2.4"/></svg><span class="mk-l">AUTO</span></button>
       </div>
       <button type="button" class="gps-chip gps-f" id="gpsChipF" onclick="gpsTap()"><i></i><span>GPS</span></button>
       <i id="mbProbe" style="position:absolute;left:0;bottom:var(--dkb);width:1px;height:0;pointer-events:none"></i>
@@ -5493,7 +5493,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.028 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.029 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6172,10 +6172,10 @@ function flyRefresh(){
   try{ MAP.options.touchZoom= on? "center" : true; MAP.touchZoom.disable(); MAP.touchZoom.enable(); }catch(_){}
   const b=document.getElementById("fyCen"); if(b) b.classList.toggle("on",on);
 }
-function flyFollow(){
+function flyFollow(zo){
   if(!modeIsFly()||!FLW||!GP.pos||typeof MAP==="undefined"||!MAP) return;
   const z=MAP.getZoom();
-  const zz=GP.zoomed? z : Math.max(z,10); let ll=L.latLng(GP.pos.lat,GP.pos.lon);
+  const zz= zo!=null? zo : GP.zoomed? z : Math.max(z,10); let ll=L.latLng(GP.pos.lat,GP.pos.lon);
   if(typeof FY!=="undefined"&&FY.on){ const g=fyGeo(), pt=MAP.project(ll,zz); ll=MAP.unproject(pt.subtract([g.Qx-g.D/2,g.Qy-g.D/2]),zz); }
   MAP.setView(ll, zz, {animate:false}); GP.zoomed=true;
 }
@@ -6562,6 +6562,42 @@ function symSet(k){
   seg.innerHTML=Object.keys(SYM).map(k=>{ const s=SYM[k]; return '<button type="button" data-s="'+k+'" aria-label="'+s.al+'"><svg viewBox="'+s.pv+'" aria-hidden="true"><g transform="rotate(35 '+s.c+')">'+s.body+'</g></svg></button>'; }).join("");
   seg.addEventListener("click",e=>{ const b=e.target.closest("button"); if(b) symSet(b.dataset.s); });
   symSet(SYMK);
+})();
+
+// ═══ v1.09.029: AUTO zoom - the zoom follows the distance to the DIRECT point (closer = zoom in, farther = zoom out) ═══
+const AZ={on:false,zv:null,ri:-1,t:0,own:false};
+try{ AZ.on=localStorage.getItem("fy_az")==="1"; }catch(_){}
+const AZ_ROWS=[{f:8.5,w:16},{f:4.7,w:10},{f:3,w:6},{f:0,w:4}];   // from this distance (NM) to the point, the screen shows this many NM across
+function azUi(){ const b=document.getElementById("fyAut"); if(!b) return; b.classList.toggle("on",AZ.on); b.removeAttribute("aria-disabled"); b.removeAttribute("tabindex"); }
+function azSnap(on){ try{ MAP.options.zoomSnap= on? 0 : 1; }catch(_){} }
+function flyAuto(){
+  AZ.on=!AZ.on; try{ localStorage.setItem("fy_az",AZ.on?"1":"0"); }catch(_){}
+  AZ.zv=null; AZ.ri=-1; azSnap(AZ.on); azUi();
+  if(AZ.on){ if(!FLW){ FLW=true; flyRefresh(); }
+    if(!DIR.on||!DIR.tgt) mbToast("AUTO zoom follows your DIRECT point. Tap a point on the map."); }
+}
+function azTarget(){
+  const P=GP.pos, T=DIR.tgt, d=Math.hypot((T.lat-P.lat)*60,(T.lon-P.lon)*60*Math.cos(P.lat*Math.PI/180));
+  if(AZ.ri<0){ AZ.ri=0; while(AZ.ri<3&&d<AZ_ROWS[AZ.ri].f) AZ.ri++; }
+  while(AZ.ri<3&&d<AZ_ROWS[AZ.ri].f*0.93) AZ.ri++;
+  while(AZ.ri>0&&d>=AZ_ROWS[AZ.ri-1].f*1.07) AZ.ri--;
+  const W=Math.max(AZ_ROWS[AZ.ri].w, d/0.42), VWd=document.getElementById("mbox").clientWidth||390;
+  const k=Math.cos(P.lat*Math.PI/180)*40075016.686/(256*1852), z=Math.log2(VWd/W*k);
+  return Math.max(MAP.getMinZoom(),Math.min(Math.min(MAP.getMaxZoom(),14),z));
+}
+function azTick(){
+  const now=performance.now(), dt=Math.min(0.2,(now-AZ.t)/1000||0.05); AZ.t=now;
+  if(!AZ.on||!modeIsFly()||!FLW||!GP.pos||Date.now()-GP.pos.t>12000||!DIR.on||!DIR.tgt||typeof MAP==="undefined"||!MAP){ AZ.zv=null; AZ.ri=-1; return; }
+  const zc=MAP.getZoom(); if(AZ.zv===null||Math.abs(AZ.zv-zc)>0.3) AZ.zv=zc;
+  const zt=azTarget(), st=(zt-AZ.zv)*(1-Math.exp(-dt/1.2)), mx=0.5*dt; AZ.zv+=Math.max(-mx,Math.min(mx,st));
+  if(Math.abs(AZ.zv-zc)<0.003) return;
+  AZ.own=true; try{ azSnap(true); flyFollow(AZ.zv); }finally{ AZ.own=false; }
+}
+setInterval(azTick,50);
+(function azInit(){
+  if(typeof MAP==="undefined"||!MAP){ setTimeout(azInit,400); return; }
+  MAP.on("zoomstart",()=>{ if(AZ.on&&!AZ.own&&modeIsFly()&&DIR.tgt){ AZ.on=false; try{ localStorage.setItem("fy_az","0"); }catch(_){} azSnap(false); azUi(); } });   // the pilot zooms by hand: AUTO steps aside until tapped again
+  azUi(); if(AZ.on) azSnap(true);
 })();
 </script>
 <script>(function(){var l=document.querySelector('link[rel=apple-touch-icon]');var i=document.getElementById('nIcon');if(l&&i)i.src=l.href})();</script>
