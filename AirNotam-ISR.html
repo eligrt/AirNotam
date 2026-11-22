@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.027 · built by eligrt
+     AirNotam-ISR · v1.09.028 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2417,7 +2417,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.027 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.028 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2454,7 +2454,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.027 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.028 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5493,7 +5493,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.027 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.028 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6529,13 +6529,13 @@ function dirUi(){
   const b=document.getElementById("fyDir"); if(!b) return;
   const fix=!!GP.pos&&GP.on;
   b.classList.toggle("dr-on",DIR.on&&fix&&!!DIR.tgt);
-  if(fix) b.removeAttribute("aria-disabled"); else b.setAttribute("aria-disabled","true");
-  b.removeAttribute("tabindex");
+  b.removeAttribute("aria-disabled"); b.removeAttribute("tabindex");   // always pressable: the line appears as soon as there is a GPS fix
 }
 function flyDirect(){
   DIR.on=!DIR.on; try{ localStorage.setItem("fy_dir",DIR.on?"1":"0"); }catch(_){}
   dirUi(); cmpDraw();
   if(DIR.on&&!DIR.tgt) mbToast("Tap a waypoint on the map");
+  else if(DIR.on&&!GP.pos) mbToast("Waiting for GPS");
 }
 function directTap(ll){   // in Fly, with DIRECT on: a tap on a reporting point or on empty map sets the target; a tap on a NOTAM area still opens its popup
   if(!modeIsFly()||!DIR.on) return false;
