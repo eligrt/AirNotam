@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.023 · built by eligrt
+     AirNotam-ISR · v1.09.025 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2361,12 +2361,13 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
 #dkDraw.pulse::after{border-color:#c8a04a;}
 .mk-dock{background:transparent !important;border-color:transparent !important;-webkit-backdrop-filter:none;backdrop-filter:none;}
 .mk-dock::before{content:"";position:absolute;inset:-2.5px;border-radius:30px;box-sizing:border-box;border:2.5px solid var(--dkc,#c8a04a);background:rgba(251,246,232,.80);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);z-index:-1;pointer-events:none;
-  -webkit-mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 0/51px 3.5px no-repeat;-webkit-mask-composite:xor;
-  mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 0/51px 3.5px no-repeat;mask-composite:exclude;}
+  -webkit-mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 0/51px 3px no-repeat;-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 0/51px 3px no-repeat;mask-composite:exclude;}
 #mbDockF{--dkc:#1c3d6e;}
-.mk-tab{height:27.6px;}
+.mk-tab{height:26.5px;border:0;padding:2.5px 0 0;}
+.mk-tab::before{content:"";position:absolute;left:0;top:0;width:100%;height:26px;box-sizing:border-box;border:2.5px solid var(--dkc,#c8a04a);border-bottom:0;border-radius:14px 14px 0 0;pointer-events:none;}
 /* ═══ v1.09.022: compass and track lines ═══ */
-#cmpSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:hidden;}
+#cmpSvg{z-index:990;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:hidden;}
 .mbox:not(.rv) .mb-leg{left:50%;transform:translateX(-50%);}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -2407,7 +2408,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.023 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.025 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2443,7 +2444,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.023 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.025 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5482,7 +5483,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.023 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.025 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6424,14 +6425,14 @@ function cmpDraw(){
   const mb=document.getElementById("mbox"), W=mb.clientWidth, H=mb.clientHeight; sv.setAttribute("viewBox","0 0 "+W+" "+H);
   const P=cmpScreen(), L0=Math.max(W,H)*2, rot=FY.on? FY.rot : 0, BL=cmpBlocks();
   let o="", pills="";
-  const ray=(a)=>[P.x+L0*Math.sin(a*RADc),P.y-L0*Math.cos(a*RADc)];
+  const ray=(a)=>[P.x+L0*Math.sin(a*RADc),P.y-L0*Math.cos(a*RADc)], st=(a)=>[P.x+20*Math.sin(a*RADc),P.y-20*Math.cos(a*RADc)];   // lines start just outside the aircraft
   if(CMP.on&&CMP.hdg!=null){
-    const a=n360(CMP.hdg-rot), e=ray(a);
-    o+='<line x1="'+P.x.toFixed(1)+'" y1="'+P.y.toFixed(1)+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#fff" stroke-width="7" stroke-opacity=".9" stroke-linecap="round"/><line x1="'+P.x.toFixed(1)+'" y1="'+P.y.toFixed(1)+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#111" stroke-width="3.2" stroke-dasharray="8 6" stroke-linecap="round"/>';
+    const a=n360(CMP.hdg-rot), e=ray(a), s=st(a);
+    o+='<line x1="'+s[0].toFixed(1)+'" y1="'+s[1].toFixed(1)+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#fff" stroke-width="7" stroke-opacity=".9" stroke-linecap="round"/><line x1="'+s[0].toFixed(1)+'" y1="'+s[1].toFixed(1)+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#111" stroke-width="3.2" stroke-dasharray="8 6" stroke-linecap="round"/>';
   }
   if(gpsMoving()){
-    const a=n360(GP.trk-rot), e=ray(a);
-    o+='<line x1="'+P.x.toFixed(1)+'" y1="'+P.y.toFixed(1)+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#1a1308" stroke-width="2.4" stroke-dasharray="2 7" stroke-linecap="round"/>';
+    const a=n360(GP.trk-rot), e=ray(a), s=st(a);
+    o+='<line x1="'+s[0].toFixed(1)+'" y1="'+s[1].toFixed(1)+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#1a1308" stroke-width="2.4" stroke-dasharray="2 7" stroke-linecap="round"/>';
   }
   if(CMP.on&&CMP.hdg!=null){
     const a=n360(CMP.hdg-rot), t="COMPASS "+String(Math.round(CMP.hdg)%360).padStart(3,"0")+"\u00b0", wl=Math.round((t.length*7.1+3*4.6+4+20)/2), ed=cmpEdge(P.x,P.y,a,W,H);
