@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.034 · built by eligrt
+     AirNotam-ISR · v1.09.035 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2404,6 +2404,12 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
 .fp .g span:nth-child(2){overflow:hidden;text-overflow:ellipsis;flex:0 1 auto;min-width:0;}
 .fp .g{grid-template-columns:auto minmax(3.3em,1fr) auto auto auto auto;}
 .fp .g{column-gap:5px;grid-template-columns:auto minmax(2.9em,1fr) auto auto auto auto;}
+/* PREVIEW demo flight: the stop button (amber, like PLAN) */
+#dmStop{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(var(--dkb,12px) + 131px);z-index:1020;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:22px;border:2.5px solid #c8a04a;background:#fbf0d2;color:#6b4f12;font:800 15px var(--font-ui,sans-serif);letter-spacing:.04em;box-shadow:0 1px 5px rgba(14,35,72,.3);}
+#dmStop svg{width:18px;height:18px;fill:currentColor;}
+body.demo #dmStop{display:flex;}
+body.demo .mb-leg{display:none !important;}
+#mbox.dk-c #dmStop{bottom:calc(var(--dkb,12px) + 46px);}
 .mbox:not(.rv) .mb-leg{left:50%;transform:translateX(-50%);}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -2444,7 +2450,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.034 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.035 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2481,7 +2487,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.034 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.035 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5520,7 +5526,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.034 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.035 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6168,6 +6174,7 @@ function gpsErr(e){
 function gpsDist(a,b,c,d){ const R=6371000, r=Math.PI/180, x=(d-b)*r*Math.cos((a+c)/2*r), y=(c-a)*r; return Math.hypot(x,y)*R; }
 function gpsBrg(a,b,c,d){ const r=Math.PI/180, y=Math.sin((d-b)*r)*Math.cos(c*r), x=Math.cos(a*r)*Math.sin(c*r)-Math.sin(a*r)*Math.cos(c*r)*Math.cos((d-b)*r); return (Math.atan2(y,x)/r+360)%360; }
 function gpsPos(p){
+  if(typeof PVW!=="undefined"&&PVW.on&&!p._demo) return;   // v1.09.035: the demo flight ignores the real GPS
   const c=p.coords; GP.pos={lat:c.latitude,lon:c.longitude,t:Date.now()}; GP.acc=c.accuracy;
   let gs=(c.speed!=null&&isFinite(c.speed))? c.speed*1.94384 : null, hd=(c.heading!=null&&isFinite(c.heading))? c.heading : null, src="phone";
   const now=Date.now(); GP.hist=(GP.hist||[]).filter(h=>now-h.t<15000); 
@@ -6717,6 +6724,48 @@ setInterval(()=>{ try{ flyPills(); }catch(_){} },1000);
   document.addEventListener("scroll",fix,{passive:true,capture:true});
   try{ if(window.visualViewport){ visualViewport.addEventListener("scroll",later); visualViewport.addEventListener("resize",later); } }catch(_){}
   setInterval(fix,1500);
+})();
+// ═══ v1.09.031-ish: PREVIEW - a demo flight along the drawn route (the real GPS is ignored while it runs) ═══
+const PVW={on:false,d:0,tm:null,last:0,hadGps:false,az:false,endN:0};
+const PVW_X=10;   // the demo flies this many times faster than real time
+function demoLegs(){ const a=[]; let t=0; for(let i=0;i<ROUTE.length-1;i++){ const l=gpsDist(ROUTE[i][0],ROUTE[i][1],ROUTE[i+1][0],ROUTE[i+1][1])/1852; a.push(l); t+=l; } return {a,t}; }
+function demoUi(){ document.body.classList.toggle("demo",PVW.on); }
+function demoStart(){
+  if(PVW.on) return;
+  if(!rtGood()){ mbToast("Draw a route first"); return; }
+  PVW.on=true; PVW.d=0; PVW.endN=0; PVW.last=performance.now(); PVW.hadGps=GP.on; PVW.az=AZ.on;
+  GP.on=true; GP.denied=false; GP.nogps=false; GP.hist=[];
+  try{ if(typeof DIR!=="undefined"){ DIR.tgt=null; } }catch(_){}
+  modeSet(true); FLW=true; try{ flyRefresh(); }catch(_){}
+  if(!AZ.on) try{ flyAuto(); }catch(_){}
+  demoUi(); demoTick(); PVW.tm=setInterval(demoTick,250);
+  mbToast("Demo flight, "+PVW_X+" times faster. Tap STOP DEMO to end.");
+}
+function demoStop(noMode){
+  if(!PVW.on) return;
+  clearInterval(PVW.tm); PVW.tm=null; PVW.on=false; demoUi();
+  GP.pos=null; GP.trk=null; GP.gs=null; GP.hist=[];
+  if(!PVW.hadGps){ GP.on=false; try{ if(GP.mk){ MAP.removeLayer(GP.mk); GP.mk=null; } }catch(_){} }
+  try{ if(!PVW.az&&AZ.on) flyAuto(); }catch(_){}
+  try{ gpsChip(); cmpDraw(); flyPills(); }catch(_){}
+  if(!noMode) try{ modeSet(false); }catch(_){}
+}
+function demoTick(){
+  if(!PVW.on) return;
+  if(!modeIsFly()||!rtGood()){ demoStop(true); return; }
+  const now=performance.now(), dt=Math.min(1,(now-PVW.last)/1000); PVW.last=now;
+  const L=demoLegs(); PVW.d=Math.min(L.t,PVW.d+CRZ_KT*PVW_X/3600*dt);
+  let rem=PVW.d, i=0; while(i<L.a.length-1&&rem>L.a[i]){ rem-=L.a[i]; i++; }
+  const f=L.a[i]>0? Math.min(1,rem/L.a[i]) : 1, a=ROUTE[i], b=ROUTE[i+1];
+  const lat=a[0]+(b[0]-a[0])*f, lon=a[1]+(b[1]-a[1])*f;
+  gpsPos({coords:{latitude:lat,longitude:lon,accuracy:5,speed:CRZ_KT/1.94384,heading:gpsBrg(a[0],a[1],b[0],b[1])},_demo:true});
+  if(PVW.d>=L.t){ PVW.endN++; if(PVW.endN>=12){ mbToast("Demo finished"); demoStop(); } }
+}
+(function demoInit(){
+  const b=document.getElementById("dkPrev");
+  if(b){ b.removeAttribute("aria-disabled"); b.removeAttribute("tabindex"); b.setAttribute("onclick","demoStart()"); }
+  const mb=document.getElementById("mbox");
+  if(mb&&!document.getElementById("dmStop")){ const s=document.createElement("button"); s.type="button"; s.id="dmStop"; s.setAttribute("onclick","demoStop()"); s.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg>STOP DEMO'; mb.appendChild(s); }
 })();
 </script>
 <script>(function(){var l=document.querySelector('link[rel=apple-touch-icon]');var i=document.getElementById('nIcon');if(l&&i)i.src=l.href})();</script>
