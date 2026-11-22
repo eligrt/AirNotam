@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.038 · built by eligrt
+     AirNotam-ISR · v1.09.039 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2412,7 +2412,7 @@ body.demo .mb-leg{display:none !important;}
 #mbox.dk-c #dmStop{bottom:calc(var(--dkb,12px) + 46px);}
 .mbox:not(.rv) .mb-leg{left:50%;transform:translateX(-50%);}
 
-/* ═══ v1.09.038: Route info pill, mode name on the handle, drift marker setting, colour fade ═══ */
+/* ═══ v1.09.039: Route info pill, mode name on the handle, drift marker setting, colour fade ═══ */
 .sp-grp{font:700 12px var(--font-ui);letter-spacing:.04em;color:#6b5d3f;padding:10px 4px 2px;border-top:1px dashed #cdbf98;margin-top:6px;}
 .sp-sw{position:relative;flex:none;width:50px;height:28px;direction:ltr;}
 .sp-sw input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;z-index:1;}
@@ -2457,7 +2457,7 @@ html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top
 #fpHnd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
 #fpWrap:not(.op) #fpHnd{margin-top:0;}
 
-/* ═══ v1.09.038: full-width Route info pill, buttons in two columns, mode switch screen ═══ */
+/* ═══ v1.09.039: full-width Route info pill, buttons in two columns, mode switch screen ═══ */
 #fpWrap{left:10px;right:10px;}
 #fpHnd{min-width:140px;}
 #fpWrap:not(.op) #fpHnd{border:2.5px solid #1c3d6e;border-radius:16px;margin-top:0;height:32px;}
@@ -2489,7 +2489,7 @@ html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top
 #mdWash span{font:600 20px var(--font-ui);}
 @keyframes mdw{0%{opacity:0}13%{opacity:1}66%{opacity:1}100%{opacity:0}}
 
-/* ═══ v1.09.038: settings grouped and shorter, columns swapped ═══ */
+/* ═══ v1.09.039: settings grouped and shorter, columns swapped ═══ */
 .setp{max-height:min(620px,calc(100% - var(--footh,44px) - 150px)) !important;}
 .sp-body{gap:6px;padding-top:0;}
 .sp-body .sp-row{padding-top:7px;padding-bottom:7px;}
@@ -2519,6 +2519,18 @@ html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top
 .lp-arr{left:64px;right:auto;transform:none;}
 @keyframes lcIn{from{opacity:0;transform:translateX(-10px) scale(.72)}to{opacity:1;transform:none}}
 .lcur.fo{transform:translateX(-10px) scale(.72);}
+
+/* ═══ v1.09.039: preview bar above the dock (previous waypoint, pause, next waypoint, speed, stop) ═══ */
+#dmStop{display:flex;position:static;transform:none;bottom:auto;height:32px;padding:0 8px 0 5px;gap:3px;border-radius:16px;border:2px solid #b94a3a;background:#b94a3a;color:#fff;font:800 11px var(--font-mono);letter-spacing:.04em;box-shadow:none;align-items:center;}
+#dmStop svg{width:13px;height:13px;fill:currentColor;}
+#pvBar{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(var(--dkb,12px) + 126px);z-index:1020;width:236px;height:46px;box-sizing:border-box;padding:0 6px;align-items:center;justify-content:space-between;border-radius:23px;border:2.5px solid #d9922b;background:rgba(255,243,214,.92);box-shadow:0 1px 6px rgba(14,35,72,.3);direction:ltr;}
+body.demo #pvBar{display:flex;}
+#mbox.dk-c #pvBar{bottom:calc(var(--dkb,12px) + 46px);}
+#pvBar .pb{width:34px;height:34px;border-radius:50%;border:2px solid #1c3d6e;background:#fbf6e8;color:#1c3d6e;padding:0;display:flex;align-items:center;justify-content:center;}
+#pvBar .pb.big{width:38px;height:38px;border-width:2.5px;}
+#pvBar .pb svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+#pvBar .pc{height:30px;min-width:42px;border-radius:15px;border:2px solid #1c3d6e;background:#fff;color:#1c3d6e;font:800 14px var(--font-mono);padding:0 6px;}
+#pvBar button:active{transform:scale(.93);}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2558,7 +2570,7 @@ html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.038 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.039 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2601,7 +2613,7 @@ html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.038 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.039 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5641,7 +5653,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.038 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.039 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6300,7 +6312,7 @@ function gpsErr(e){
 function gpsDist(a,b,c,d){ const R=6371000, r=Math.PI/180, x=(d-b)*r*Math.cos((a+c)/2*r), y=(c-a)*r; return Math.hypot(x,y)*R; }
 function gpsBrg(a,b,c,d){ const r=Math.PI/180, y=Math.sin((d-b)*r)*Math.cos(c*r), x=Math.cos(a*r)*Math.sin(c*r)-Math.sin(a*r)*Math.cos(c*r)*Math.cos((d-b)*r); return (Math.atan2(y,x)/r+360)%360; }
 function gpsPos(p){
-  if(typeof PVW!=="undefined"&&PVW.on&&!p._demo) return;   // v1.09.038: the demo flight ignores the real GPS
+  if(typeof PVW!=="undefined"&&PVW.on&&!p._demo) return;   // v1.09.039: the demo flight ignores the real GPS
   const c=p.coords; GP.pos={lat:c.latitude,lon:c.longitude,t:Date.now()}; GP.acc=c.accuracy;
   let gs=(c.speed!=null&&isFinite(c.speed))? c.speed*1.94384 : null, hd=(c.heading!=null&&isFinite(c.heading))? c.heading : null, src="phone";
   const now=Date.now(); GP.hist=(GP.hist||[]).filter(h=>now-h.t<15000); 
@@ -6890,19 +6902,20 @@ setInterval(()=>{ try{ flyPills(); }catch(_){} },1000);
 })();
 // ═══ v1.09.031-ish: PREVIEW - a demo flight along the drawn route (the real GPS is ignored while it runs) ═══
 const PVW={on:false,d:0,tm:null,last:0,hadGps:false,az:false,endN:0};
-const PVW_X=10;   // the demo flies this many times faster than real time
+const PVW_SP=[1,3,10,30,60]; let PVW_I=2;   // the demo flies this many times faster than real time (changed on the preview bar, starts at 10x)
+const PVW_X=()=>PVW_SP[PVW_I];
 function demoLegs(){ const a=[]; let t=0; for(let i=0;i<ROUTE.length-1;i++){ const l=gpsDist(ROUTE[i][0],ROUTE[i][1],ROUTE[i+1][0],ROUTE[i+1][1])/1852; a.push(l); t+=l; } return {a,t}; }
 function demoUi(){ document.body.classList.toggle("demo",PVW.on); }
 function demoStart(){
   if(PVW.on) return;
   if(!rtGood()){ mbToast("Draw a route first"); return; }
-  PVW.on=true; PVW.d=0; PVW.endN=0; PVW.last=performance.now(); PVW.hadGps=GP.on; PVW.az=AZ.on;
+  PVW.on=true; PVW.d=0; PVW.endN=0; PVW.paused=false; PVW_I=2; try{ pvUi(); }catch(_){} PVW.last=performance.now(); PVW.hadGps=GP.on; PVW.az=AZ.on;
   GP.on=true; GP.denied=false; GP.nogps=false; GP.hist=[];
   try{ if(typeof DIR!=="undefined"){ DIR.tgt=null; } }catch(_){}
   modeSet(true); FLW=true; try{ flyRefresh(); }catch(_){}
   if(!AZ.on) try{ flyAuto(); }catch(_){}
   demoUi(); demoTick(); PVW.tm=setInterval(demoTick,250);
-  mbToast("Demo flight, "+PVW_X+" times faster. Tap STOP DEMO to end.");
+  mbToast("Preview flight. Use the bar above the dock to pause, skip or change speed.");
 }
 function demoStop(noMode){
   if(!PVW.on) return;
@@ -6913,22 +6926,42 @@ function demoStop(noMode){
   try{ gpsChip(); cmpDraw(); flyPills(); }catch(_){}
   if(!noMode) try{ modeSet(false); }catch(_){}
 }
+
+function pvUi(){
+  const p=document.getElementById("pvPlay"), sp=document.getElementById("pvSpd"); if(!p||!sp) return;
+  const pa=!!PVW.paused;
+  p.innerHTML= pa? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" style="fill:currentColor"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5" width="4" height="14" rx="1" style="fill:currentColor"/><rect x="13.5" y="5" width="4" height="14" rx="1" style="fill:currentColor"/></svg>';
+  p.setAttribute("aria-label", pa? "המשך" : "השהה"); sp.textContent=PVW_SP[PVW_I]+"x";
+}
+function pvPause(){ if(!PVW.on) return; PVW.paused=!PVW.paused; PVW.last=performance.now(); pvUi(); }
+function pvSpeed(){ if(!PVW.on) return; PVW_I=(PVW_I+1)%PVW_SP.length; pvUi(); }
+function pvSkip(dir){   // jump to the next waypoint, or back to the start of this leg (and then the one before)
+  if(!PVW.on||!rtGood()) return;
+  const L=demoLegs(), cum=[0]; L.a.forEach(x=>cum.push(cum[cum.length-1]+x));
+  let t=PVW.d;
+  if(dir>0){ const k=cum.findIndex(c=>c>t+0.02); t= k<0? L.t : cum[k]; }
+  else { let k=-1; for(let i=0;i<cum.length;i++) if(cum[i]<t-0.15) k=i; t= k<0? 0 : cum[k]; }
+  PVW.d=Math.max(0,Math.min(L.t,t)); PVW.endN=0; PVW.last=performance.now();
+  try{ NXT.sig=""; }catch(_){}
+  demoTick();
+}
 function demoTick(){
   if(!PVW.on) return;
   if(!modeIsFly()||!rtGood()){ demoStop(true); return; }
   const now=performance.now(), dt=Math.min(1,(now-PVW.last)/1000); PVW.last=now;
-  const L=demoLegs(); PVW.d=Math.min(L.t,PVW.d+CRZ_KT*PVW_X/3600*dt);
+  const L=demoLegs(); if(!PVW.paused) PVW.d=Math.min(L.t,PVW.d+CRZ_KT*PVW_X()/3600*dt);
   let rem=PVW.d, i=0; while(i<L.a.length-1&&rem>L.a[i]){ rem-=L.a[i]; i++; }
   const f=L.a[i]>0? Math.min(1,rem/L.a[i]) : 1, a=ROUTE[i], b=ROUTE[i+1];
   const lat=a[0]+(b[0]-a[0])*f, lon=a[1]+(b[1]-a[1])*f;
   gpsPos({coords:{latitude:lat,longitude:lon,accuracy:5,speed:CRZ_KT/1.94384,heading:gpsBrg(a[0],a[1],b[0],b[1])},_demo:true});
-  if(PVW.d>=L.t){ PVW.endN++; if(PVW.endN>=12){ mbToast("Demo finished"); demoStop(); } }
+  if(PVW.d>=L.t&&!PVW.paused){ PVW.endN++; if(PVW.endN>=12){ mbToast("Demo finished"); demoStop(); } }
 }
 (function demoInit(){
   const b=document.getElementById("dkPrev");
   if(b){ b.removeAttribute("aria-disabled"); b.removeAttribute("tabindex"); b.setAttribute("onclick","demoStart()"); }
   const mb=document.getElementById("mbox");
-  if(mb&&!document.getElementById("dmStop")){ const s=document.createElement("button"); s.type="button"; s.id="dmStop"; s.setAttribute("onclick","demoStop()"); s.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg>STOP DEMO'; mb.appendChild(s); }
+  if(mb&&!document.getElementById("pvBar")){ const s=document.createElement("div"); s.id="pvBar"; s.setAttribute("role","group"); s.setAttribute("aria-label","תצוגה מקדימה");
+    s.innerHTML='<button type="button" class="pb" id="pvPrev" aria-label="נקודה קודמת" onclick="pvSkip(-1)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14"/><path d="M19 5.5v13L9 12z" style="fill:currentColor"/></svg></button><button type="button" class="pb big" id="pvPlay" aria-label="השהה" onclick="pvPause()"></button><button type="button" class="pb" id="pvNext" aria-label="נקודה הבאה" onclick="pvSkip(1)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5v14"/><path d="M5 5.5v13L15 12z" style="fill:currentColor"/></svg></button><button type="button" class="pc" id="pvSpd" aria-label="מהירות" onclick="pvSpeed()">10x</button><button type="button" class="pst" id="dmStop" aria-label="סיום" onclick="demoStop()"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg><span>STOP</span></button>'; mb.appendChild(s); pvUi(); }
 })();
 </script>
 <script>(function(){var l=document.querySelector('link[rel=apple-touch-icon]');var i=document.getElementById('nIcon');if(l&&i)i.src=l.href})();</script>
