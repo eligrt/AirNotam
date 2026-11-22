@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.039 · built by eligrt
+     AirNotam-ISR · v1.09.040 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2412,7 +2412,7 @@ body.demo .mb-leg{display:none !important;}
 #mbox.dk-c #dmStop{bottom:calc(var(--dkb,12px) + 46px);}
 .mbox:not(.rv) .mb-leg{left:50%;transform:translateX(-50%);}
 
-/* ═══ v1.09.039: Route info pill, mode name on the handle, drift marker setting, colour fade ═══ */
+/* ═══ v1.09.040: Route info pill, mode name on the handle, drift marker setting, colour fade ═══ */
 .sp-grp{font:700 12px var(--font-ui);letter-spacing:.04em;color:#6b5d3f;padding:10px 4px 2px;border-top:1px dashed #cdbf98;margin-top:6px;}
 .sp-sw{position:relative;flex:none;width:50px;height:28px;direction:ltr;}
 .sp-sw input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;z-index:1;}
@@ -2457,7 +2457,7 @@ html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top
 #fpHnd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
 #fpWrap:not(.op) #fpHnd{margin-top:0;}
 
-/* ═══ v1.09.039: full-width Route info pill, buttons in two columns, mode switch screen ═══ */
+/* ═══ v1.09.040: full-width Route info pill, buttons in two columns, mode switch screen ═══ */
 #fpWrap{left:10px;right:10px;}
 #fpHnd{min-width:140px;}
 #fpWrap:not(.op) #fpHnd{border:2.5px solid #1c3d6e;border-radius:16px;margin-top:0;height:32px;}
@@ -2489,7 +2489,7 @@ html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top
 #mdWash span{font:600 20px var(--font-ui);}
 @keyframes mdw{0%{opacity:0}13%{opacity:1}66%{opacity:1}100%{opacity:0}}
 
-/* ═══ v1.09.039: settings grouped and shorter, columns swapped ═══ */
+/* ═══ v1.09.040: settings grouped and shorter, columns swapped ═══ */
 .setp{max-height:min(620px,calc(100% - var(--footh,44px) - 150px)) !important;}
 .sp-body{gap:6px;padding-top:0;}
 .sp-body .sp-row{padding-top:7px;padding-bottom:7px;}
@@ -2520,7 +2520,7 @@ html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top
 @keyframes lcIn{from{opacity:0;transform:translateX(-10px) scale(.72)}to{opacity:1;transform:none}}
 .lcur.fo{transform:translateX(-10px) scale(.72);}
 
-/* ═══ v1.09.039: preview bar above the dock (previous waypoint, pause, next waypoint, speed, stop) ═══ */
+/* ═══ v1.09.040: preview bar above the dock (previous waypoint, pause, next waypoint, speed, stop) ═══ */
 #dmStop{display:flex;position:static;transform:none;bottom:auto;height:32px;padding:0 8px 0 5px;gap:3px;border-radius:16px;border:2px solid #b94a3a;background:#b94a3a;color:#fff;font:800 11px var(--font-mono);letter-spacing:.04em;box-shadow:none;align-items:center;}
 #dmStop svg{width:13px;height:13px;fill:currentColor;}
 #pvBar{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(var(--dkb,12px) + 126px);z-index:1020;width:236px;height:46px;box-sizing:border-box;padding:0 6px;align-items:center;justify-content:space-between;border-radius:23px;border:2.5px solid #d9922b;background:rgba(255,243,214,.92);box-shadow:0 1px 6px rgba(14,35,72,.3);direction:ltr;}
@@ -2570,7 +2570,7 @@ body.demo #pvBar{display:flex;}
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.039 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.040 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2613,7 +2613,7 @@ body.demo #pvBar{display:flex;}
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.039 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.040 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -3982,9 +3982,9 @@ function famUi(){
 // v1.08.022: the shape filter sits evenly between the last red button and REVIEW; only its list scrolls, a soft fade at the bottom says "more below"
 function famFade(){ const ls=document.querySelector(".fam-ctl .fam-list"); if(!ls) return; ls.classList.toggle("more", ls.scrollTop+ls.clientHeight < ls.scrollHeight-3); }
 function famPlace(){   // v1.08.101: hangs under the top buttons and grows downward; the list scrolls so the panel never reaches the red NOTAM button
-  const box=document.querySelector(".fam-ctl"), ls=box&&box.querySelector(".fam-list"), a=document.getElementById("mbList"), r=document.getElementById("mbPill")||document.getElementById("mbRv"), m=MAP&&MAP.getContainer(); if(!ls||!a||!r||!m) return;
+  const box=document.querySelector(".fam-ctl"), ls=box&&box.querySelector(".fam-list"), a=document.getElementById("mbFull"), r=document.getElementById("mbPill")||document.getElementById("mbRv"), m=MAP&&MAP.getContainer(); if(!ls||!a||!r||!m) return;
   const mr=m.getBoundingClientRect(), ar=a.getBoundingClientRect(), rr=r.getBoundingClientRect();
-  let top=Math.max(0,Math.round(ar.bottom-mr.top+8)); box.style.marginTop=top+"px"; box.style.marginRight="10px";
+  let top=Math.max(0,Math.round(ar.bottom-mr.top+8)); box.style.marginTop=top+"px"; box.style.marginRight="19px";
   { const d=box.getBoundingClientRect().top-(ar.bottom+8); if(Math.abs(d)>1){ top=Math.max(0,Math.round(top-d)); box.style.marginTop=top+"px"; } }   // other controls in the same corner push it down: measure and correct
   const keep=ls.scrollTop; ls.style.maxHeight="none"; const natural=ls.scrollHeight;
   const chv=box.querySelector(".fam-tg"), stp=box.querySelector(".fam-step"), chrome=(chv?chv.offsetHeight+3:0)+(stp?stp.offsetHeight+8:0)+14;
@@ -5653,7 +5653,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.039 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.040 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6312,7 +6312,7 @@ function gpsErr(e){
 function gpsDist(a,b,c,d){ const R=6371000, r=Math.PI/180, x=(d-b)*r*Math.cos((a+c)/2*r), y=(c-a)*r; return Math.hypot(x,y)*R; }
 function gpsBrg(a,b,c,d){ const r=Math.PI/180, y=Math.sin((d-b)*r)*Math.cos(c*r), x=Math.cos(a*r)*Math.sin(c*r)-Math.sin(a*r)*Math.cos(c*r)*Math.cos((d-b)*r); return (Math.atan2(y,x)/r+360)%360; }
 function gpsPos(p){
-  if(typeof PVW!=="undefined"&&PVW.on&&!p._demo) return;   // v1.09.039: the demo flight ignores the real GPS
+  if(typeof PVW!=="undefined"&&PVW.on&&!p._demo) return;   // v1.09.040: the demo flight ignores the real GPS
   const c=p.coords; GP.pos={lat:c.latitude,lon:c.longitude,t:Date.now()}; GP.acc=c.accuracy;
   let gs=(c.speed!=null&&isFinite(c.speed))? c.speed*1.94384 : null, hd=(c.heading!=null&&isFinite(c.heading))? c.heading : null, src="phone";
   const now=Date.now(); GP.hist=(GP.hist||[]).filter(h=>now-h.t<15000); 
@@ -6416,6 +6416,7 @@ function railSync(){
     const lc=document.querySelector(".lyr-ctl"); if(lc&&lc.offsetParent){ const pr2=lc.offsetParent.getBoundingClientRect().top; lc.style.setProperty("top",(zt+30-pr2).toFixed(1)+"px","important"); }
     const zl=document.querySelector(".zoom-tl"); if(zl&&zl.offsetParent){ const pr=zl.offsetParent.getBoundingClientRect().top; zl.style.setProperty("top",(zt-18-pr).toFixed(1)+"px","important"); }
   }catch(_){}
+  try{ if(typeof FAM_CTL!=="undefined"&&FAM_CTL) famPlace(); }catch(_){}
 }
 setInterval(railSync,400); window.addEventListener("resize",railSync); window.addEventListener("orientationchange",railSync); setTimeout(railSync,300);
 // ═══ v1.09.020: NORTH button: north up / track up (the map turns so the direction of flight is at the top; the aircraft stays put on the screen) ═══
