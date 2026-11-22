@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.021 · built by eligrt
+     AirNotam-ISR · v1.09.022 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2365,6 +2365,8 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
   mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 0/51px 3.5px no-repeat;mask-composite:exclude;}
 #mbDockF{--dkc:#1c3d6e;}
 .mk-tab{height:27.6px;}
+/* ═══ v1.09.022: compass and track lines ═══ */
+#cmpSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:hidden;}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2404,7 +2406,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.021 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.022 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2440,7 +2442,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.021 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.022 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -2507,6 +2509,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
     <div id="mapEmpty" class="map-empty"></div>
     <button type="button" class="nv-pill" id="nvPill" onclick="setNvis('normal')"></button>
     <div class="mbox" id="mbox">
+      <svg id="cmpSvg" aria-hidden="true"></svg>
       <div class="mb-info" id="mbInfo"><div class="mib"><div class="mi1" id="mi1"></div><div class="mi2 mi-tf" id="mi5" hidden></div><div class="mi2" id="mi2"></div><div class="mi3" id="mi3" hidden></div><div class="mi3" id="mi4" hidden></div></div></div>
       <button type="button" id="mbBell" class="mb-b mb-bell" style="right:10px;top:114px" aria-label="NOTAM חדשים ב-72 שעות האחרונות" onclick="newsOpen()" hidden><span class="bl-ic"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg></span><span class="mb-t mb-t-c">NEW</span><span class="mb-bd" id="mbBellN"></span></button>
       <button type="button" id="mbFull" class="mb-b mb-n mb-m" style="right:10px;top:10px" aria-label="מסך מלא" onclick="setFull(!document.documentElement.classList.contains('full'))"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span class="mb-t mb-t-l" id="mbFullT">FULL</span></button>
@@ -2532,7 +2535,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
         <button type="button" class="mk-b" id="fyCen" style="left:8px" aria-label="מרכז" onclick="flyCenter()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4"/></svg><span class="mk-l">CENTER</span></button>
         <button type="button" class="mk-b" id="fyNor" style="left:63px" aria-label="צפון" onclick="flyNorth()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.6 21.5V11l8.8 10.5V11" style="stroke-width:2.3"/><path d="M12 1.6L9 8.2h6z" style="fill:#d23a2a;stroke:#d23a2a;stroke-width:1;stroke-linejoin:round"/></svg><span class="mk-l">NORTH</span></button>
         <i class="mk-sep" style="left:123.75px"></i>
-        <button type="button" class="mk-b" id="fyCmp" style="left:134px" aria-label="מצפן" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9l-1.8 4.2L9 15l1.8-4.2z"/></svg><span class="mk-l">COMPASS</span></button>
+        <button type="button" class="mk-b" id="fyCmp" style="left:134px" aria-label="מצפן" onclick="flyCompass()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9l-1.8 4.2L9 15l1.8-4.2z"/></svg><span class="mk-l">COMPASS</span></button>
         <button type="button" class="mk-b" id="fyDir" style="left:189px" aria-label="ישר ליעד" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13"/><path d="M12.5 6.5L18 12l-5.5 5.5"/><path d="M20.5 5v14"/></svg><span class="mk-l">DIRECT</span></button>
         <button type="button" class="mk-b" id="fyRng" style="left:244px" aria-label="טבעות" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="9.5"/></svg><span class="mk-l">RINGS</span></button>
         <i class="mk-sep" style="left:304.75px"></i>
@@ -5479,7 +5482,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.021 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.022 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6109,7 +6112,7 @@ function modeSet(fly){
   if(m){ const sv=m.querySelector("svg"), l=m.querySelector(".mk-l"); if(sv) sv.innerHTML= fly? IC_FLY : IC_PLAN; if(l) l.textContent= fly? "FLY" : "PLAN"; m.setAttribute("aria-label", fly? "מצב טיסה" : "מצב תכנון"); }
   if(fly){ GP.shown=true; gpsStart(); GP.zoomed=false; FLW=true; flyFollow(); }
   flyRefresh();
-  gpsWake(fly&&GP.on); try{ flyOrient(); }catch(_){}
+  gpsWake(fly&&GP.on); try{ flyOrient(); cmpArm(); }catch(_){}
   MB_FITK=""; try{ mbSync(); }catch(_){}
   try{ if(LP_OPEN==="layers") lpPlace(); }catch(_){}
   gpsChip();
@@ -6127,7 +6130,7 @@ function gpsErr(e){
 function gpsPos(p){
   const c=p.coords; GP.pos={lat:c.latitude,lon:c.longitude,t:Date.now()}; GP.acc=c.accuracy;
   const gs=(c.speed!=null&&isFinite(c.speed))? c.speed*1.94384 : null;
-  if(c.heading!=null&&isFinite(c.heading)&&gs!=null&&gs>=1.62){ GP.trk=c.heading; try{ fyHead(GP.trk); }catch(_){} }
+  if(c.heading!=null&&isFinite(c.heading)&&gs!=null&&gs>=1.62){ GP.trk=c.heading; GP.mvT=Date.now(); try{ fyHead(GP.trk); }catch(_){} } else if(gs!=null&&gs<1.62) GP.mvT=0;
   gpsMarker();
   flyFollow();
   gpsChip();
@@ -6278,6 +6281,7 @@ function flyNorthUi(){
 }
 function flyNorth(){
   FY.trk=!FY.trk; try{ localStorage.setItem("fy_trk",FY.trk?"1":"0"); }catch(_){}
+  if(FY.trk&&modeIsFly()) try{ cmpStart(); }catch(_){}
   flyOrient();
   gpsNote(FY.trk? "Track up: the map turns so your direction of flight is at the top." : "North up: north is at the top.");
 }
@@ -6320,6 +6324,94 @@ function fyTick(){
   window.addEventListener("resize",()=>{ if(FY.on) fyLayout(); });
   setInterval(()=>{ if(FY.on) fyMarkers(); },1500);
 })();
+// ═══ v1.09.022: COMPASS line (the way the phone points) and TRACK line (the way you move), like AirTrack; phone compass gives the heading when slow ═══
+const CMP={on:false,hdg:null,raw:null,cv:null,t:0,last:0};
+const n360=a=>((a%360)+360)%360, RADc=Math.PI/180;
+function gpsMoving(){ return GP.trk!=null&&GP.mvT&&Date.now()-GP.mvT<12000&&GP.pos&&Date.now()-GP.pos.t<=12000; }
+function cmpOri(e){
+  let h=null;
+  if(typeof e.webkitCompassHeading==="number"){ if(e.webkitCompassAccuracy!=null&&e.webkitCompassAccuracy<0) return; h=e.webkitCompassHeading; }
+  else if(e.absolute&&e.alpha!=null) h=360-e.alpha;
+  else return;
+  const sa=(screen.orientation&&typeof screen.orientation.angle==="number")? screen.orientation.angle : (window.orientation||0);
+  h=n360(h+sa);
+  const x=Math.cos(h*RADc), y=Math.sin(h*RADc);
+  if(!CMP.cv) CMP.cv={x,y}; else { CMP.cv.x+=(x-CMP.cv.x)*0.07; CMP.cv.y+=(y-CMP.cv.y)*0.07; }
+  CMP.raw=n360(Math.atan2(CMP.cv.y,CMP.cv.x)/RADc);
+  if(CMP.hdg==null) CMP.hdg=CMP.raw;
+  if(!CMP.t) CMP.t=requestAnimationFrame(cmpTick);
+}
+function cmpTick(t){
+  CMP.t=0; if(!CMP.on||CMP.raw==null) return;
+  if(t-CMP.last>=50){
+    CMP.last=t; const d=((CMP.raw-CMP.hdg+540)%360)-180;
+    if(Math.abs(d)>=0.5){ CMP.hdg=n360(CMP.hdg+d*0.35); if(!gpsMoving()) fyHead(CMP.hdg); cmpDraw(); }
+  }
+  CMP.t=requestAnimationFrame(cmpTick);
+}
+function cmpUi(){ const b=document.getElementById("fyCmp"); if(b){ b.classList.toggle("on",CMP.on); b.removeAttribute("aria-disabled"); b.removeAttribute("tabindex"); } }
+function cmpStart(){
+  if(CMP.on) return;
+  if(typeof DeviceOrientationEvent==="undefined"){ mbToast("No compass on this device."); return; }
+  const go=()=>{ CMP.on=true; window.addEventListener("deviceorientationabsolute",cmpOri,true); window.addEventListener("deviceorientation",cmpOri,true); cmpUi(); cmpDraw(); mbToast("Compass on: the black line shows where the phone points."); };
+  if(typeof DeviceOrientationEvent.requestPermission==="function"){ DeviceOrientationEvent.requestPermission().then(r=>{ if(r==="granted") go(); else mbToast("The compass was not allowed. You can allow it in the phone settings."); }).catch(()=>{ mbToast("The compass was not allowed."); }); }
+  else go();
+}
+function cmpStop(){
+  CMP.on=false; CMP.raw=null; CMP.hdg=null; CMP.cv=null; if(CMP.t){ cancelAnimationFrame(CMP.t); CMP.t=0; }
+  window.removeEventListener("deviceorientationabsolute",cmpOri,true); window.removeEventListener("deviceorientation",cmpOri,true); cmpUi(); cmpDraw();
+}
+function flyCompass(){ if(CMP.on) cmpStop(); else cmpStart(); }
+function cmpScreen(){   // where the aircraft is on the screen (the map may be turned)
+  const c=MAP.latLngToContainerPoint([GP.pos.lat,GP.pos.lon]);
+  if(!FY.on) return {x:c.x,y:c.y};
+  const g=fyGeo(), r=FY.rot*RADc, vx=c.x-g.Qx, vy=c.y-g.Qy, co=Math.cos(r), si=Math.sin(r);
+  return {x:g.Sx+vx*co+vy*si, y:g.Sy-vx*si+vy*co};
+}
+function cmpEdge(cx,cy,ang,L){   // distance along the line to the usable screen edge
+  const a=ang*RADc, dx=Math.sin(a), dy=-Math.cos(a), W=L.W, ts=[];
+  if(dx>1e-6) ts.push((W-14-cx)/dx); if(dx<-1e-6) ts.push((L.left-cx)/dx);
+  if(dy>1e-6) ts.push((L.bottom-cy)/dy); if(dy<-1e-6) ts.push((L.top-cy)/dy);
+  return ts.length? Math.min(...ts) : 100;
+}
+function cmpPill(cx,cy,ang,d,txt,tag,col){
+  const a=ang*RADc, x=cx+d*Math.sin(a), y=cy-d*Math.cos(a); let r=ang-90; r=((r+180)%360+360)%360-180; if(r>90) r-=180; if(r<-90) r+=180;
+  const w=Math.round(txt.length*7.1+tag.length*4.6+4+20);
+  return '<g transform="translate('+x.toFixed(1)+' '+y.toFixed(1)+') rotate('+r.toFixed(1)+')"><rect x="'+(-w/2)+'" y="-9" width="'+w+'" height="18" rx="9" fill="#fff" stroke="#fff" stroke-width="5"/><rect x="'+(-w/2)+'" y="-9" width="'+w+'" height="18" rx="9" fill="#fbf6e8" stroke="'+col+'" stroke-width="1.6"/><text y="3.7" font-size="10.5" font-weight="800" font-family="JetBrains Mono,monospace" letter-spacing=".02em" text-anchor="middle" fill="'+col+'">'+txt+'<tspan font-size="7.5" dx="3" letter-spacing=".04em">'+tag+'</tspan></text></g>';
+}
+function cmpDraw(){
+  const sv=document.getElementById("cmpSvg"); if(!sv) return;
+  const show=modeIsFly()&&GP.pos&&typeof MAP!=="undefined"&&MAP&&(CMP.on&&CMP.hdg!=null||gpsMoving());
+  if(!show){ if(sv.innerHTML) sv.innerHTML=""; return; }
+  const mb=document.getElementById("mbox"), W=mb.clientWidth, H=mb.clientHeight; sv.setAttribute("viewBox","0 0 "+W+" "+H);
+  const P=cmpScreen(), dk=document.getElementById("mbDockF"), dr=dk&&dk.offsetParent? dk.getBoundingClientRect() : null, mr=mb.getBoundingClientRect();
+  const L={W:W,left:86,top:110,bottom:(dr? dr.top-mr.top-34 : H-120)}, L0=Math.max(W,H)*2, rot=FY.on? FY.rot : 0;
+  let o="", pills="";
+  const ray=(a)=>[P.x+L0*Math.sin(a*RADc),P.y-L0*Math.cos(a*RADc)];
+  if(CMP.on&&CMP.hdg!=null){
+    const a=n360(CMP.hdg-rot), e=ray(a);
+    o+='<line x1="'+P.x.toFixed(1)+'" y1="'+P.y.toFixed(1)+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#fff" stroke-width="7" stroke-opacity=".9" stroke-linecap="round"/><line x1="'+P.x.toFixed(1)+'" y1="'+P.y.toFixed(1)+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#111" stroke-width="3.2" stroke-dasharray="8 6" stroke-linecap="round"/>';
+    const t="COMPASS "+String(Math.round(CMP.hdg)%360).padStart(3,"0")+"°", wl=Math.round((t.length*7.1+3*4.6+4+20)/2), ed=cmpEdge(P.x,P.y,a,L);
+    if(ed-wl-10>34) pills+=cmpPill(P.x,P.y,a,ed-wl-10,t,"MAG","#111111");
+  }
+  if(gpsMoving()){
+    const a=n360(GP.trk-rot), e=ray(a);
+    o+='<line x1="'+P.x.toFixed(1)+'" y1="'+P.y.toFixed(1)+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#1a1308" stroke-width="2.4" stroke-dasharray="2 7" stroke-linecap="round"/>';
+    const t="TRACK", wl=Math.round((5*7.1+4*4.6+4+20)/2), ed=cmpEdge(P.x,P.y,a,L), d=Math.max(70,Math.min(170,ed-wl-10));
+    if(ed-wl-10>34) pills+=cmpPill(P.x,P.y,a,d,t+" "+String(Math.round(GP.trk)%360).padStart(3,"0")+"°","TRUE","#1a1308");
+  }
+  sv.innerHTML=o+pills;
+}
+(function cmpInit(){
+  if(typeof MAP==="undefined"||!MAP){ setTimeout(cmpInit,400); return; }
+  MAP.on("move zoom moveend zoomend",()=>cmpDraw());
+  setInterval(cmpDraw,500);
+})();
+function cmpArm(){
+  if(!modeIsFly()){ if(CMP.on) cmpStop(); else cmpDraw(); return; }
+  if(FY.trk&&!CMP.on){ const o=()=>{ document.removeEventListener("click",o,true); if(FY.trk&&!CMP.on&&modeIsFly()) cmpStart(); }; document.addEventListener("click",o,true); }
+  cmpDraw();
+}
 </script>
 <script>(function(){var l=document.querySelector('link[rel=apple-touch-icon]');var i=document.getElementById('nIcon');if(l&&i)i.src=l.href})();</script>
 <div class="adm-wrap" id="admWrap"><div class="adm-bk" id="admBk" onclick="admClose()"></div>
