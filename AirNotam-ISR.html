@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.020 · built by eligrt
+     AirNotam-ISR · v1.09.021 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2353,6 +2353,18 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
 #map.fy-rot .leaflet-marker-icon:not(.gp-ac){rotate:var(--unrot,0deg);}
 #map.fy-rot .leaflet-popup,#map.fy-rot .leaflet-tooltip{rotate:var(--unrot,0deg);}
 .sp-ver{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);text-align:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--gold-deep);opacity:.8;}
+
+/* ═══ v1.09.021: amber DRAW and PREVIEW, handle blended into the dock ═══ */
+#dkDraw,#dkPrev{border-color:#c8a04a;background:#fbf0d2;color:#6b4f12;}
+#dkDraw .mk-l,#dkPrev .mk-l{background:#c8a04a;color:#3b2d0a;}
+#dkDraw.on{background:#f1dca0;}
+#dkDraw.pulse::after{border-color:#c8a04a;}
+.mk-dock{background:transparent !important;border-color:transparent !important;-webkit-backdrop-filter:none;backdrop-filter:none;}
+.mk-dock::before{content:"";position:absolute;inset:-2.5px;border-radius:30px;box-sizing:border-box;border:2.5px solid var(--dkc,#c8a04a);background:rgba(251,246,232,.80);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);z-index:-1;pointer-events:none;
+  -webkit-mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 0/51px 3.5px no-repeat;-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 0/51px 3.5px no-repeat;mask-composite:exclude;}
+#mbDockF{--dkc:#1c3d6e;}
+.mk-tab{height:27.6px;}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2392,7 +2404,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.020 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.021 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2428,7 +2440,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.020 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.021 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -2511,19 +2523,19 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
         <button type="button" class="mk-tab" id="dkTab" aria-label="כווץ" onclick="dkSet(false)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <button type="button" class="mk-b" id="dkDraw" style="left:25.5px" aria-label="מסלול" onclick="mbDrawGo()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 12l.8-3 6.7-7 2.5 2.5-7 6.7z"/><circle cx="3.5" cy="21" r="1.8"/><path d="M4.6 19.4L7 13.5L10 19.5L13 12"/></svg><span class="mk-l">DRAW</span></button>
         <button type="button" class="mk-b" id="dkPrev" style="left:87.5px" aria-label="תצוגה מקדימה" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.2v11.6a.6.6 0 0 0 .9.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.9.5z" style="fill:currentColor"/></svg><span class="mk-l">PREVIEW</span></button>
-        <i class="mk-sep" style="left:160.25px"></i>
+        <i class="mk-sep" style="left:157.75px"></i>
         <button type="button" class="mk-b nr" id="dkList" style="left:177.5px" aria-label="רשימה" onclick="mbListGo()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6l1.2 1.2L6.8 5M3.5 12l1.2 1.2L6.8 11M3.5 18l1.2 1.2L6.8 17"/></svg><span class="mk-l">LIST</span></button>
         <button type="button" class="mk-b nr" id="dkRv" style="left:239.5px" aria-label="סקירה" onclick="slotReview()"><svg viewBox="0.5 0.5 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21M7.8 10.6l2 2 3.4-4"/></svg><span class="mk-l" id="dkRvT">REVIEW</span><span class="mk-bd" id="dkRvN" hidden></span></button>
       </div>
       <div class="mk-dock fl mb-m" id="mbDockF" role="group" aria-label="טיסה">
         <button type="button" class="mk-tab" id="dkTabF" aria-label="כווץ" onclick="dkSet(false)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <button type="button" class="mk-b" id="fyCen" style="left:8px" aria-label="מרכז" onclick="flyCenter()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4"/></svg><span class="mk-l">CENTER</span></button>
-        <button type="button" class="mk-b" id="fyNor" style="left:63px" aria-label="צפון" onclick="flyNorth()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 16-5-4-5 4z"/></svg><span class="mk-l">NORTH</span></button>
-        <i class="mk-sep" style="left:126.25px"></i>
+        <button type="button" class="mk-b" id="fyNor" style="left:63px" aria-label="צפון" onclick="flyNorth()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.6 21.5V11l8.8 10.5V11" style="stroke-width:2.3"/><path d="M12 1.6L9 8.2h6z" style="fill:#d23a2a;stroke:#d23a2a;stroke-width:1;stroke-linejoin:round"/></svg><span class="mk-l">NORTH</span></button>
+        <i class="mk-sep" style="left:123.75px"></i>
         <button type="button" class="mk-b" id="fyCmp" style="left:134px" aria-label="מצפן" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9l-1.8 4.2L9 15l1.8-4.2z"/></svg><span class="mk-l">COMPASS</span></button>
         <button type="button" class="mk-b" id="fyDir" style="left:189px" aria-label="ישר ליעד" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13"/><path d="M12.5 6.5L18 12l-5.5 5.5"/><path d="M20.5 5v14"/></svg><span class="mk-l">DIRECT</span></button>
         <button type="button" class="mk-b" id="fyRng" style="left:244px" aria-label="טבעות" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="9.5"/></svg><span class="mk-l">RINGS</span></button>
-        <i class="mk-sep" style="left:307.25px"></i>
+        <i class="mk-sep" style="left:304.75px"></i>
         <button type="button" class="mk-b" id="fyAut" style="left:315px" aria-label="זום אוטומטי" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><circle cx="12" cy="12" r="2.4"/></svg><span class="mk-l">AUTO</span></button>
       </div>
       <button type="button" class="gps-chip gps-f" id="gpsChipF" onclick="gpsTap()"><i></i><span>GPS</span></button>
@@ -5467,7 +5479,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.020 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.021 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6115,7 +6127,7 @@ function gpsErr(e){
 function gpsPos(p){
   const c=p.coords; GP.pos={lat:c.latitude,lon:c.longitude,t:Date.now()}; GP.acc=c.accuracy;
   const gs=(c.speed!=null&&isFinite(c.speed))? c.speed*1.94384 : null;
-  if(c.heading!=null&&isFinite(c.heading)&&gs!=null&&gs>=3){ GP.trk=c.heading; try{ fyHead(GP.trk); }catch(_){} }
+  if(c.heading!=null&&isFinite(c.heading)&&gs!=null&&gs>=1.62){ GP.trk=c.heading; try{ fyHead(GP.trk); }catch(_){} }
   gpsMarker();
   flyFollow();
   gpsChip();
@@ -6260,7 +6272,7 @@ function flyOrient(){
 }
 function flyNorthUi(){
   const b=document.getElementById("fyNor"); if(!b) return; const on=FY.trk&&modeIsFly();
-  b.classList.toggle("on",on); const l=b.querySelector(".mk-l"); if(l) l.textContent= on? "TRACK" : "NORTH";
+  b.classList.toggle("on",on);
   b.setAttribute("aria-label", on? "הכיוון שלך למעלה" : "צפון למעלה");
   const a=b.querySelector("svg"); if(a&&!on) a.style.transform="";
 }
