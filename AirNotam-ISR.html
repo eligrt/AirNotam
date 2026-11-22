@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.026 · built by eligrt
+     AirNotam-ISR · v1.09.027 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2368,6 +2368,15 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
 .mk-tab::before{content:"";position:absolute;left:0;top:0;width:100%;height:26px;box-sizing:border-box;border:2.5px solid var(--dkc,#c8a04a);border-bottom:0;border-radius:14px 14px 0 0;pointer-events:none;}
 /* ═══ v1.09.022: compass and track lines ═══ */
 #cmpSvg{z-index:990;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:hidden;}
+/* ═══ v1.09.027: RINGS button follows the ring colour (fine dashes), DIRECT in wine, position symbol choice ═══ */
+#fyRng.rg-nm{--rgc:#d9622b;} #fyRng.rg-min{--rgc:#a3207a;}
+#fyRng.rg-nm,#fyRng.rg-min{border-color:transparent;}
+#fyRng.rg-nm::before,#fyRng.rg-min::before{content:"";position:absolute;inset:-2.5px;border-radius:50%;background:repeating-conic-gradient(var(--rgc) 0 9deg,transparent 9deg 15deg);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2.5px),#000 calc(100% - 2.5px));mask:radial-gradient(farthest-side,transparent calc(100% - 2.5px),#000 calc(100% - 2.5px));pointer-events:none;}
+#fyRng.rg-nm .mk-l{background:#d9622b;} #fyRng.rg-min .mk-l{background:#a3207a;}
+#fyDir.dr-on{border-color:#7d1c33;} #fyDir.dr-on .mk-l{background:#7d1c33;}
+#symSeg button{height:56px;padding:0;display:flex;align-items:center;justify-content:center;}
+#symSeg button svg{width:44px;height:44px;overflow:visible;}
+#symSeg button.on{background:#e6ebf4;border:2px solid var(--ink);}
 .mbox:not(.rv) .mb-leg{left:50%;transform:translateX(-50%);}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -2408,7 +2417,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.026 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.027 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2437,6 +2446,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
       <div class="sp-row sp-irow sp-static" id="rteCorrBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18"/><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/></svg></span><span class="sp-tx"><b>רוחב המסלול</b></span><div class="fgrace sp-corr" id="corrSeg"><button type="button" data-c="2">2NM</button><button type="button" data-c="3">3NM</button><button type="button" data-c="5">5NM</button></div></div>
       <div class="sp-row sp-irow sp-static" id="rteSpdBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="sp-tx"><b>מהירות שיוט</b><small id="spdSm" data-ok="לחישוב זמן הטיסה">לחישוב זמן הטיסה</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="spdIn" aria-label="מהירות שיוט בקשר" placeholder="--"><span>קשר</span></div></div>
       <div class="sp-row sp-irow sp-static" id="rteBurnBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M4 21h12"/><path d="M15 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/><path d="M7.5 8h5"/></svg></span><span class="sp-tx"><b>צריכת דלק</b><small id="burnSm" data-ok="לחישוב כמות הדלק. הערכה בלבד, ללא רוח">לחישוב כמות הדלק. הערכה בלבד, ללא רוח</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="burnIn" aria-label="צריכת דלק בליטרים לשעה" placeholder="--"><span>ליטר לשעה</span></div></div>
+      <div class="sp-row sp-irow sp-static" id="symBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l6 17-6-4-6 4z"/></svg></span><span class="sp-tx"><b>סמל מיקום</b></span><div class="fgrace sp-corr" id="symSeg"></div></div>
       <a class="sp-row sp-irow" href="mailto:eligrt@gmail.com?subject=AirNotam%20-%20משוב"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg></span><span class="sp-tx"><b>יש תקלה או רעיון? כתוב לי</b></span></a>
       <div class="sp-sep"></div>
       <button type="button" class="sp-row sp-irow sp-red" onclick="setFullReset()"><span class="sp-ic r"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.01"/></svg></span><span class="sp-tx"><b>איפוס מלא של האפליקציה</b></span></button>
@@ -2444,7 +2454,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.026 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.027 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -2537,7 +2547,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
         <button type="button" class="mk-b" id="fyNor" style="left:63px" aria-label="צפון" onclick="flyNorth()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.6 21.5V11l8.8 10.5V11" style="stroke-width:2.3"/><path d="M12 1.6L9 8.2h6z" style="fill:#d23a2a;stroke:#d23a2a;stroke-width:1;stroke-linejoin:round"/></svg><span class="mk-l">NORTH</span></button>
         <i class="mk-sep" style="left:123.75px"></i>
         <button type="button" class="mk-b" id="fyCmp" style="left:134px" aria-label="מצפן" onclick="flyCompass()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9l-1.8 4.2L9 15l1.8-4.2z"/></svg><span class="mk-l">COMPASS</span></button>
-        <button type="button" class="mk-b" id="fyDir" style="left:189px" aria-label="ישר ליעד" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13"/><path d="M12.5 6.5L18 12l-5.5 5.5"/><path d="M20.5 5v14"/></svg><span class="mk-l">DIRECT</span></button>
+        <button type="button" class="mk-b" id="fyDir" style="left:189px" aria-label="ישר ליעד" onclick="flyDirect()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13"/><path d="M12.5 6.5L18 12l-5.5 5.5"/><path d="M20.5 5v14"/></svg><span class="mk-l">DIRECT</span></button>
         <button type="button" class="mk-b" id="fyRng" style="left:244px" aria-label="טבעות" onclick="flyRings()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="9.5"/></svg><span class="mk-l">RINGS</span></button>
         <i class="mk-sep" style="left:304.75px"></i>
         <button type="button" class="mk-b" id="fyAut" style="left:315px" aria-label="זום אוטומטי" aria-disabled="true" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><circle cx="12" cy="12" r="2.4"/></svg><span class="mk-l">AUTO</span></button>
@@ -5047,7 +5057,7 @@ function gisInitMap(){
   });
   gisCredit();
   MAP.on("zoomend",()=>{ gisPts(); gisFill(); });
-  MAP.on("click",ev=>{ if(gisPanelOpen()){ gisPanelToggle(false); return; } if(!DRAWING) openAt(ev.latlng); });
+  MAP.on("click",ev=>{ if(gisPanelOpen()){ gisPanelToggle(false); return; } if(!DRAWING){ try{ if(directTap(ev.latlng)) return; }catch(_){} openAt(ev.latlng); } });
   gisPanel(); gisFill();
   lsaInit();   // v1.07.052
   GIS_IDS.forEach(gisApply);
@@ -5483,7 +5493,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.026 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.027 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6150,7 +6160,7 @@ function gpsPos(p){
 function gpsMarker(){
   if(!GP.pos||typeof MAP==="undefined"||!MAP) return;
   if(!GP.mk){
-    const ic=L.divIcon({className:"gp-ac",iconSize:[40,40],iconAnchor:[20,20],html:'<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="#1c3d6e" stroke="#fff" stroke-width="1.3" stroke-linejoin="round" paint-order="stroke"><path d="M12 2.5c.7 0 1.2.8 1.2 1.8v4.3H21a1 1 0 0 1 1 1v1.8a1 1 0 0 1-1 1h-7.8v5H16a1 1 0 0 1 1 1v.8a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-.8a1 1 0 0 1 1-1h2.8v-5H3a1 1 0 0 1-1-1V9.6a1 1 0 0 1 1-1h7.8V4.3c0-1 .5-1.8 1.2-1.8z"/></g></svg>'});
+    const ic=symIcon();
     GP.mk=L.marker([GP.pos.lat,GP.pos.lon],{icon:ic,interactive:false,keyboard:false,zIndexOffset:2000}).addTo(MAP);
   } else GP.mk.setLatLng([GP.pos.lat,GP.pos.lon]);
   const el=GP.mk.getElement(), sv=el&&el.querySelector("svg"); if(sv) sv.style.transform="rotate("+Math.round(GP.trk||0)+"deg)";
@@ -6365,7 +6375,7 @@ function cmpUi(){ const b=document.getElementById("fyCmp"); if(b){ b.classList.t
 function cmpStart(){
   if(CMP.on) return;
   if(typeof DeviceOrientationEvent==="undefined"){ mbToast("No compass on this device."); return; }
-  const go=()=>{ CMP.on=true; window.addEventListener("deviceorientationabsolute",cmpOri,true); window.addEventListener("deviceorientation",cmpOri,true); cmpUi(); cmpDraw(); mbToast("Compass on: the black line shows where the phone points."); };
+  const go=()=>{ CMP.on=true; window.addEventListener("deviceorientationabsolute",cmpOri,true); window.addEventListener("deviceorientation",cmpOri,true); cmpUi(); cmpDraw(); };
   if(typeof DeviceOrientationEvent.requestPermission==="function"){ DeviceOrientationEvent.requestPermission().then(r=>{ if(r==="granted") go(); else mbToast("The compass was not allowed. You can allow it in the phone settings."); }).catch(()=>{ mbToast("The compass was not allowed."); }); }
   else go();
 }
@@ -6374,12 +6384,13 @@ function cmpStop(){
   window.removeEventListener("deviceorientationabsolute",cmpOri,true); window.removeEventListener("deviceorientation",cmpOri,true); cmpUi(); cmpDraw();
 }
 function flyCompass(){ if(CMP.on) cmpStop(); else cmpStart(); }
-function cmpScreen(){   // where the aircraft is on the screen (the map may be turned)
-  const c=MAP.latLngToContainerPoint([GP.pos.lat,GP.pos.lon]);
+function cmpScreenLL(lat,lon){
+  const c=MAP.latLngToContainerPoint([lat,lon]);
   if(!FY.on) return {x:c.x,y:c.y};
   const g=fyGeo(), r=FY.rot*RADc, vx=c.x-g.Qx, vy=c.y-g.Qy, co=Math.cos(r), si=Math.sin(r);
   return {x:g.Sx+vx*co+vy*si, y:g.Sy-vx*si+vy*co};
 }
+function cmpScreen(){ return cmpScreenLL(GP.pos.lat,GP.pos.lon); }
 function cmpEdge(cx,cy,ang,W,H){   // distance along the line to the screen edge
   const a=ang*RADc, dx=Math.sin(a), dy=-Math.cos(a), ts=[];
   if(dx>1e-6) ts.push((W-10-cx)/dx); if(dx<-1e-6) ts.push((10-cx)/dx);
@@ -6420,7 +6431,7 @@ function cmpSvg(){
 }
 function cmpDraw(){
   if(typeof MAP==="undefined"||!MAP) return; const sv=cmpSvg(); if(!sv) return;
-  const show=modeIsFly()&&GP.pos&&(RNG!=="off"||CMP.on&&CMP.hdg!=null||gpsMoving());
+  const show=modeIsFly()&&GP.pos&&(RNG!=="off"||(DIR.on&&!!DIR.tgt)||CMP.on&&CMP.hdg!=null||gpsMoving());
   if(!show){ if(sv.innerHTML) sv.innerHTML=""; return; }
   const mb=document.getElementById("mbox"), W=mb.clientWidth, H=mb.clientHeight; sv.setAttribute("viewBox","0 0 "+W+" "+H);
   const P=cmpScreen(), L0=Math.max(W,H)*2, rot=FY.on? FY.rot : 0, BL=cmpBlocks();
@@ -6442,6 +6453,18 @@ function cmpDraw(){
     const a=n360(GP.trk-rot), wl=Math.round((9*7.1+4*4.6+4+20)/2), ed=cmpEdge(P.x,P.y,a,W,H);
     pills+=cmpPlace(P,a,Math.max(70,Math.min(170,ed-wl-10)),34,ed-wl-10,"TRACK "+String(Math.round(GP.trk)%360).padStart(3,"0")+"\u00b0","TRUE","#1a1308",BL,W,H);
   }
+  if(DIR.on&&DIR.tgt){
+    const T=cmpScreenLL(DIR.tgt.lat,DIR.tgt.lon), dx=T.x-P.x, dy=T.y-P.y, len=Math.hypot(dx,dy);
+    if(len>24){
+      const a=n360(Math.atan2(dx,-dy)/RADc), s=st(a), f=v=>v.toFixed(1);
+      o+='<line x1="'+f(s[0])+'" y1="'+f(s[1])+'" x2="'+f(T.x)+'" y2="'+f(T.y)+'" stroke="#fff" stroke-opacity=".85" stroke-width="6" stroke-linecap="round"/><line x1="'+f(s[0])+'" y1="'+f(s[1])+'" x2="'+f(T.x)+'" y2="'+f(T.y)+'" stroke="'+WINE+'" stroke-width="2.6" stroke-linecap="round"/>';
+      const brg=gpsBrg(GP.pos.lat,GP.pos.lon,DIR.tgt.lat,DIR.tgt.lon), txt="DIRECT "+String(Math.round(brg)%360).padStart(3,"0")+"\u00b0", wl=Math.round((txt.length*7.1+4*4.6+4+20)/2), pinExt=DIR.tgt.snapped? 12 : 33+4;
+      const dmax=Math.min(len-wl-pinExt-3, cmpEdge(P.x,P.y,a,W,H)-wl-8);
+      if(dmax>=50) pills+=cmpPlace(P,a,dmax,50,dmax,txt,"TRUE",WINE,BL,W,H);
+    }
+    if(DIR.tgt.snapped) o+='<circle cx="'+T.x.toFixed(1)+'" cy="'+T.y.toFixed(1)+'" r="11" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="5.5"/><circle cx="'+T.x.toFixed(1)+'" cy="'+T.y.toFixed(1)+'" r="11" fill="none" stroke="'+WINE+'" stroke-width="3"/>';
+    else o+='<path transform="translate('+T.x.toFixed(1)+' '+T.y.toFixed(1)+')" d="M0 0 c-9 -12 -11 -16 -11 -21 a11 11 0 1 1 22 0 c0 5 -2 9 -11 21z" fill="'+WINE+'" stroke="#fff" stroke-width="1.5"/><circle cx="'+T.x.toFixed(1)+'" cy="'+(T.y-21).toFixed(1)+'" r="4" fill="#fff"/>';
+  }
   const RG=ringsDraw(P,BL,W,H);
   sv.innerHTML=RG.o+o+pills+RG.p;
 }
@@ -6462,6 +6485,8 @@ function rngUi(){
   const b=document.getElementById("fyRng"); if(!b) return;
   const fix=!!GP.pos&&GP.on;
   b.classList.toggle("on",RNG!=="off"&&fix);
+  b.classList.toggle("rg-nm",RNG==="nm"&&fix); b.classList.toggle("rg-min",RNG==="min"&&fix);
+  try{ dirUi(); }catch(_){}
   if(fix) b.removeAttribute("aria-disabled"); else b.setAttribute("aria-disabled","true");
   b.removeAttribute("tabindex");
   const l=b.querySelector(".mk-l"); if(l) l.textContent="RINGS "+(RNG==="off"?"OFF":RNG==="nm"?"NM":"MIN");
@@ -6497,6 +6522,47 @@ function ringsDraw(P,BL,W,H){
   });
   return {o,p:pills};
 }
+// ═══ v1.09.027: DIRECT (a line to a tapped point, in deep wine red) and the position symbol choice ═══
+const WINE="#7d1c33";
+const DIR={on:true,tgt:null}; try{ DIR.on=localStorage.getItem("fy_dir")!=="0"; }catch(_){}
+function dirUi(){
+  const b=document.getElementById("fyDir"); if(!b) return;
+  const fix=!!GP.pos&&GP.on;
+  b.classList.toggle("dr-on",DIR.on&&fix&&!!DIR.tgt);
+  if(fix) b.removeAttribute("aria-disabled"); else b.setAttribute("aria-disabled","true");
+  b.removeAttribute("tabindex");
+}
+function flyDirect(){
+  DIR.on=!DIR.on; try{ localStorage.setItem("fy_dir",DIR.on?"1":"0"); }catch(_){}
+  dirUi(); cmpDraw();
+  if(DIR.on&&!DIR.tgt) mbToast("Tap a waypoint on the map");
+}
+function directTap(ll){   // in Fly, with DIRECT on: a tap on a reporting point or on empty map sets the target; a tap on a NOTAM area still opens its popup
+  if(!modeIsFly()||!DIR.on) return false;
+  const o= MAP.getZoom()>=9? snapNearest(ll) : null;
+  if(o) DIR.tgt={lat:o.lat,lon:o.lon,name:o.name,snapped:true};
+  else { if(idsAt(ll).length||gisHtml(ll)) return false; DIR.tgt={lat:ll.lat,lon:ll.lng,name:"Point",snapped:false}; }
+  dirUi(); cmpDraw(); return true;
+}
+// position symbols
+const SYM={
+  paper:{vb:"-20 -20 40 40",pv:"-24 -24 48 48",c:"0 0",body:'<path d="M0 -19 L14 15 L3 10 L0 18 L-3 10 L-14 15Z" fill="#1c3d6e" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><path d="M0 -15 L0 9" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>',al:"מטוס נייר"},
+  plane:{vb:"0 0 24 24",pv:"-2 -2 28 28",c:"12 12",body:'<g fill="#1c3d6e" stroke="#fff" stroke-width="1.3" stroke-linejoin="round" paint-order="stroke"><path d="M12 2.5c.7 0 1.2.8 1.2 1.8v4.3H21a1 1 0 0 1 1 1v1.8a1 1 0 0 1-1 1h-7.8v5H16a1 1 0 0 1 1 1v.8a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-.8a1 1 0 0 1 1-1h2.8v-5H3a1 1 0 0 1-1-1V9.6a1 1 0 0 1 1-1h7.8V4.3c0-1 .5-1.8 1.2-1.8z"/></g>',al:"מטוס"},
+  dot:{vb:"-20 -20 40 40",pv:"-26 -40 52 64",c:"0 0",body:'<path d="M0 0 L-13 -34 Q0 -40 13 -34Z" fill="#1c3d6e" opacity=".3"/><circle r="9" fill="#1c3d6e" stroke="#fff" stroke-width="3"/>',al:"נקודה עם קונוס"}
+};
+let SYMK="paper"; try{ const v=localStorage.getItem("fy_sym"); if(v&&SYM[v]) SYMK=v; }catch(_){}
+function symIcon(){ const s=SYM[SYMK]; return L.divIcon({className:"gp-ac",iconSize:[40,40],iconAnchor:[20,20],html:'<svg viewBox="'+s.vb+'" aria-hidden="true">'+s.body+'</svg>'}); }
+function symSet(k){
+  if(!SYM[k]) return; SYMK=k; try{ localStorage.setItem("fy_sym",k); }catch(_){}
+  document.querySelectorAll("#symSeg button").forEach(b=>b.classList.toggle("on",b.dataset.s===k));
+  if(GP.mk){ GP.mk.setIcon(symIcon()); const el=GP.mk.getElement(), sv=el&&el.querySelector("svg"); if(sv) sv.style.transform="rotate("+Math.round(GP.trk||0)+"deg)"; }
+}
+(function symInit(){
+  const seg=document.getElementById("symSeg"); if(!seg) return;
+  seg.innerHTML=Object.keys(SYM).map(k=>{ const s=SYM[k]; return '<button type="button" data-s="'+k+'" aria-label="'+s.al+'"><svg viewBox="'+s.pv+'" aria-hidden="true"><g transform="rotate(35 '+s.c+')">'+s.body+'</g></svg></button>'; }).join("");
+  seg.addEventListener("click",e=>{ const b=e.target.closest("button"); if(b) symSet(b.dataset.s); });
+  symSet(SYMK);
+})();
 </script>
 <script>(function(){var l=document.querySelector('link[rel=apple-touch-icon]');var i=document.getElementById('nIcon');if(l&&i)i.src=l.href})();</script>
 <div class="adm-wrap" id="admWrap"><div class="adm-bk" id="admBk" onclick="admClose()"></div>
