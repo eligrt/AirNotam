@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.043 · built by eligrt
+     AirNotam-ISR · v1.09.044 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2540,10 +2540,10 @@ body.demo #pvBar{display:flex;}
 #mbGear{transition:bottom var(--glide),translate var(--glide);}
 #mbFull,.leaflet-control.lyr-ctl,.zoom-tl,.leaflet-control-zoom{transition:translate var(--glide);}
 /* Route info: the box slides open (grid row 0fr to 1fr), the handle changes shape with it, one border only (no line where handle and box meet) */
-#fpBox{display:grid;grid-template-rows:0fr;visibility:hidden;pointer-events:none;transition:grid-template-rows var(--glide),visibility 0s .4s;}
-#fpWrap.op #fpBox{grid-template-rows:1fr;visibility:visible;pointer-events:auto;transition:grid-template-rows var(--glide),visibility 0s;}
-#fpClip{min-height:0;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;}
-#fpIn{flex:none;-webkit-mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 100%/136px 2.5px no-repeat;-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 100%/136px 2.5px no-repeat;mask-composite:exclude;}
+#fpBox{position:relative;height:0;overflow:hidden;visibility:hidden;pointer-events:none;transition:height var(--glide),visibility 0s .4s;}   /* v1.09.044: the box grows by its height and its content stays glued to the bottom edge, so it always touches the handle */
+#fpWrap.op #fpBox{height:var(--fp-h,0px);visibility:visible;pointer-events:auto;transition:height var(--glide),visibility 0s;}
+#fpClip{position:absolute;inset:0;overflow:hidden;}
+#fpIn{position:absolute;left:0;right:0;bottom:0;-webkit-mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 100%/136px 2.5px no-repeat;-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 100%/136px 2.5px no-repeat;mask-composite:exclude;}
 #fpHnd{width:140px;min-width:140px;transition:height var(--glide),margin-top var(--glide),border-radius var(--glide),border-top-width var(--glide);}
 #fpWrap{transition:opacity .3s ease,visibility 0s;}
 #fpWrap.gone{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s .3s;}
@@ -2571,8 +2571,7 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
 #alCard .al-l{font:400 14px/1.3 var(--font-ui);color:#3b2a0a;margin-top:3px;}
 #fpWrap{translate:0 var(--al-sh,0px);transition:opacity .3s ease,visibility 0s,translate var(--glide);}
 #fpWrap.gone{transition:opacity .3s ease,visibility 0s .3s,translate var(--glide);}
-#rteCorrBox{flex-wrap:wrap;height:auto;flex-shrink:0;row-gap:2px;align-content:center;}
-#rteCorrBox .sp-note{flex:0 0 100%;font-size:12px;line-height:1.35;color:var(--ink-muted);font-weight:400;}
+#rteCorrBox{height:auto;flex-shrink:0;}   /* v1.09.044: the grey line sits inside the text block under the title (like the other rows) and wraps beside the buttons; the row grows to fit */
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2612,7 +2611,7 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.043 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.044 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2646,7 +2645,7 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
       </div>
       <div class="sp-row sp-irow sp-static" id="symBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l6 17-6-4-6 4z"/></svg></span><span class="sp-tx"><b>סמל מיקום</b></span><div class="fgrace sp-corr" id="symSeg"></div></div>
       <div class="sp-grp">מסלול</div>
-      <div class="sp-row sp-irow sp-static" id="rteCorrBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18"/><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/></svg></span><span class="sp-tx"><b>רוחב המסלול</b></span><div class="fgrace sp-corr" id="corrSeg"><button type="button" data-c="2">2NM</button><button type="button" data-c="3">3NM</button><button type="button" data-c="5">5NM</button></div><small class="sp-note">רוחב המסלול מכל צד. קובע אילו NOTAMים יוצגו לאורך המסלול.</small></div>
+      <div class="sp-row sp-irow sp-static" id="rteCorrBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18"/><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/></svg></span><span class="sp-tx"><b>רוחב המסלול</b><small>רוחב המסלול מכל צד. קובע אילו NOTAMים יוצגו לאורך המסלול.</small></span><div class="fgrace sp-corr" id="corrSeg"><button type="button" data-c="2">2NM</button><button type="button" data-c="3">3NM</button><button type="button" data-c="5">5NM</button></div></div>
       <div class="sp-row sp-irow sp-static sp-swrow" id="driftBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M7 9l-3 3 3 3M17 9l3 3-3 3"/><path d="M12 5v3M12 16v3"/></svg></span><span class="sp-tx"><b>הצג מרחק מהמסלול</b><small>קו מהמטוס אל המסלול, ובסטייה גם המרחק</small></span><label class="sp-sw"><input type="checkbox" id="driftSw" aria-label="הצג מרחק מהמסלול"><i></i></label></div>
       <div class="sp-grp">עזרה</div>
       <a class="sp-row sp-irow" href="mailto:eligrt@gmail.com?subject=AirNotam%20-%20משוב"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg></span><span class="sp-tx"><b>יש תקלה או רעיון? כתוב לי</b></span></a>
@@ -2655,7 +2654,7 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.043 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.044 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5699,7 +5698,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.043 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.044 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6236,7 +6235,7 @@ function mbSync(){
   q("mbOnly").classList.toggle("on",ro); q("mbOnly").setAttribute("aria-pressed",ro?"true":"false"); q("mbOnly").classList.toggle("grey",!ro); q("mbOnly").classList.remove("dis"); q("mbOnly").setAttribute("aria-disabled","false"); q("mbOnlyT").textContent= rm==="only"? "ONLY":"ALL";
   if(timeMode==="flight"&&!flightValid(FLIGHT)){ renderFlightBar(); try{render();}catch(_){} }   // v1.08.023: a custom range ends when the planned landing has passed
   const H=winH(); q("mbTimeT").textContent= timeMode==="flight"? "CUSTOM" : H===0? "ALL" : H+" HR";
-  { const pt=q("mpTimeT"); if(pt) pt.textContent=mpTimeTxt(q("mbTimeT").textContent); const po=q("mpOnly"); if(po){ po.classList.toggle("on",ro); po.classList.toggle("dis",!hasR); po.setAttribute("aria-pressed",ro?"true":"false"); } }
+  { const pt=q("mpTimeT"); if(pt) pt.textContent=mpTimeTxt(q("mbTimeT").textContent); const po=q("mpOnly"); if(po){ po.classList.toggle("on",ro); po.classList.remove("dis"); po.setAttribute("aria-pressed",ro?"true":"false"); } }
   [["hz","mbF_hz"],["cvfr","mbF_cvfr"],["apt","mbF_apt"],["hel","mbF_hel"],["ins","mbF_ins"]].forEach(([k,id])=>{ const v=FAMC[k]; q(id).classList.toggle("on",v===1); q(id).classList.toggle("fd",v===2); q(id).setAttribute("aria-pressed",v===1?"true":v===2?"mixed":"false"); const f=document.getElementById("mpf_"+k); if(f){ f.classList.toggle("o",!v); f.classList.toggle("f",v===2); } });
   q("mbPill").classList.toggle("alloff",!(FAMC.cvfr||FAMC.apt||FAMC.hel||FAMC.ins));
   q("mbPill").classList.toggle("glow",!FAMC.hz);   // v1.08.108: ALERT off (or everything off) = a steady red ring, so a pilot cannot forget NOTAMs are hidden; no mark is added to the closed pill
@@ -6659,6 +6658,7 @@ function cmpBlocks(){   // every button and panel on the map: a label never sits
     out.push({x1:r.left-mr.left-6,x2:r.right-mr.left+6,y1:r.top-mr.top-6,y2:r.bottom-mr.top+6}); });
   return out;
 }
+const AC_R=26;   // v1.09.044: half size of the area around the aircraft that stays free of labels
 function cmpHit(a,b){ return a.x1<b.x2&&a.x2>b.x1&&a.y1<b.y2&&a.y2>b.y1; }
 function cmpPlace(P,ang,d0,dMin,dMax,txt,tag,col,BL,W,H){   // slide the label along its line until it is clear of every button and of the other label
   const a=ang*RADc, w=Math.round(txt.length*7.1+tag.length*4.6+4+20); let r=ang-90; r=((r+180)%360+360)%360-180; if(r>90) r-=180; if(r<-90) r+=180;
@@ -6704,7 +6704,12 @@ function driftDraw(P,BL){   // a short line from the aircraft straight across to
   const ux=dx/len, uy=dy/len, sx=P.x+ux*16, sy=P.y+uy*16, ex=F.x, ey=F.y, f=v=>v.toFixed(1);
   const head=(x,y,vx,vy)=>{ const nx=-vy, ny=vx, bx=x-vx*13, by=y-vy*13; return '<path d="M'+f(x)+' '+f(y)+' L'+f(bx+nx*6)+' '+f(by+ny*6)+' L'+f(bx-nx*6)+' '+f(by-ny*6)+'Z" fill="'+D.col+'" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>'; };
   let o='<line x1="'+f(sx)+'" y1="'+f(sy)+'" x2="'+f(ex)+'" y2="'+f(ey)+'" stroke="#fff" stroke-opacity=".9" stroke-width="7" stroke-linecap="round"/><line x1="'+f(sx)+'" y1="'+f(sy)+'" x2="'+f(ex)+'" y2="'+f(ey)+'" stroke="'+D.col+'" stroke-width="3.4" stroke-linecap="round"/>'+head(ex,ey,ux,uy)+head(sx,sy,-ux,-uy);
-  if(D.pill){ const txt=(D.d<10? D.d.toFixed(1) : String(Math.round(D.d)))+" NM", w=txt.length*8.2+22, mx=(sx+ex)/2, my=(sy+ey)/2; try{ BL.push({x1:mx-w/2-2,x2:mx+w/2+2,y1:my-14,y2:my+14}); }catch(_){}
+  if(D.pill){ const txt=(D.d<10? D.d.toFixed(1) : String(Math.round(D.d)))+" NM", w=txt.length*8.2+22;
+    let mx=(sx+ex)/2, my=(sy+ey)/2;   // v1.09.044: the pill starts in the middle of the line and slides along it until it is clear of the aircraft symbol
+    { const hit=(x,y)=>Math.abs(x-P.x)<AC_R+w/2&&Math.abs(y-P.y)<AC_R+12;
+      if(hit(mx,my)){ const mid=len/2; let found=false;
+        for(let k=1;k<=60&&!found;k++){ for(const sg of [1,-1]){ const d=mid+sg*k*4; if(d<AC_R||d>len+w) continue; const x=P.x+ux*d, y=P.y+uy*d; if(!hit(x,y)){ mx=x; my=y; found=true; break; } } } } }
+    try{ BL.push({x1:mx-w/2-2,x2:mx+w/2+2,y1:my-14,y2:my+14}); }catch(_){}
     o+='<rect x="'+f(mx-w/2)+'" y="'+f(my-12)+'" width="'+f(w)+'" height="24" rx="12" fill="#fbf6e8" stroke="'+D.col+'" stroke-width="1.8"/><text x="'+f(mx)+'" y="'+f(my+4.6)+'" font-size="13" font-family="JetBrains Mono,monospace" font-weight="800" text-anchor="middle" fill="'+D.col+'">'+txt+'</text>'; }
   return o;
 }
@@ -6714,6 +6719,7 @@ function cmpDraw(){
   if(!show){ if(sv.innerHTML) sv.innerHTML=""; return; }
   const mb=document.getElementById("mbox"), W=mb.clientWidth, H=mb.clientHeight; sv.setAttribute("viewBox","0 0 "+W+" "+H);
   const P=cmpScreen(), L0=Math.max(W,H)*2, rot=FY.on? FY.rot : 0, BL=cmpBlocks();
+  BL.push({x1:P.x-AC_R,x2:P.x+AC_R,y1:P.y-AC_R,y2:P.y+AC_R});   // v1.09.044: the aircraft symbol is protected space, no label may sit on it
   let o="", pills="";
   const ray=(a)=>[P.x+L0*Math.sin(a*RADc),P.y-L0*Math.cos(a*RADc)], st=(a)=>[P.x+20*Math.sin(a*RADc),P.y-20*Math.cos(a*RADc)];   // lines start just outside the aircraft
   if(CMP.on&&CMP.hdg!=null){
@@ -6730,7 +6736,10 @@ function cmpDraw(){
   }
   if(gpsMoving()){
     const a=n360(GP.trk-rot), wl=Math.round((9*7.1+4*4.6+4+20)/2), ed=cmpEdge(P.x,P.y,a,W,H);
-    pills+=cmpPlace(P,a,Math.max(70,Math.min(170,ed-wl-10)),34,ed-wl-10,"TRACK "+String(Math.round(GP.trk)%360).padStart(3,"0")+"\u00b0","TRUE","#1a1308",BL,W,H);
+    const tt="TRACK "+String(Math.round(GP.trk)%360).padStart(3,"0")+"\u00b0";
+    let tp=cmpPlace(P,a,Math.max(70,Math.min(170,ed-wl-10)),34,ed-wl-10,tt,"TRUE","#1a1308",BL,W,H);
+    if(!tp){ const a2=n360(a+180), ed2=cmpEdge(P.x,P.y,a2,W,H); tp=cmpPlace(P,a2,Math.max(70,Math.min(170,ed2-wl-10)),34,ed2-wl-10,tt,"TRUE","#1a1308",BL,W,H); }   // v1.09.044: no room ahead (compass and track nearly the same): the label goes behind the aircraft, never on it
+    pills+=tp;
   }
   if(DIR.on&&DIR.tgt){
     const T=cmpScreenLL(DIR.tgt.lat,DIR.tgt.lon), dx=T.x-P.x, dy=T.y-P.y, len=Math.hypot(dx,dy);
@@ -6953,7 +6962,7 @@ function flyPills(){
     if(showR) h+='<div class="dv"></div>';
     h+='<div class="rw dr"><span class="pl">DIRECT</span>'+vl(fpBrg(P.lat,P.lon,T.lat,T.lon),nm,hh,fpFuel(hh))+'</div>';
   }
-  B.innerHTML=h;
+  B.innerHTML=h; w.style.setProperty("--fp-h",B.offsetHeight+"px");
   fpEx((FPO.open&&!LP_OPEN)? Math.max(0,Math.round(B.offsetHeight+34-COL_OFF)) : 0);   // how far the open pill pushes the button columns down
 }
 function fpEx(v){   // the columns glide down with the pill (CSS translate); the shape filter follows them
