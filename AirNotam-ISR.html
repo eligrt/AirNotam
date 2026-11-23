@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.047 · built by eligrt
+     AirNotam-ISR · v1.09.048 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -150,7 +150,7 @@ html,body{height:100%;height:var(--app-h,100%);background:var(--paper-hi);font-f
 .fl-prog .pg-bar i{display:block;height:100%;width:0;background:var(--info-accent);transition:width .35s ease;}
 .fl-prog.done .pg-txt b{color:#9fe0b0;}
 .fl-prog.done .pg-bar i{background:#6fcf8a;}
-.map-legend{background:rgba(251,246,232,.92);border-radius:6px;padding:4px 8px;display:flex;gap:9px;font-size:10.5px;color:var(--ink-muted);direction:rtl;font-family:var(--font-ui);}
+.map-legend{background:rgba(251,246,232,.96);border-radius:6px;padding:4px 8px;display:flex;gap:9px;font-size:10.5px;color:var(--ink-muted);direction:rtl;font-family:var(--font-ui);}
 .map-legend span{display:inline-flex;align-items:center;gap:4px;}
 .lg{width:10px;height:10px;border-radius:50%;display:inline-block;}
 .lg-new{background:rgba(185,74,58,.35);border:2px solid #b94a3a;}
@@ -158,7 +158,7 @@ html,body{height:100%;height:var(--app-h,100%);background:var(--paper-hi);font-f
 .lg-irr{background:rgba(154,154,154,.3);border:2px dotted #6b6b6b;}
 /* v1.08.045: stage 4 - the bell keeps the ringing of the old update button (rules for the bell itself are at the end) */
 @keyframes bellRing{0%,100%{transform:rotate(0)}12%{transform:rotate(16deg)}28%{transform:rotate(-14deg)}44%{transform:rotate(10deg)}60%{transform:rotate(-7deg)}76%{transform:rotate(3deg)}}
-.irr-tgl{background:rgba(251,246,232,.95);border-radius:6px;padding:5px 8px;font-size:11.5px;color:var(--ink);direction:rtl;font-family:var(--font-ui);display:flex;align-items:center;gap:5px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.15);}
+.irr-tgl{background:rgba(251,246,232,.96);border-radius:6px;padding:5px 8px;font-size:11.5px;color:var(--ink);direction:rtl;font-family:var(--font-ui);display:flex;align-items:center;gap:5px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.15);}
 .irr-tgl input{margin:0;accent-color:var(--ink);}
 /* popup */
 .pu-wrap{max-height:300px;overflow-y:auto;overflow-x:hidden;direction:rtl;padding-left:6px;
@@ -588,7 +588,7 @@ html,body{height:100%;height:var(--app-h,100%);background:var(--paper-hi);font-f
 .footer-refresh .rtime{font-family:var(--font-mono);font-weight:700;color:var(--ink);}
 .footer-build{flex:1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;letter-spacing:0;font-size:8.5px;}
 /* v1.05.002T: shape-family filter, lower right of the map (v1.06.001: in prod, הגדרות מתקדמות, off by default) */
-.fam-ctl{background:rgba(251,246,232,.94);border:1px solid rgba(14,35,72,.25);border-radius:7px;padding:4px 6px;box-shadow:0 1px 5px rgba(14,35,72,.2);font-family:var(--font-ui);direction:rtl;}
+.fam-ctl{background:rgba(251,246,232,.96);border:1px solid rgba(14,35,72,.25);border-radius:7px;padding:4px 6px;box-shadow:0 1px 5px rgba(14,35,72,.2);font-family:var(--font-ui);direction:rtl;}
 .fam-ctl label{display:flex;align-items:center;gap:5px;font-size:11px;line-height:1.15;padding:2px 1px;color:var(--ink);cursor:pointer;white-space:nowrap;}
 .fam-ctl label.off{color:var(--ink-faint);cursor:default;}
 .fam-ctl input{margin:0;width:12px;height:12px;}
@@ -1221,7 +1221,7 @@ body.wide .rvc-mid .card>.more{-webkit-mask-image:linear-gradient(to bottom,#000
 .rvcer[hidden],.ms-chips[hidden]{display:none !important;}
 .cer{position:relative;display:flex;justify-content:center;align-items:center;min-height:160px;margin:0 -6px;}
 .cer-map{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;-webkit-mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent);}
-.stamp{position:relative;border:3px solid var(--done-g);color:var(--done-g);background:rgba(251,246,232,.9);border-radius:8px;padding:8px 18px;text-align:center;
+.stamp{position:relative;border:3px solid var(--done-g);color:var(--done-g);background:rgba(251,246,232,.96);border-radius:8px;padding:8px 18px;text-align:center;
   box-shadow:0 2px 10px rgba(14,35,72,.12);pointer-events:none;opacity:0;transform:rotate(-6deg) scale(1.45);
   transition:opacity .25s ease .35s,transform .45s cubic-bezier(.2,1.6,.4,1) .35s;}
 .stamp.landed{opacity:1;transform:rotate(-6deg) scale(1);}
@@ -2172,7 +2172,7 @@ html.full #mbox{--mt:env(safe-area-inset-top,0px);}
 .mk-b.nr .mk-l{bottom:-9px;line-height:9px;padding:2px 6px;text-align:center;}
 .mk-b.nr .mk-l::before{content:"NOTAM";display:block;font-size:6.5px;line-height:8px;opacity:.85;letter-spacing:.06em;}
 .mk-dock,.mk-tab,.mk-hnd,.mb-info .mib{-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
-.mb-info .mib{background:rgba(251,246,232,.80) !important;}   /* same see-through level as the dock and the popups */
+.mb-info .mib{background:var(--glass) !important;}   /* same see-through level as the dock and the popups */
 .mk-b.done{border-color:#1f6f3f;background:#dcefe2;color:#1f6f3f;} .mk-b.done .mk-l{background:#1f6f3f;}
 .mk-b[aria-disabled="true"]{opacity:.45;cursor:default;}
 .mk-b.pulse::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:3px solid #e0a63a;opacity:0;animation:mbPulse 2.5s ease-out infinite;pointer-events:none;}
@@ -2186,12 +2186,12 @@ html.full #mbox{--mt:env(safe-area-inset-top,0px);}
 #mbGear{left:10px;bottom:calc(var(--dkb) + 123px);z-index:2;}
 #mbox.dk-c #mbGear{bottom:calc(var(--dkb) + 38px);}
 #stage:not(.v-map) #mbGear{bottom:var(--dkb);}
-.mk-dock{position:absolute;left:50%;margin-left:-161px;bottom:var(--dkb);width:322px;height:92px;box-sizing:border-box;border-radius:30px;background:rgba(251,246,232,.80);border:2.5px solid #c8a04a;z-index:3;box-shadow:0 1px 5px rgba(14,35,72,.2);transform-origin:50% 100%;transition:transform .32s cubic-bezier(.3,.8,.3,1),opacity .24s ease;}
+.mk-dock{position:absolute;left:50%;margin-left:-161px;bottom:var(--dkb);width:322px;height:92px;box-sizing:border-box;border-radius:30px;background:var(--glass);border:2.5px solid #c8a04a;z-index:3;box-shadow:0 1px 5px rgba(14,35,72,.2);transform-origin:50% 100%;transition:transform .32s cubic-bezier(.3,.8,.3,1),opacity .24s ease;}
 .mk-dock .mk-b{top:16px;}
 .mk-sep{position:absolute;top:26px;width:1.5px;height:36px;border-radius:1px;background:#cdbf98;}
-.mk-tab{position:absolute;left:50%;top:-26px;margin-left:-28px;width:56px;height:26px;box-sizing:border-box;border:2.5px solid #c8a04a;border-bottom:0;border-radius:14px 14px 0 0;background:rgba(251,246,232,.80);display:flex;align-items:center;justify-content:center;color:#1c3d6e;padding:0;cursor:pointer;}
+.mk-tab{position:absolute;left:50%;top:-26px;margin-left:-28px;width:56px;height:26px;box-sizing:border-box;border:2.5px solid #c8a04a;border-bottom:0;border-radius:14px 14px 0 0;background:var(--glass);display:flex;align-items:center;justify-content:center;color:#1c3d6e;padding:0;cursor:pointer;}
 .mk-tab svg,.mk-hnd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
-.mk-hnd{position:absolute;left:50%;margin-left:-32px;bottom:var(--dkb);width:64px;height:32px;box-sizing:border-box;border-radius:16px;background:rgba(251,246,232,.80);border:2.5px solid #c8a04a;display:flex;opacity:0;pointer-events:none;transition:opacity .15s ease;align-items:center;justify-content:center;color:#1c3d6e;padding:0;cursor:pointer;z-index:3;}
+.mk-hnd{position:absolute;left:50%;margin-left:-32px;bottom:var(--dkb);width:64px;height:32px;box-sizing:border-box;border-radius:16px;background:var(--glass);border:2.5px solid #c8a04a;display:flex;opacity:0;pointer-events:none;transition:opacity .15s ease;align-items:center;justify-content:center;color:#1c3d6e;padding:0;cursor:pointer;z-index:3;}
 #mbox.dk-c .mk-dock{transform:scale(.72) translateY(24px);opacity:0;pointer-events:none;transition:transform .22s cubic-bezier(.4,0,.6,1),opacity .2s ease;}
 #mbox.dk-c .mk-hnd{opacity:1;pointer-events:auto;transition:opacity .28s ease .14s;}
 #mbGear,#mbTime,#mbOnly,.mbox:not(.rv) .mb-leg{transition:bottom .32s cubic-bezier(.3,.8,.3,1);}
@@ -2217,7 +2217,7 @@ html.full #mbFull{top:calc(282px + env(safe-area-inset-top,0px)) !important;}
 .mbox.dk-c:not(.rv) .mb-leg{bottom:calc(var(--dkb) + 46px);}
 .lp-cue{position:absolute;height:56px;z-index:6;border-radius:0 0 19px 19px;background:linear-gradient(to bottom,rgba(251,246,232,0),rgba(251,246,232,.8) 78%);pointer-events:none;opacity:1;transition:opacity .35s ease;}
 .lp-cue.hide{opacity:0;}
-.fam-ctl{transition:opacity .25s ease;background:rgba(251,246,232,.80) !important;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
+.fam-ctl{transition:opacity .25s ease;background:var(--glass) !important;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
 .fam-ctl.lp-hid{opacity:0;pointer-events:none;}   /* the shape filter steps aside only when the layers popup would really cover it */
 .lp-cue .scroll-btn{pointer-events:auto;bottom:8px;}
 .lp-cue.hide .scroll-btn{pointer-events:none;}
@@ -2225,7 +2225,7 @@ body.lv #list{padding-bottom:86px;}
 .rvc{padding-bottom:calc(12px + max(0px,calc(env(safe-area-inset-bottom,0px) - 6px))) !important;}   /* the review curtain now rests on the screen bottom (no footer under it) */
 .setp{padding-bottom:max(0px,calc(env(safe-area-inset-bottom,0px) - 8px));}
 /* the layers panel (charts at the top, layers below, sliders always visible) */
-.lcur{left:74px !important;width:min(304px,calc(100% - 86px)) !important;border:2.5px solid #1c3d6e !important;border-radius:22px !important;background:rgba(251,246,232,.80) !important;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);padding:16px 14px 20px !important;}
+.lcur{left:74px !important;width:min(304px,calc(100% - 86px)) !important;border:2.5px solid #1c3d6e !important;border-radius:22px !important;background:var(--glass) !important;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);padding:16px 14px 20px !important;}
 .lp-st.lpf{left:74px !important;width:min(304px,calc(100% - 86px)) !important;}
 .lp-arr{left:64px;}
 .lcur .lp-sec{font:700 10px var(--font-mono);letter-spacing:.12em;color:#8a7a52;direction:ltr;text-align:left;margin:2px 0 6px;}
@@ -2322,8 +2322,8 @@ html.full.gps-vis .mb-info{top:calc(40px + env(safe-area-inset-top,0px));}
 .lyr-btn svg{width:24px !important;height:24px !important;}
 #mbFull{left:16px !important;top:calc(248px + var(--mt)) !important;width:44px !important;height:44px !important;}
 html.full #mbFull{top:calc(248px + env(safe-area-inset-top,0px)) !important;}
-.pp{background:rgba(251,246,232,.80);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
-.pp-arr::after{background:rgba(251,246,232,.80);}
+.pp{background:var(--glass);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
+.pp-arr::after{background:var(--glass);}
 .pp-row{background:transparent;} .pp-row:active{background:rgba(14,35,72,.08);}
 
 /* ═══ v1.09.016: side rail 38px, no Settings label, mode icon = ruler and pencil ═══ */
@@ -2360,7 +2360,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
 #dkDraw.on{background:#f1dca0;}
 #dkDraw.pulse::after{border-color:#c8a04a;}
 .mk-dock{background:transparent !important;border-color:transparent !important;-webkit-backdrop-filter:none;backdrop-filter:none;}
-.mk-dock::before{content:"";position:absolute;inset:-2.5px;border-radius:30px;box-sizing:border-box;border:2.5px solid var(--dkc,#c8a04a);background:rgba(251,246,232,.80);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);z-index:-1;pointer-events:none;
+.mk-dock::before{content:"";position:absolute;inset:-2.5px;border-radius:30px;box-sizing:border-box;border:2.5px solid var(--dkc,#c8a04a);background:var(--glass);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);z-index:-1;pointer-events:none;
   -webkit-mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 0/136px 3px no-repeat;-webkit-mask-composite:xor;
   mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 0/136px 3px no-repeat;mask-composite:exclude;}
 #mbDockF{--dkc:#1c3d6e;}
@@ -2434,7 +2434,7 @@ body.demo .mb-leg{display:none !important;}
 #fpWrap{left:66px;right:10px;top:10px;gap:0;align-items:stretch;}
 html.full #fpWrap{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));}
 html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top,0px)));}
-#fpIn{background:rgba(251,246,232,.82);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);border:2.5px solid #1c3d6e;border-radius:18px;padding:4px 12px 6px;color:#1c3d6e;direction:ltr;box-sizing:border-box;box-shadow:0 1px 5px rgba(14,35,72,.25);pointer-events:auto;font-size:17px;}
+#fpIn{background:var(--glass);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);border:2.5px solid #1c3d6e;border-radius:18px;padding:4px 12px 6px;color:#1c3d6e;direction:ltr;box-sizing:border-box;box-shadow:0 1px 5px rgba(14,35,72,.25);pointer-events:auto;font-size:17px;}
 #fpIn[hidden]{display:none;}
 #fpIn .st{display:flex;justify-content:space-between;align-items:center;font-size:16px;font-weight:700;padding:3px 0 5px;}
 #fpIn .st b{font-size:18px;margin-right:4px;}
@@ -2453,7 +2453,7 @@ html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top
 #fpIn .rw.dr .vl{font-weight:700;}
 #fpIn .rw.dr .pl{flex:none;border:2px dashed #7d1c33;border-radius:15px;padding:1px 10px;font:800 14px var(--font-mono);letter-spacing:.05em;}
 #fpIn .dn{font-weight:800;color:#0e2348;padding:6px 0;}
-#fpHnd{align-self:center;pointer-events:auto;display:flex;align-items:center;justify-content:center;gap:6px;height:30px;padding:0 14px;margin-top:-2.5px;box-sizing:border-box;border:2.5px solid #1c3d6e;border-top:0;border-radius:0 0 16px 16px;background:rgba(251,246,232,.82);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);color:#1c3d6e;font:700 12px var(--font-mono);letter-spacing:.08em;cursor:pointer;min-width:140px;}
+#fpHnd{align-self:center;pointer-events:auto;display:flex;align-items:center;justify-content:center;gap:6px;height:30px;padding:0 14px;margin-top:-2.5px;box-sizing:border-box;border:2.5px solid #1c3d6e;border-top:0;border-radius:0 0 16px 16px;background:var(--glass);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);color:#1c3d6e;font:700 12px var(--font-mono);letter-spacing:.08em;cursor:pointer;min-width:140px;}
 #fpHnd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
 
 /* ═══ v1.09.040: full-width Route info pill, buttons in two columns, mode switch screen ═══ */
@@ -2531,7 +2531,7 @@ body.demo #pvBar{display:flex;}
 #pvBar button:active{transform:scale(.93);}
 
 /* ═══ v1.09.041: columns start under the closed pill and glide with it, Route info slides, calmer dock, taller settings rows ═══ */
-:root{--fp-ex:0px;--glide:.4s cubic-bezier(.32,.72,.2,1);}
+:root{--glass:rgba(251,246,232,.80);--glass-amber:rgba(251,236,203,.80);--fp-ex:0px;--glide:.4s cubic-bezier(.32,.72,.2,1);}
 #mbox #mbGear{top:var(--rail-y,48px) !important;}
 #mbFull,html.full #mbFull{top:calc(var(--rail-y,48px) + 99px) !important;}
 #mbGear,#mbFull,.leaflet-control.lyr-ctl,.zoom-tl,.leaflet-control-zoom{translate:0 var(--fp-ex,0px);}
@@ -2555,14 +2555,14 @@ body.demo #pvBar{display:flex;}
 #corrSeg button{height:44px;padding:0 13px;font-size:14px;}
 
 /* ═══ v1.09.043: alert card (GPS lost / location blocked / compass), amber, same gap above and below, pill and columns glide down ═══ */
-#alCard{position:absolute;left:10px;right:10px;top:10px;height:84px;box-sizing:border-box;display:flex;flex-direction:row;direction:rtl;align-items:center;gap:12px;background:#fbeccb;border:1px solid #e3b75a;border-inline-start:5px solid #d9981f;border-radius:14px;padding:12px 14px;box-shadow:0 6px 18px rgba(14,35,72,.28);z-index:1012;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s .3s;}
+#alCard{position:absolute;left:10px;right:10px;top:10px;height:60px;box-sizing:border-box;display:flex;flex-direction:row;direction:rtl;align-items:center;gap:10px;background:var(--glass-amber);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);border:1px solid #e3b75a;border-inline-start:5px solid #d9981f;border-radius:12px;padding:8px 12px;box-shadow:0 1px 5px rgba(14,35,72,.25);z-index:1012;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s .3s;}
 html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));}
 #alCard.show{opacity:1;visibility:visible;transition:opacity .3s ease,visibility 0s;}
 #alCard.cmp.show{pointer-events:auto;cursor:pointer;}
-#alCard svg{flex:none;width:30px;height:30px;animation:alPl 1.6s ease-in-out infinite;transform-origin:center;}
+#alCard svg{flex:none;width:24px;height:24px;animation:alPl 1.6s ease-in-out infinite;transform-origin:center;}
 @keyframes alPl{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
-#alCard .al-t{font:700 17px/1.2 var(--font-ui);color:#7a4a05;}
-#alCard .al-l{font:400 14px/1.3 var(--font-ui);color:#3b2a0a;margin-top:3px;}
+#alCard .al-t{font:700 15px/1.2 var(--font-ui);color:#7a4a05;}
+#alCard .al-l{font:400 12.5px/1.3 var(--font-ui);color:#3b2a0a;margin-top:2px;}
 #fpWrap{translate:0 var(--al-sh,0px);transition:opacity .3s ease,visibility 0s,translate var(--glide);}
 #fpWrap.gone{transition:opacity .3s ease,visibility 0s .3s,translate var(--glide);}
 #rteCorrBox{height:auto;flex-shrink:0;}   /* v1.09.044: the grey line sits inside the text block under the title (like the other rows) and wraps beside the buttons; the row grows to fit */
@@ -2571,7 +2571,7 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
 #fpOpen{transform-origin:50% 0;transition:transform .42s cubic-bezier(.22,1,.36,1),opacity .3s ease;}
 #fpWrap:not(.op) #fpOpen{transform:scale(.72) translateY(-24px);opacity:0;transition:transform .36s cubic-bezier(.4,0,.2,1),opacity .3s ease;}
 #fpWrap:not(.op) #fpOpen,#fpWrap:not(.op) #fpOpen *{pointer-events:none !important;}
-#fpPill{position:absolute;top:0;left:50%;margin-left:-70px;width:140px;height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:6px;padding:0 14px;border:2.5px solid #1c3d6e;border-radius:16px;background:rgba(251,246,232,.82);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);color:#1c3d6e;font:700 12px var(--font-mono);letter-spacing:.08em;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+#fpPill{position:absolute;top:0;left:50%;margin-left:-70px;width:140px;height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:6px;padding:0 14px;border:2.5px solid #1c3d6e;border-radius:16px;background:var(--glass);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);color:#1c3d6e;font:700 12px var(--font-mono);letter-spacing:.08em;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s ease;}
 #fpPill svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
 #fpWrap:not(.op) #fpPill{opacity:1;pointer-events:auto;transition:opacity .4s ease .16s;}
 #fpHnd{margin:-2.5px auto 0;height:30px;width:140px;min-width:140px;}
@@ -2614,7 +2614,7 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.047 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.048 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2657,7 +2657,7 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.047 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.048 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5156,7 +5156,7 @@ function lsaInit(){
    The old side curtain is gone. ── */
 let LP_OPEN=null;   // "charts" | "layers" | null
 let FP_EX=0;   // v1.09.041: how far the open Route info pill pushes the button columns down
-const COL_OFF=16, AL_H=84, AL_GAP=10; let AL_SH=0;   // v1.09.042: where the button columns start, counted from the top of the closed Route info pill
+const COL_OFF=16, AL_H=60, AL_GAP=10; let AL_SH=0;   // v1.09.042: where the button columns start, counted from the top of the closed Route info pill
 const GIS_OP=(()=>{ try{ return JSON.parse(localStorage.getItem("airnotam_gis_op")||"{}")||{}; }catch(e){ return {}; } })();   // route line transparency, per route
 const lpEl=id=>document.getElementById(id);
 const lpOp=id=> id in GIS_OP ? Math.max(.1,Math.min(1,+GIS_OP[id]||1)) : 1;   // v1.08.067: the toggle switches a route on or off, the bar only softens it (10% to 100%)
@@ -5701,7 +5701,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.047 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.048 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
