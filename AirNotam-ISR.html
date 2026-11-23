@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.060 · built by eligrt
+     AirNotam-ISR · v1.09.061 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2577,7 +2577,7 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
 #fpHnd{margin:-2.5px auto 0;height:30px;width:140px;min-width:140px;}
 .sp-body>.cue{bottom:-58px;}   /* v1.09.049: the settings scroll fade now reaches the real bottom edge of the page */
 
-/* ═══ v1.09.060: new top bar and mode switch. The navy bar has the logo, the settings gear and the GPS pill (no clock); the mode circle sits in a notch at the bar's right and only shows the mode; a tall gear handle on the left edge switches Plan and Fly. Left column: layers, FULL. Right column: zoom. Alert card sits under the circle. ═══ */
+/* ═══ v1.09.061: new top bar and mode switch. The navy bar has the logo, the settings gear and the GPS pill (no clock); the mode circle sits in a notch at the bar's right and only shows the mode; a tall gear handle on the left edge switches Plan and Fly. Left column: layers, FULL. Right column: zoom. Alert card sits under the circle. ═══ */
 .strip-clock{display:none !important;}
 .strip .gps-chip{display:flex !important;width:52px !important;min-width:52px !important;max-width:52px !important;height:20px !important;font-size:10px !important;line-height:17px !important;justify-content:center;padding:0 !important;letter-spacing:.02em !important;background:#dcd9d2 !important;border:1.5px solid #8a8a8a !important;color:#55585c !important;box-shadow:none !important;animation:none !important;}
 .strip .gps-chip i{display:none !important;}
@@ -2618,7 +2618,7 @@ body.lv #lstat{padding-right:108px !important;box-sizing:border-box;}
 html.full #app>#mbGear{right:auto !important;left:12px !important;top:calc(env(safe-area-inset-top,0px) + 26px) !important;width:46px !important;height:46px !important;background:#fbf6e8 !important;border:2.5px solid #1c3d6e !important;color:#1c3d6e !important;box-shadow:0 1px 5px rgba(14,35,72,.28) !important;}
 html.full #app>#mbGear svg{width:24px !important;height:24px !important;stroke:#1c3d6e;stroke-width:1.9;}
 /* GPS pill in full screen: hidden (the alert card still warns) */
-html.full #mbox .gps-chip.gps-f{position:absolute !important;right:60px !important;left:auto !important;top:calc(var(--pill-top,36px) + 50px) !important;transform:translateX(50%);margin:0 !important;z-index:1100;}
+html.full #mbox .gps-chip.gps-f{position:absolute !important;left:50% !important;right:auto !important;top:calc(var(--pill-top,60px) + var(--al-sh,0px) - 28px) !important;transform:translateX(-50%);margin:0 !important;z-index:1100;}
 /* columns: left = layers, FULL   right = zoom */
 html #mbox #mbFull,html.full #mbox #mbFull{left:19px !important;right:auto !important;top:calc(var(--rail-y,48px) + 46px) !important;}
 /* Route info and the Plan info pill are centred on the screen */
@@ -2627,7 +2627,7 @@ html #mbox #mbFull,html.full #mbox #mbFull{left:19px !important;right:auto !impo
 /* alert card under the circle */
 #mbox #alCard{top:8px;left:10px;right:100px;height:52px;padding:6px 10px;gap:8px;}
 #alCard .al-t{font-size:14px;} #alCard .al-l{font-size:11.5px;} #alCard svg{width:20px;height:20px;}
-html.full #mbox #alCard{top:calc(var(--pill-top,36px) - 10px);left:68px;right:100px;}
+html.full #mbox #alCard{top:calc(var(--pill-top,60px) - 34px);left:68px;right:100px;}
 /* tall gear handle (mode switch) */
 #pfSw{position:absolute;left:16px;top:58%;width:60px;height:120px;margin-top:-60px;padding:0;border:0;background:none;transform:scale(.82);transform-origin:0 50%;z-index:6;--mc:#c8a04a;-webkit-tap-highlight-color:transparent;cursor:pointer;font:inherit;}
 #pfSw.pf-on{--mc:#1c3d6e;}
@@ -2680,7 +2680,7 @@ html.full #mbox #alCard{top:calc(var(--pill-top,36px) - 10px);left:68px;right:10
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.060 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.061 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2723,7 +2723,7 @@ html.full #mbox #alCard{top:calc(var(--pill-top,36px) - 10px);left:68px;right:10
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.060 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.061 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5226,8 +5226,8 @@ function lsaInit(){
 let LP_OPEN=null;   // "charts" | "layers" | null
 let FP_EX=0;   // v1.09.041: how far the open Route info pill pushes the button columns down
 const COL_OFF=16, AL_H=60, AL_GAP=10; let AL_SH=0;
-function colOff(full){ return full? 76 : 30; }   // v1.09.060: the first button row starts below the mode circle (in the bar) or below the circle on the map (full screen)
-function alShNow(){ return AL.k? (document.documentElement.classList.contains("full")? 76 : 60) : 0; }   // v1.09.060: the alert card sits under the mode circle   // v1.09.042: where the button columns start, counted from the top of the closed Route info pill
+function colOff(full){ return full? 34 : 30; }   // v1.09.061: the first button row starts below the mode circle (in the bar) or below the circle on the map (full screen)
+function alShNow(){ return AL.k? (document.documentElement.classList.contains("full")? 54 : 60) : 0; }   // v1.09.061: the alert card sits under the mode circle   // v1.09.042: where the button columns start, counted from the top of the closed Route info pill
 const GIS_OP=(()=>{ try{ return JSON.parse(localStorage.getItem("airnotam_gis_op")||"{}")||{}; }catch(e){ return {}; } })();   // route line transparency, per route
 const lpEl=id=>document.getElementById(id);
 const lpOp=id=> id in GIS_OP ? Math.max(.1,Math.min(1,+GIS_OP[id]||1)) : 1;   // v1.08.067: the toggle switches a route on or off, the bar only softens it (10% to 100%)
@@ -5772,7 +5772,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.060 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.061 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6516,7 +6516,7 @@ function gpsState(){
   return (GP.pos&&Date.now()-GP.pos.t<=12000)? "fix" : "search";
 }
 function gpsChip(){
-  const st=gpsState(), txt="GPS";   // v1.09.060: the colour tells the state, the word stays
+  const st=gpsState(), txt="GPS";   // v1.09.061: the colour tells the state, the word stays
   ["gpsChip","gpsChipF"].forEach(id=>{
     const e=document.getElementById(id); if(!e) return;
     e.className="gps-chip"+(id==="gpsChipF"?" gps-f":"")+(GP.shown?" on":"")+" "+st;
@@ -6555,7 +6555,7 @@ function railSync(){
     if(!RAIL_PROBE){ RAIL_PROBE=document.createElement("div"); RAIL_PROBE.style.cssText="position:fixed;left:0;top:0;width:1px;visibility:hidden;pointer-events:none;padding-top:env(safe-area-inset-top,0px)"; document.body.appendChild(RAIL_PROBE); }
     const env=parseFloat(getComputedStyle(RAIL_PROBE).paddingTop)||0, mt=mb.getBoundingClientRect().top;
     const tyOf=el=>{ const t=getComputedStyle(el).translate; if(!t||t==="none") return 0; return parseFloat(t.split(" ")[1])||0; };   // v1.09.041: the columns glide with a translate, positions are worked out without it
-    const pillTop= full? env+36-mt : 10, colTop=pillTop+colOff(full);   // v1.09.042: the first row of both columns starts level with the middle of the closed Route info pill
+    const pillTop= full? env+60-mt : 10, colTop=pillTop+colOff(full);   // v1.09.042: the first row of both columns starts level with the middle of the closed Route info pill
     {
       const want=mt+colTop, cur=parseFloat(getComputedStyle(z).marginTop)||0, act=z.getBoundingClientRect().top-tyOf(z);
       if(Math.abs(act-want)>0.5) z.style.setProperty("margin-top",(cur+want-act)+"px","important");
@@ -6563,7 +6563,7 @@ function railSync(){
     const zt=z.getBoundingClientRect().top-tyOf(z);
     mb.style.setProperty("--rail-y",(zt-mt).toFixed(1)+"px");
     mb.style.setProperty("--chip-top",(env+26-mt).toFixed(1)+"px");
-    mb.style.setProperty("--pill-top",(env+36-mt).toFixed(1)+"px");
+    mb.style.setProperty("--pill-top",(env+60-mt).toFixed(1)+"px");
     const lc=document.querySelector(".lyr-ctl"); if(lc&&lc.offsetParent){ const pr2=lc.offsetParent.getBoundingClientRect().top; lc.style.setProperty("top",(zt-pr2).toFixed(1)+"px","important"); }
     const zl=document.querySelector(".zoom-tl"); if(zl&&zl.offsetParent){ const pr=zl.offsetParent.getBoundingClientRect().top; zl.style.setProperty("top",(zt+z.offsetHeight+2-pr).toFixed(1)+"px","important"); }
   }catch(_){}
@@ -7012,7 +7012,7 @@ function flyPills(){
   const B=document.getElementById("fpIn"), H=document.getElementById("fpHnd");
   try{ nxtStep(); }catch(_){}
   const on=modeIsFly()&&GP.pos;   // v1.09.041: an open layers panel no longer removes the pill; it fades out (and back in) with the panel
-  const showD=on&&DIR.on&&!!DIR.tgt, showR=on&&rtGood(), wait=modeIsFly()&&!GP.pos&&rtGood();   // v1.09.060: with no GPS fix the pill still shows, with a waiting note
+  const showD=on&&DIR.on&&!!DIR.tgt, showR=on&&rtGood(), wait=modeIsFly()&&!GP.pos&&rtGood();   // v1.09.061: with no GPS fix the pill still shows, with a waiting note
   if(!(showD||showR||wait)){ w.style.display="none"; fpEx(0); return; }
   w.style.display="flex"; w.classList.toggle("op",FPO.open); w.classList.toggle("gone",!!LP_OPEN);
   const P=GP.pos, vi=(ic,x)=>'<span class="v">'+FP_IC[ic]+'<bdi>'+x+'</bdi></span>', vl=(br,dist,h,fuel)=>'<span class="vl">'+vi("brg",br)+vi("dst",fpDist(dist))+vi("clk",fpTime(h))+(fuel?vi("fuel",fuel):"")+'</span>';
@@ -7038,7 +7038,7 @@ function flyPills(){
   }
   if(wait) h='<div class="dn" style="text-align:center">Pending GPS fix...</div>';
   B.innerHTML=h;
-  const fullM=document.documentElement.classList.contains("full"), opSh=(FPO.open&&!(AL.k&&alShNow()))? (fullM?76:28) : 0;   // v1.09.060: the open pill starts below the mode circle
+  const fullM=document.documentElement.classList.contains("full"), opSh=(FPO.open&&!(AL.k&&alShNow()))? (fullM?28:28) : 0;   // v1.09.061: the open pill starts below the mode circle
   mb.style.setProperty("--op-sh",opSh+"px");
   fpEx((FPO.open&&!LP_OPEN)? Math.max(0,Math.round(B.offsetHeight+34-colOff(fullM)+opSh)) : 0);   // how far the open pill pushes the button columns down
 }
@@ -7197,7 +7197,7 @@ function demoTick(){
 </div></div>
 
 <script>
-/* v1.09.060: mode circle and gear live in the app frame (over the navy bar); the handle springs between Plan and Fly; the bar notch follows the bar's real height */
+/* v1.09.061: mode circle and gear live in the app frame (over the navy bar); the handle springs between Plan and Fly; the bar notch follows the bar's real height */
 (function(){
   const $=id=>document.getElementById(id), app=$("app"), root=document.documentElement;
   const mode=$("mbMode"), gear=$("mbGear");
