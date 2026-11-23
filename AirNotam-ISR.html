@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.048 · built by eligrt
+     AirNotam-ISR · v1.09.049 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2531,7 +2531,7 @@ body.demo #pvBar{display:flex;}
 #pvBar button:active{transform:scale(.93);}
 
 /* ═══ v1.09.041: columns start under the closed pill and glide with it, Route info slides, calmer dock, taller settings rows ═══ */
-:root{--glass:rgba(251,246,232,.80);--glass-amber:rgba(251,236,203,.80);--fp-ex:0px;--glide:.4s cubic-bezier(.32,.72,.2,1);}
+:root{--glass:rgba(251,246,232,.80);--glass-amber:rgba(251,236,203,.96);--fp-ex:0px;--glide:.4s cubic-bezier(.32,.72,.2,1);}
 #mbox #mbGear{top:var(--rail-y,48px) !important;}
 #mbFull,html.full #mbFull{top:calc(var(--rail-y,48px) + 99px) !important;}
 #mbGear,#mbFull,.leaflet-control.lyr-ctl,.zoom-tl,.leaflet-control-zoom{translate:0 var(--fp-ex,0px);}
@@ -2555,7 +2555,7 @@ body.demo #pvBar{display:flex;}
 #corrSeg button{height:44px;padding:0 13px;font-size:14px;}
 
 /* ═══ v1.09.043: alert card (GPS lost / location blocked / compass), amber, same gap above and below, pill and columns glide down ═══ */
-#alCard{position:absolute;left:10px;right:10px;top:10px;height:60px;box-sizing:border-box;display:flex;flex-direction:row;direction:rtl;align-items:center;gap:10px;background:var(--glass-amber);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);border:1px solid #e3b75a;border-inline-start:5px solid #d9981f;border-radius:12px;padding:8px 12px;box-shadow:0 1px 5px rgba(14,35,72,.25);z-index:1012;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s .3s;}
+#alCard{position:absolute;left:10px;right:10px;top:10px;height:60px;box-sizing:border-box;display:flex;flex-direction:row;direction:rtl;align-items:center;gap:10px;background:var(--glass-amber);border:1px solid #e3b75a;border-inline-start:5px solid #d9981f;border-radius:12px;padding:8px 12px;box-shadow:0 1px 5px rgba(14,35,72,.25);z-index:1012;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s .3s;}
 html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));}
 #alCard.show{opacity:1;visibility:visible;transition:opacity .3s ease,visibility 0s;}
 #alCard.cmp.show{pointer-events:auto;cursor:pointer;}
@@ -2575,6 +2575,7 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
 #fpPill svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
 #fpWrap:not(.op) #fpPill{opacity:1;pointer-events:auto;transition:opacity .4s ease .16s;}
 #fpHnd{margin:-2.5px auto 0;height:30px;width:140px;min-width:140px;}
+.sp-body>.cue{bottom:-58px;}   /* v1.09.049: the settings scroll fade now reaches the real bottom edge of the page */
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2614,7 +2615,7 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.048 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.049 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2657,7 +2658,7 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.048 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.049 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5179,7 +5180,7 @@ function lpStatus(id,txt,err){
 }
 function lpPlace(){   // v1.09.001: the panel opens beside the layers button, from just under the mode button down to above the dock
   const h=lpEl("mbox"), c=lpEl("lpL"); if(!h||!c) return;
-  const hr=h.getBoundingClientRect(), mm=lpEl("mbGear"), fin=el=>{ const t=getComputedStyle(el).translate, ty=(t&&t!=="none")? (parseFloat(t.split(" ")[1])||0) : 0; return el.getBoundingClientRect().top-ty+FP_EX; };   // v1.09.041: where the button will stand when the glide has ended
+  const hr=h.getBoundingClientRect(), mm=lpEl("mbGear"), fin=el=>{ const t=getComputedStyle(el).translate, ty=(t&&t!=="none")? (parseFloat(t.split(" ")[1])||0) : 0; return el.getBoundingClientRect().top-ty+FP_EX+AL_SH; };   // v1.09.049: the alert card pushes the columns down, so the panel and its pointer start below it   // v1.09.041: where the button will stand when the glide has ended
   const top=Math.round((mm&&mm.offsetWidth? fin(mm)-hr.top : 16)-12);
   c.style.top=top+"px"; c.style.maxHeight=Math.max(150,Math.min(580,Math.round(hr.height-top-150)))+"px";
   const f=lpEl("lpSt2"); if(f){ f.style.top=(top+c.offsetHeight+8)+"px"; f.style.display=(LP_OPEN==="layers"&&f.textContent)?"block":"none"; }
@@ -5701,7 +5702,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.048 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.049 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6999,7 +7000,7 @@ function alTick(){
   const k=alWant(); if(k===AL.k) return; AL.k=k;
   if(k){ el.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#b7791f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z" fill="#fff3d6"/><path d="M12 10v5"/><path d="M12 18v.5"/></svg><div style="flex:1"><div class="al-t">'+AL_TXT[k][0]+'</div><div class="al-l">'+AL_TXT[k][1]+'</div></div>'; }
   el.classList.toggle("cmp",k==="compass"); el.classList.toggle("show",!!k);
-  AL_SH= k? AL_H+AL_GAP : 0; mb.style.setProperty("--al-sh",AL_SH+"px"); exApply();
+  AL_SH= k? AL_H+AL_GAP : 0; mb.style.setProperty("--al-sh",AL_SH+"px"); exApply(); try{ lpFit(); }catch(_){}
 }
 setInterval(()=>{ try{ alTick(); }catch(_){} },1000);
 
