@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.045 · built by eligrt
+     AirNotam-ISR · v1.09.047 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2455,12 +2455,10 @@ html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top
 #fpIn .dn{font-weight:800;color:#0e2348;padding:6px 0;}
 #fpHnd{align-self:center;pointer-events:auto;display:flex;align-items:center;justify-content:center;gap:6px;height:30px;padding:0 14px;margin-top:-2.5px;box-sizing:border-box;border:2.5px solid #1c3d6e;border-top:0;border-radius:0 0 16px 16px;background:rgba(251,246,232,.82);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);color:#1c3d6e;font:700 12px var(--font-mono);letter-spacing:.08em;cursor:pointer;min-width:140px;}
 #fpHnd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
-#fpWrap:not(.op) #fpHnd{margin-top:0;}
 
 /* ═══ v1.09.040: full-width Route info pill, buttons in two columns, mode switch screen ═══ */
 #fpWrap{left:10px;right:10px;}
 #fpHnd{min-width:140px;}
-#fpWrap:not(.op) #fpHnd{border:2.5px solid #1c3d6e;border-radius:16px;margin-top:0;height:32px;}
 #fpIn{padding:4px 14px 6px;}
 #fpIn .rw{gap:7px;}
 #fpIn .rw .nm{font-size:16px;}
@@ -2540,12 +2538,7 @@ body.demo #pvBar{display:flex;}
 #mbGear{transition:bottom var(--glide),translate var(--glide);}
 #mbFull,.leaflet-control.lyr-ctl,.zoom-tl,.leaflet-control-zoom{transition:translate var(--glide);}
 /* Route info: the box slides open (grid row 0fr to 1fr), the handle changes shape with it, one border only (no line where handle and box meet) */
-#fpBox{position:relative;height:0;overflow:hidden;visibility:hidden;pointer-events:none;transition:height var(--glide),visibility 0s .4s;}   /* v1.09.044: the box grows by its height and its content stays glued to the bottom edge, so it always touches the handle */
-#fpWrap.op #fpBox{height:var(--fp-h,0px);visibility:visible;pointer-events:auto;transition:height var(--glide),visibility 0s;}
-#fpClip{position:absolute;inset:0;overflow:hidden;}
-#fpIn{position:absolute;left:0;right:0;bottom:0;-webkit-mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 100%/136px 2.5px no-repeat;-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 100%/136px 2.5px no-repeat;mask-composite:exclude;}
-#fpHnd{width:140px;min-width:140px;transition:height var(--glide),margin-top var(--glide),border-radius 0s .3s,border-top-width 0s .3s;}
-#fpWrap.op #fpHnd{transition:height var(--glide),margin-top var(--glide),border-radius 0s,border-top-width 0s;}   /* v1.09.045: the handle turns into the tab shape (square top, no top border) the moment the box starts to open and keeps it until the box is nearly closed, so there are never rounded corners with map showing between handle and box */
+#fpIn{-webkit-mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 100%/136px 2.5px no-repeat;-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 100%/136px 2.5px no-repeat;mask-composite:exclude;}
 #fpWrap{transition:opacity .3s ease,visibility 0s;}
 #fpWrap.gone{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s .3s;}
 /* docks: a little slower and smoother, buttons that ride with the dock use the same glide */
@@ -2573,6 +2566,15 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
 #fpWrap{translate:0 var(--al-sh,0px);transition:opacity .3s ease,visibility 0s,translate var(--glide);}
 #fpWrap.gone{transition:opacity .3s ease,visibility 0s .3s,translate var(--glide);}
 #rteCorrBox{height:auto;flex-shrink:0;}   /* v1.09.044: the grey line sits inside the text block under the title (like the other rows) and wraps beside the buttons; the row grows to fit */
+
+/* ═══ v1.09.047: Route info moves exactly like the docks: the open box with its tab fades and shrinks away (scale .72, 24 px toward the top edge), the closed pill fades in a moment later; no sliding, so no seams. Same timings and curves as the docks. ═══ */
+#fpOpen{transform-origin:50% 0;transition:transform .42s cubic-bezier(.22,1,.36,1),opacity .3s ease;}
+#fpWrap:not(.op) #fpOpen{transform:scale(.72) translateY(-24px);opacity:0;transition:transform .36s cubic-bezier(.4,0,.2,1),opacity .3s ease;}
+#fpWrap:not(.op) #fpOpen,#fpWrap:not(.op) #fpOpen *{pointer-events:none !important;}
+#fpPill{position:absolute;top:0;left:50%;margin-left:-70px;width:140px;height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:6px;padding:0 14px;border:2.5px solid #1c3d6e;border-radius:16px;background:rgba(251,246,232,.82);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);color:#1c3d6e;font:700 12px var(--font-mono);letter-spacing:.08em;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+#fpPill svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+#fpWrap:not(.op) #fpPill{opacity:1;pointer-events:auto;transition:opacity .4s ease .16s;}
+#fpHnd{margin:-2.5px auto 0;height:30px;width:140px;min-width:140px;}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2612,7 +2614,7 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.045 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.047 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2655,7 +2657,7 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.045 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.047 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5699,7 +5701,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.045 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.047 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6654,7 +6656,8 @@ function cmpEdge(cx,cy,ang,W,H){   // distance along the line to the screen edge
 function cmpBlocks(){   // every button and panel on the map: a label never sits under one
   const mb=document.getElementById("mbox"), mr=mb.getBoundingClientRect(), out=[];
   document.querySelectorAll("#mbox button,#mbox .mib,#mbox .mb-leg,#mbox .mk-dock,#mbox .gps-chip,#mbox .mb-info,#map .leaflet-control").forEach(e=>{
-    if(e.closest("[hidden]")) return; const cs=getComputedStyle(e); if(cs.display==="none"||cs.visibility==="hidden"||+cs.opacity===0) return;
+    if(e.closest("[hidden]")) return; if(e.id==="fpHnd"){ const fw=document.getElementById("fpWrap"); if(fw&&!fw.classList.contains("op")) return; }   // v1.09.047: the open tab is not an obstacle while Route info is closed
+    const cs=getComputedStyle(e); if(cs.display==="none"||cs.visibility==="hidden"||+cs.opacity===0) return;
     const r=e.getBoundingClientRect(); if(r.width<4||r.height<4) return;
     out.push({x1:r.left-mr.left-6,x2:r.right-mr.left+6,y1:r.top-mr.top-6,y2:r.bottom-mr.top+6}); });
   return out;
@@ -6934,14 +6937,13 @@ function flyPills(){
   const mb=document.getElementById("mbox"); if(!mb) return;
   let w=document.getElementById("fpWrap");
   if(!w){ w=document.createElement("div"); w.id="fpWrap"; mb.appendChild(w); }
-  if(!document.getElementById("fpBox")){ w.innerHTML='<div id="fpBox"><div id="fpClip"><div id="fpIn"></div></div></div><button type="button" id="fpHnd" aria-label="מידע על המסלול" onclick="fpToggle()"><span>ROUTE INFO</span><svg viewBox="0 0 24 24" aria-hidden="true"></svg></button>'; }
+  if(!document.getElementById("fpBox")){ w.innerHTML='<div id="fpOpen"><div id="fpBox"><div id="fpClip"><div id="fpIn"></div></div></div><button type="button" id="fpHnd" aria-label="סגור מידע על המסלול" onclick="fpToggle()"><span>ROUTE INFO</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button></div><button type="button" id="fpPill" aria-label="מידע על המסלול" onclick="fpToggle()"><span>ROUTE INFO</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>'; }
   const B=document.getElementById("fpIn"), H=document.getElementById("fpHnd");
   try{ nxtStep(); }catch(_){}
   const on=modeIsFly()&&GP.pos;   // v1.09.041: an open layers panel no longer removes the pill; it fades out (and back in) with the panel
   const showD=on&&DIR.on&&!!DIR.tgt, showR=on&&rtGood();
   if(!(showD||showR)){ w.style.display="none"; fpEx(0); return; }
   w.style.display="flex"; w.classList.toggle("op",FPO.open); w.classList.toggle("gone",!!LP_OPEN);
-  H.querySelector("svg").innerHTML=FPO.open?'<path d="M6 15l6-6 6 6"/>':'<path d="M6 9l6 6 6-6"/>';
   const P=GP.pos, vi=(ic,x)=>'<span class="v">'+FP_IC[ic]+'<bdi>'+x+'</bdi></span>', vl=(br,dist,h,fuel)=>'<span class="vl">'+vi("brg",br)+vi("dst",fpDist(dist))+vi("clk",fpTime(h))+(fuel?vi("fuel",fuel):"")+'</span>';
   let h="";
   if(showR){
@@ -6963,7 +6965,7 @@ function flyPills(){
     if(showR) h+='<div class="dv"></div>';
     h+='<div class="rw dr"><span class="pl">DIRECT</span>'+vl(fpBrg(P.lat,P.lon,T.lat,T.lon),nm,hh,fpFuel(hh))+'</div>';
   }
-  B.innerHTML=h; w.style.setProperty("--fp-h",B.offsetHeight+"px");
+  B.innerHTML=h;
   fpEx((FPO.open&&!LP_OPEN)? Math.max(0,Math.round(B.offsetHeight+34-COL_OFF)) : 0);   // how far the open pill pushes the button columns down
 }
 function fpEx(v){   // the columns glide down with the pill (CSS translate); the shape filter follows them
