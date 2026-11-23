@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.040 · built by eligrt
+     AirNotam-ISR · v1.09.041 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2361,8 +2361,8 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
 #dkDraw.pulse::after{border-color:#c8a04a;}
 .mk-dock{background:transparent !important;border-color:transparent !important;-webkit-backdrop-filter:none;backdrop-filter:none;}
 .mk-dock::before{content:"";position:absolute;inset:-2.5px;border-radius:30px;box-sizing:border-box;border:2.5px solid var(--dkc,#c8a04a);background:rgba(251,246,232,.80);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);z-index:-1;pointer-events:none;
-  -webkit-mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 0/51px 3px no-repeat;-webkit-mask-composite:xor;
-  mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 0/51px 3px no-repeat;mask-composite:exclude;}
+  -webkit-mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 0/136px 3px no-repeat;-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 0/136px 3px no-repeat;mask-composite:exclude;}
 #mbDockF{--dkc:#1c3d6e;}
 .mk-tab{height:26.5px;border:0;padding:2.5px 0 0;}
 .mk-tab::before{content:"";position:absolute;left:0;top:0;width:100%;height:26px;box-sizing:border-box;border:2.5px solid var(--dkc,#c8a04a);border-bottom:0;border-radius:14px 14px 0 0;pointer-events:none;}
@@ -2434,25 +2434,25 @@ body.demo .mb-leg{display:none !important;}
 #fpWrap{left:66px;right:10px;top:10px;gap:0;align-items:stretch;}
 html.full #fpWrap{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));}
 html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top,0px)));}
-#fpBox{background:rgba(251,246,232,.82);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);border:2.5px solid #1c3d6e;border-radius:18px;padding:4px 12px 6px;color:#1c3d6e;direction:ltr;box-sizing:border-box;box-shadow:0 1px 5px rgba(14,35,72,.25);pointer-events:auto;font-size:17px;}
-#fpBox[hidden]{display:none;}
-#fpBox .st{display:flex;justify-content:space-between;align-items:center;font-size:16px;font-weight:700;padding:3px 0 5px;}
-#fpBox .st b{font-size:18px;margin-right:4px;}
-#fpBox .dv{border-top:2px dashed #1c3d6e;opacity:.7;margin:0 -2px;}
-#fpBox .rw{display:flex;align-items:center;gap:8px;min-height:40px;border-bottom:1px solid #d9cba4;}
-#fpBox .rw:last-child{border-bottom:0;}
-#fpBox .rw .nm{font-size:17px;font-weight:500;color:#4d4326;flex:none;}
-#fpBox .rw.nx .nm{font-weight:800;color:#0e2348;}
-#fpBox .rw .vl{margin-left:auto;display:flex;gap:6px;align-items:center;white-space:nowrap;font-weight:600;font-size:16px;}
-#fpBox .rw.nx .vl{font-weight:800;}
-#fpBox .rw .vl small{font-size:.72em;font-weight:600;margin-left:1px;}
-#fpBox .rw .vl i{font-style:normal;opacity:.5;}
-#fpBox .cn{flex:none;width:28px;height:28px;border-radius:50%;box-sizing:border-box;border:2px solid #fff;background:#0e2348;color:#f5c518;font:800 15px var(--font-mono);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1.5px #0e2348;}
-#fpBox .cf{flex:none;width:28px;height:28px;display:block;}
-#fpBox .rw.dr{color:#7d1c33;}
-#fpBox .rw.dr .vl{font-weight:700;}
-#fpBox .rw.dr .pl{flex:none;border:2px dashed #7d1c33;border-radius:15px;padding:1px 10px;font:800 14px var(--font-mono);letter-spacing:.05em;}
-#fpBox .dn{font-weight:800;color:#0e2348;padding:6px 0;}
+#fpIn{background:rgba(251,246,232,.82);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);border:2.5px solid #1c3d6e;border-radius:18px;padding:4px 12px 6px;color:#1c3d6e;direction:ltr;box-sizing:border-box;box-shadow:0 1px 5px rgba(14,35,72,.25);pointer-events:auto;font-size:17px;}
+#fpIn[hidden]{display:none;}
+#fpIn .st{display:flex;justify-content:space-between;align-items:center;font-size:16px;font-weight:700;padding:3px 0 5px;}
+#fpIn .st b{font-size:18px;margin-right:4px;}
+#fpIn .dv{border-top:2px dashed #1c3d6e;opacity:.7;margin:0 -2px;}
+#fpIn .rw{display:flex;align-items:center;gap:8px;min-height:40px;border-bottom:1px solid #d9cba4;}
+#fpIn .rw:last-child{border-bottom:0;}
+#fpIn .rw .nm{font-size:17px;font-weight:500;color:#4d4326;flex:none;}
+#fpIn .rw.nx .nm{font-weight:800;color:#0e2348;}
+#fpIn .rw .vl{margin-left:auto;display:flex;gap:6px;align-items:center;white-space:nowrap;font-weight:600;font-size:16px;}
+#fpIn .rw.nx .vl{font-weight:800;}
+#fpIn .rw .vl small{font-size:.72em;font-weight:600;margin-left:1px;}
+#fpIn .rw .vl i{font-style:normal;opacity:.5;}
+#fpIn .cn{flex:none;width:28px;height:28px;border-radius:50%;box-sizing:border-box;border:2px solid #fff;background:#0e2348;color:#f5c518;font:800 15px var(--font-mono);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1.5px #0e2348;}
+#fpIn .cf{flex:none;width:28px;height:28px;display:block;}
+#fpIn .rw.dr{color:#7d1c33;}
+#fpIn .rw.dr .vl{font-weight:700;}
+#fpIn .rw.dr .pl{flex:none;border:2px dashed #7d1c33;border-radius:15px;padding:1px 10px;font:800 14px var(--font-mono);letter-spacing:.05em;}
+#fpIn .dn{font-weight:800;color:#0e2348;padding:6px 0;}
 #fpHnd{align-self:center;pointer-events:auto;display:flex;align-items:center;justify-content:center;gap:6px;height:30px;padding:0 14px;margin-top:-2.5px;box-sizing:border-box;border:2.5px solid #1c3d6e;border-top:0;border-radius:0 0 16px 16px;background:rgba(251,246,232,.82);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);color:#1c3d6e;font:700 12px var(--font-mono);letter-spacing:.08em;cursor:pointer;min-width:140px;}
 #fpHnd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
 #fpWrap:not(.op) #fpHnd{margin-top:0;}
@@ -2461,13 +2461,13 @@ html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top
 #fpWrap{left:10px;right:10px;}
 #fpHnd{min-width:140px;}
 #fpWrap:not(.op) #fpHnd{border:2.5px solid #1c3d6e;border-radius:16px;margin-top:0;height:32px;}
-#fpBox{padding:4px 14px 6px;}
-#fpBox .rw{gap:7px;}
-#fpBox .rw .nm{font-size:16px;}
-#fpBox .rw .vl{gap:9px;font-size:15px;}
-#fpBox .v{display:inline-flex;align-items:center;gap:3px;}
-#fpBox .v svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.7;}
-#fpBox .rw.dr .pl{font-size:13px;padding:1px 8px;}
+#fpIn{padding:4px 14px 6px;}
+#fpIn .rw{gap:7px;}
+#fpIn .rw .nm{font-size:16px;}
+#fpIn .rw .vl{gap:9px;font-size:15px;}
+#fpIn .v{display:inline-flex;align-items:center;gap:3px;}
+#fpIn .v svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.7;}
+#fpIn .rw.dr .pl{font-size:13px;padding:1px 8px;}
 /* right column: settings, layers, FULL (the left column keeps the zoom level, plus and minus) */
 #mbox #mbGear{left:auto !important;right:19px !important;top:calc(var(--rail-y,72px) - 18px) !important;}
 #stage:not(.v-map) #mbGear{top:auto !important;bottom:var(--dkb);}
@@ -2531,6 +2531,34 @@ body.demo #pvBar{display:flex;}
 #pvBar .pb svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
 #pvBar .pc{height:30px;min-width:42px;border-radius:15px;border:2px solid #1c3d6e;background:#fff;color:#1c3d6e;font:800 14px var(--font-mono);padding:0 6px;}
 #pvBar button:active{transform:scale(.93);}
+
+/* ═══ v1.09.041: columns start under the closed pill and glide with it, Route info slides, calmer dock, taller settings rows ═══ */
+:root{--fp-ex:0px;--glide:.4s cubic-bezier(.32,.72,.2,1);}
+#mbox #mbGear{top:var(--rail-y,48px) !important;}
+#mbFull,html.full #mbFull{top:calc(var(--rail-y,48px) + 99px) !important;}
+#mbGear,#mbFull,.leaflet-control.lyr-ctl,.zoom-tl,.leaflet-control-zoom{translate:0 var(--fp-ex,0px);}
+#mbGear{transition:bottom var(--glide),translate var(--glide);}
+#mbFull,.leaflet-control.lyr-ctl,.zoom-tl,.leaflet-control-zoom{transition:translate var(--glide);}
+/* Route info: the box slides open (grid row 0fr to 1fr), the handle changes shape with it, one border only (no line where handle and box meet) */
+#fpBox{display:grid;grid-template-rows:0fr;opacity:0;visibility:hidden;pointer-events:none;transition:grid-template-rows var(--glide),opacity .3s ease,visibility 0s .4s;}
+#fpWrap.op #fpBox{grid-template-rows:1fr;opacity:1;visibility:visible;pointer-events:auto;transition:grid-template-rows var(--glide),opacity .3s ease .05s,visibility 0s;}
+#fpClip{min-height:0;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;}
+#fpIn{flex:none;-webkit-mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 100%/136px 2.5px no-repeat;-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) 0 0/100% 100% no-repeat,linear-gradient(#000 0 0) 50% 100%/136px 2.5px no-repeat;mask-composite:exclude;}
+#fpHnd{width:140px;min-width:140px;transition:height var(--glide),margin-top var(--glide),border-radius var(--glide),border-top-width var(--glide);}
+#fpWrap{transition:opacity .3s ease,visibility 0s;}
+#fpWrap.gone{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s .3s;}
+/* docks: a little slower and smoother, buttons that ride with the dock use the same glide */
+.mk-dock{transition:transform .42s cubic-bezier(.22,1,.36,1),opacity .3s ease;}
+#mbox.dk-c .mk-dock{transition:transform .36s cubic-bezier(.4,0,.2,1),opacity .3s ease;}
+.mk-hnd{transition:opacity .25s ease;}
+#mbox.dk-c .mk-hnd{transition:opacity .4s ease .16s;}
+#mbTime,#mbOnly,.mbox:not(.rv) .mb-leg{transition:bottom var(--glide);}
+#mbPill{transition:height .32s cubic-bezier(.3,.8,.3,1),width .32s cubic-bezier(.3,.8,.3,1),border-radius .32s ease,background .25s,bottom var(--glide);}
+/* settings: the three slim rows get room, no icon square on them */
+#symBox,#rteCorrBox,#driftBox{min-height:66px;padding-top:12px;padding-bottom:12px;}
+#symBox .sp-ic,#rteCorrBox .sp-ic,#driftBox .sp-ic{display:none;}
+#symSeg button{height:48px;}
+#corrSeg button{height:44px;padding:0 13px;font-size:14px;}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2570,7 +2598,7 @@ body.demo #pvBar{display:flex;}
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.040 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.041 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2613,7 +2641,7 @@ body.demo #pvBar{display:flex;}
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.040 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.041 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5111,6 +5139,7 @@ function lsaInit(){
    with its button on the left. They live inside the map overlay (mbox), so they hide by themselves while drawing, in the review and in the list view.
    The old side curtain is gone. ── */
 let LP_OPEN=null;   // "charts" | "layers" | null
+let FP_EX=0;   // v1.09.041: how far the open Route info pill pushes the button columns down
 const GIS_OP=(()=>{ try{ return JSON.parse(localStorage.getItem("airnotam_gis_op")||"{}")||{}; }catch(e){ return {}; } })();   // route line transparency, per route
 const lpEl=id=>document.getElementById(id);
 const lpOp=id=> id in GIS_OP ? Math.max(.1,Math.min(1,+GIS_OP[id]||1)) : 1;   // v1.08.067: the toggle switches a route on or off, the bar only softens it (10% to 100%)
@@ -5133,10 +5162,11 @@ function lpStatus(id,txt,err){
 }
 function lpPlace(){   // v1.09.001: the panel opens beside the layers button, from just under the mode button down to above the dock
   const h=lpEl("mbox"), c=lpEl("lpL"); if(!h||!c) return;
-  const hr=h.getBoundingClientRect(), mm=lpEl("mbGear"), top=Math.round((mm&&mm.offsetWidth? mm.getBoundingClientRect().top-hr.top : 16)-12);
+  const hr=h.getBoundingClientRect(), mm=lpEl("mbGear"), fin=el=>{ const t=getComputedStyle(el).translate, ty=(t&&t!=="none")? (parseFloat(t.split(" ")[1])||0) : 0; return el.getBoundingClientRect().top-ty+FP_EX; };   // v1.09.041: where the button will stand when the glide has ended
+  const top=Math.round((mm&&mm.offsetWidth? fin(mm)-hr.top : 16)-12);
   c.style.top=top+"px"; c.style.maxHeight=Math.max(150,Math.min(580,Math.round(hr.height-top-150)))+"px";
   const f=lpEl("lpSt2"); if(f){ f.style.top=(top+c.offsetHeight+8)+"px"; f.style.display=(LP_OPEN==="layers"&&f.textContent)?"block":"none"; }
-  { const ar=lpEl("lpArr"), lb=document.querySelector(".lyr-ctl"); if(ar&&lb){ const lr=lb.getBoundingClientRect(), cy=Math.round(lr.top-hr.top+lr.height/2); ar.style.top=Math.max(top+26,Math.min(top+c.offsetHeight-46,cy-10))+"px"; } }   // v1.09.004: the small pointer is back, level with the layers button
+  { const ar=lpEl("lpArr"), lb=document.querySelector(".lyr-ctl"); if(ar&&lb){ const cy=Math.round(fin(lb)-hr.top+lb.getBoundingClientRect().height/2); ar.style.top=Math.max(top+26,Math.min(top+c.offsetHeight-46,cy-10))+"px"; } }   // v1.09.004: the small pointer is back, level with the layers button
   setTimeout(lpCueUpd,30);
 }
 function lpFit(){ if(LP_OPEN==="layers") lpPlace(); }
@@ -5149,6 +5179,7 @@ function lyrSet(w){
   LP_OPEN=w; try{ lpCueUpd(); setTimeout(lpCueUpd,80); setTimeout(lpCueUpd,420); }catch(_){}   // v1.09.003: the scroll chevron follows the panel (gone the moment it closes)
   const L1=lpEl("lpL"), C1=lpEl("lpC"); lpFadeSet(L1,w==="layers"); const A1=lpEl("lpArr"); lpFadeSet(A1,w==="layers"); lpFadeSet(C1,w==="charts");
   const mb=lpEl("mbox"); if(mb) mb.classList.toggle("pl-open",!!w);
+  try{ flyPills(); }catch(_){}   // v1.09.041: the Route info pill fades out together with the panel opening (and back in when it closes); the columns glide with it
   if(w==="layers") lpPlace();
   if(w!=="charts") cpPopSet(false);
   alog("panel "+(w||"closed")); try{mbSync();}catch(_){}
@@ -5653,7 +5684,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.040 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.041 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6296,6 +6327,7 @@ function modeSet(fly){
   flyRefresh();
   gpsWake(fly&&GP.on); try{ flyOrient(); cmpArm(); }catch(_){}
   MB_FITK=""; try{ mbSync(); }catch(_){}
+  try{ flyPills(); }catch(_){}
   try{ if(LP_OPEN==="layers") lpPlace(); }catch(_){}
   gpsChip();
 }
@@ -6335,8 +6367,11 @@ function gpsMarker(){
     const ic=symIcon();
     GP.mk=L.marker([GP.pos.lat,GP.pos.lon],{icon:ic,interactive:false,keyboard:false,zIndexOffset:2000}).addTo(MAP);
   } else GP.mk.setLatLng([GP.pos.lat,GP.pos.lon]);
-  const el=GP.mk.getElement(), sv=el&&el.querySelector("svg"); if(sv) sv.style.transform="rotate("+Math.round(GP.trk||0)+"deg)";
+  symTurn();
 }
+// v1.09.041: the symbol points where the compass points when you are slow or standing, and along the GPS track when you move (compass on)
+function symHdg(){ try{ if(CMP.on&&CMP.hdg!=null&&!gpsMoving()) return CMP.hdg; }catch(_){} return GP.trk||0; }
+function symTurn(){ const el=GP.mk&&GP.mk.getElement(), sv=el&&el.querySelector("svg"); if(sv) sv.style.transform="rotate("+Math.round(symHdg())+"deg)"; }
 let FLW=true;
 // v1.09.018: in Fly mode the map follows the aircraft until the pilot drags the map; CENTER brings the following back
 function flyRefresh(){
@@ -6403,18 +6438,18 @@ function railSync(){
     const full=document.documentElement.classList.contains("full");
     if(!RAIL_PROBE){ RAIL_PROBE=document.createElement("div"); RAIL_PROBE.style.cssText="position:fixed;left:0;top:0;width:1px;visibility:hidden;pointer-events:none;padding-top:env(safe-area-inset-top,0px)"; document.body.appendChild(RAIL_PROBE); }
     const env=parseFloat(getComputedStyle(RAIL_PROBE).paddingTop)||0, mt=mb.getBoundingClientRect().top;
-    let ex=0; { const fw=document.getElementById("fpWrap"), fb=document.getElementById("fpBox"); if(modeIsFly()&&fw&&fw.style.display!=="none"&&fb&&!fb.hidden) ex=Math.max(0,Math.round(fb.offsetHeight-4)); }   // an open Route info pill pushes the buttons down
-    if(full){
-      const want=env+84+ex, cur=parseFloat(getComputedStyle(z).marginTop)||0, act=z.getBoundingClientRect().top;
+    const tyOf=el=>{ const t=getComputedStyle(el).translate; if(!t||t==="none") return 0; return parseFloat(t.split(" ")[1])||0; };   // v1.09.041: the columns glide with a translate, positions are worked out without it
+    const pillTop= full? env+(GP.shown?58:26)-mt : 10, colTop=pillTop+38;   // the first row of both columns starts just under the closed Route info pill
+    {
+      const want=mt+colTop, cur=parseFloat(getComputedStyle(z).marginTop)||0, act=z.getBoundingClientRect().top-tyOf(z);
       if(Math.abs(act-want)>0.5) z.style.setProperty("margin-top",(cur+want-act)+"px","important");
-    } else if(ex>0) z.style.setProperty("margin-top",(72+ex)+"px","important");
-    else if(z.style.marginTop) z.style.removeProperty("margin-top");
-    const zt=z.getBoundingClientRect().top;
+    }
+    const zt=z.getBoundingClientRect().top-tyOf(z);
     mb.style.setProperty("--rail-y",(zt-mt).toFixed(1)+"px");
     mb.style.setProperty("--chip-top",(env+26-mt).toFixed(1)+"px");
     mb.style.setProperty("--pill-top",(env+(GP.shown?58:26)-mt).toFixed(1)+"px");
-    const lc=document.querySelector(".lyr-ctl"); if(lc&&lc.offsetParent){ const pr2=lc.offsetParent.getBoundingClientRect().top; lc.style.setProperty("top",(zt+30-pr2).toFixed(1)+"px","important"); }
-    const zl=document.querySelector(".zoom-tl"); if(zl&&zl.offsetParent){ const pr=zl.offsetParent.getBoundingClientRect().top; zl.style.setProperty("top",(zt-18-pr).toFixed(1)+"px","important"); }
+    const lc=document.querySelector(".lyr-ctl"); if(lc&&lc.offsetParent){ const pr2=lc.offsetParent.getBoundingClientRect().top; lc.style.setProperty("top",(zt+46-pr2).toFixed(1)+"px","important"); }
+    const zl=document.querySelector(".zoom-tl"); if(zl&&zl.offsetParent){ const pr=zl.offsetParent.getBoundingClientRect().top; zl.style.setProperty("top",(zt+z.offsetHeight+2-pr).toFixed(1)+"px","important"); }
   }catch(_){}
   try{ if(typeof FAM_CTL!=="undefined"&&FAM_CTL) famPlace(); }catch(_){}
 }
@@ -6543,7 +6578,7 @@ function cmpTick(t){
   CMP.t=0; if(!CMP.on||CMP.raw==null) return;
   if(t-CMP.last>=50){
     CMP.last=t; const d=((CMP.raw-CMP.hdg+540)%360)-180;
-    if(Math.abs(d)>=0.5){ CMP.hdg=n360(CMP.hdg+d*0.35); if(!gpsMoving()) fyHead(CMP.hdg); cmpDraw(); }
+    if(Math.abs(d)>=0.5){ CMP.hdg=n360(CMP.hdg+d*0.35); if(!gpsMoving()) fyHead(CMP.hdg); symTurn(); cmpDraw(); }
   }
   CMP.t=requestAnimationFrame(cmpTick);
 }
@@ -6556,7 +6591,7 @@ function cmpStart(){
   else go();
 }
 function cmpStop(){
-  CMP.on=false; CMP.raw=null; CMP.hdg=null; CMP.cv=null; if(CMP.t){ cancelAnimationFrame(CMP.t); CMP.t=0; }
+  CMP.on=false; CMP.raw=null; CMP.hdg=null; CMP.cv=null; try{ symTurn(); }catch(_){} if(CMP.t){ cancelAnimationFrame(CMP.t); CMP.t=0; }
   window.removeEventListener("deviceorientationabsolute",cmpOri,true); window.removeEventListener("deviceorientation",cmpOri,true); cmpUi(); cmpDraw();
 }
 function flyCompass(){ if(CMP.on) cmpStop(); else cmpStart(); }
@@ -6756,7 +6791,7 @@ function symIcon(){ const s=SYM[SYMK]; return L.divIcon({className:"gp-ac",iconS
 function symSet(k){
   if(!SYM[k]) return; SYMK=k; try{ localStorage.setItem("fy_sym",k); }catch(_){}
   document.querySelectorAll("#symSeg button").forEach(b=>b.classList.toggle("on",b.dataset.s===k));
-  if(GP.mk){ GP.mk.setIcon(symIcon()); const el=GP.mk.getElement(), sv=el&&el.querySelector("svg"); if(sv) sv.style.transform="rotate("+Math.round(GP.trk||0)+"deg)"; }
+  if(GP.mk){ GP.mk.setIcon(symIcon()); symTurn(); }
 }
 (function symInit(){
   const seg=document.getElementById("symSeg"); if(!seg) return;
@@ -6849,15 +6884,14 @@ function flyPills(){
   const mb=document.getElementById("mbox"); if(!mb) return;
   let w=document.getElementById("fpWrap");
   if(!w){ w=document.createElement("div"); w.id="fpWrap"; mb.appendChild(w); }
-  if(!document.getElementById("fpBox")){ w.innerHTML='<div id="fpBox" hidden></div><button type="button" id="fpHnd" aria-label="מידע על המסלול" onclick="fpToggle()"><span>ROUTE INFO</span><svg viewBox="0 0 24 24" aria-hidden="true"></svg></button>'; }
-  const B=document.getElementById("fpBox"), H=document.getElementById("fpHnd");
+  if(!document.getElementById("fpBox")){ w.innerHTML='<div id="fpBox"><div id="fpClip"><div id="fpIn"></div></div></div><button type="button" id="fpHnd" aria-label="מידע על המסלול" onclick="fpToggle()"><span>ROUTE INFO</span><svg viewBox="0 0 24 24" aria-hidden="true"></svg></button>'; }
+  const B=document.getElementById("fpIn"), H=document.getElementById("fpHnd");
   try{ nxtStep(); }catch(_){}
-  const on=modeIsFly()&&GP.pos&&!LP_OPEN;
+  const on=modeIsFly()&&GP.pos;   // v1.09.041: an open layers panel no longer removes the pill; it fades out (and back in) with the panel
   const showD=on&&DIR.on&&!!DIR.tgt, showR=on&&rtGood();
-  if(!(showD||showR)){ w.style.display="none"; return; }
-  w.style.display="flex"; w.classList.toggle("op",FPO.open);
+  if(!(showD||showR)){ w.style.display="none"; fpEx(0); return; }
+  w.style.display="flex"; w.classList.toggle("op",FPO.open); w.classList.toggle("gone",!!LP_OPEN);
   H.querySelector("svg").innerHTML=FPO.open?'<path d="M6 15l6-6 6 6"/>':'<path d="M6 9l6 6 6-6"/>';
-  B.hidden=!FPO.open; if(!FPO.open) return;
   const P=GP.pos, vi=(ic,x)=>'<span class="v">'+FP_IC[ic]+'<bdi>'+x+'</bdi></span>', vl=(br,dist,h,fuel)=>'<span class="vl">'+vi("brg",br)+vi("dst",fpDist(dist))+vi("clk",fpTime(h))+(fuel?vi("fuel",fuel):"")+'</span>';
   let h="";
   if(showR){
@@ -6880,6 +6914,12 @@ function flyPills(){
     h+='<div class="rw dr"><span class="pl">DIRECT</span>'+vl(fpBrg(P.lat,P.lon,T.lat,T.lon),nm,hh,fpFuel(hh))+'</div>';
   }
   B.innerHTML=h;
+  fpEx((FPO.open&&!LP_OPEN)? Math.max(0,Math.round(B.offsetHeight-4)) : 0);   // how far the open pill pushes the button columns down
+}
+function fpEx(v){   // the columns glide down with the pill (CSS translate); the shape filter follows them
+  if(v===FP_EX) return; FP_EX=v;
+  document.documentElement.style.setProperty("--fp-ex",v+"px");
+  try{ famFollow(520); }catch(_){}
 }
 setInterval(()=>{ try{ flyPills(); }catch(_){} },1000);
 // ═══ v1.09.031: the page never stays shifted (iPhone can scroll the whole page a little, then the lower part turns white and the navy bar is out of reach) ═══
