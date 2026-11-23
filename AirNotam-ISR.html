@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.050 · built by eligrt
+     AirNotam-ISR · v1.09.054 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2182,7 +2182,7 @@ html.full #mbox{--mt:env(safe-area-inset-top,0px);}
 .mk-b.done .mk-bd{background:#1f6f3f;color:#fff;}
 .mk-mode{left:10px;top:calc(16px + var(--mt));width:58px;height:58px;border:3px solid #c8a04a;background:#fbf0d2;color:#6b4f12;box-shadow:0 1px 5px rgba(14,35,72,.3);cursor:default;}
 .mk-mode svg{width:29px;height:29px;transform:translateY(-1px);stroke-width:1.5;}
-.mk-mode .mk-l{background:#c8a04a;color:#3b2d0a;font-size:9px;padding:1px 6px;}
+.mk-mode .mk-l{background:#c8a04a;color:#fff;font-size:9px;padding:1px 6px;}
 #mbGear{left:10px;bottom:calc(var(--dkb) + 123px);z-index:2;}
 #mbox.dk-c #mbGear{bottom:calc(var(--dkb) + 38px);}
 #stage:not(.v-map) #mbGear{bottom:var(--dkb);}
@@ -2356,7 +2356,7 @@ html.full.gps-vis .mb-info{top:var(--pill-top,calc(52px + env(safe-area-inset-to
 
 /* ═══ v1.09.021: amber DRAW and PREVIEW, handle blended into the dock ═══ */
 #dkDraw,#dkPrev{border-color:#c8a04a;background:#fbf0d2;color:#6b4f12;}
-#dkDraw .mk-l,#dkPrev .mk-l{background:#c8a04a;color:#3b2d0a;}
+#dkDraw .mk-l,#dkPrev .mk-l{background:#c8a04a;color:#fff;}
 #dkDraw.on{background:#f1dca0;}
 #dkDraw.pulse::after{border-color:#c8a04a;}
 .mk-dock{background:transparent !important;border-color:transparent !important;-webkit-backdrop-filter:none;backdrop-filter:none;}
@@ -2577,35 +2577,48 @@ html.full #alCard{top:var(--pill-top,calc(24px + env(safe-area-inset-top,0px)));
 #fpHnd{margin:-2.5px auto 0;height:30px;width:140px;min-width:140px;}
 .sp-body>.cue{bottom:-58px;}   /* v1.09.049: the settings scroll fade now reaches the real bottom edge of the page */
 
-/* ═══ v1.09.050: new top bar and mode switch. The navy bar has the logo, the settings gear and the GPS pill (no clock); the mode circle sits in a notch at the bar's right and only shows the mode; a tall gear handle on the left edge switches Plan and Fly. Left column: layers, FULL. Right column: zoom. Alert card sits under the circle. ═══ */
+/* ═══ v1.09.054: new top bar and mode switch. The navy bar has the logo, the settings gear and the GPS pill (no clock); the mode circle sits in a notch at the bar's right and only shows the mode; a tall gear handle on the left edge switches Plan and Fly. Left column: layers, FULL. Right column: zoom. Alert card sits under the circle. ═══ */
 .strip-clock{display:none !important;}
+.strip .gps-chip{display:flex !important;width:64px !important;min-width:64px !important;max-width:64px !important;height:20px !important;font-size:10px !important;line-height:17px !important;gap:4px !important;justify-content:center;padding:0 !important;letter-spacing:.02em !important;}
+html:not(.gps-vis) .strip .gps-chip{background:#dcd9d2;border-color:#8a8a8a;color:#55585c;opacity:.55;pointer-events:none;}
+html:not(.gps-vis) .strip .gps-chip i{display:none;}
 .metabar.hdr-meta{padding-right:112px !important;}
 .strip .gps-chip{position:absolute !important;right:60px !important;left:auto !important;top:var(--gy,34px) !important;transform:translate(50%,-50%) !important;margin:0 !important;}
-#pfNotch{position:absolute;right:0;top:calc(var(--hb,84px) - 31px);pointer-events:none;z-index:11;}
+#pfNotch{position:absolute;right:0;top:calc(var(--hb,84px) - 31px);pointer-events:none;z-index:1099;}
 #pfNotch path{fill:var(--paper-hi);}
-html.full #pfNotch,#app:has(#stage:not(.v-map)) #pfNotch{display:none;}
+html.full #pfNotch{display:none;}
 /* mode circle: indicator only */
-#app>#mbMode{position:absolute !important;left:auto !important;bottom:auto !important;right:34px !important;top:calc(var(--hb,84px) - 26px) !important;width:52px !important;height:52px !important;z-index:12;pointer-events:none !important;transition:none !important;margin:0 !important;}
+#app>#mbMode{position:absolute !important;left:auto !important;bottom:auto !important;right:34px !important;top:calc(var(--hb,84px) - 26px) !important;width:52px !important;height:52px !important;z-index:1100;pointer-events:none !important;transition:none !important;margin:0 !important;}
 #app>#mbMode svg{width:32px;height:32px;stroke-width:1.3;transform:translateY(-1px);}
+#app>#mbMode{box-shadow:0 0 0 5px #fbf6e8 !important;}
+#app>#mbMode .mk-l{box-shadow:0 0 0 3px #fbf6e8;}
 html.pf-fly #app>#mbMode{border-color:#1c3d6e;background:#dfe8f6;color:#1c3d6e;}
 html.pf-fly #app>#mbMode .mk-l{background:#1c3d6e;color:#fff;}
 html.pf-fly #app>#mbMode svg{width:26px;height:26px;stroke-width:.6;}
 html.full #app>#mbMode{top:calc(env(safe-area-inset-top,0px) + 26px) !important;}
-#app:has(#stage:not(.v-map)) #app>#mbMode,#app:has(#stage:not(.v-map)) > #mbMode{display:none !important;}
+#app:has(#stage:not(.v-map)) > #mbMode{display:none !important;}
+#app>#pfLst{display:none;position:absolute !important;left:auto !important;bottom:auto !important;right:34px !important;top:calc(var(--hb,84px) - 26px) !important;width:52px !important;height:52px !important;margin:0 !important;z-index:1100;pointer-events:none !important;box-shadow:0 0 0 5px #fbf6e8 !important;transform:none !important;}
+#app:has(#stage:not(.v-map)) > #pfLst{display:block !important;}
+#app>#pfLst{border:2.5px solid #b94a3a;background:#f6d7d1;border-radius:50%;box-sizing:border-box;}
+#app>#pfLst .mp-face{position:absolute;left:0;right:0;top:6px;display:grid;grid-template-columns:1fr 1fr;gap:3px 0;padding:0 9px;justify-items:center;color:#b94a3a;}
+#app>#pfLst .mp-face span{display:flex;} #app>#pfLst .mp-face svg{width:15px;height:15px;}
+#app>#pfLst .pf-ll{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);background:#b94a3a;color:#fff;font:700 9px/12px var(--font-mono);letter-spacing:.03em;padding:0 6px;border-radius:8px;white-space:nowrap;box-shadow:0 0 0 3px #fbf6e8;}
+#list{padding-top:34px;}
+body.lv #lstat{padding-right:84px !important;box-sizing:border-box;}
 /* settings gear in the bar */
-#app>#mbGear{position:absolute !important;left:auto !important;bottom:auto !important;right:111px !important;top:calc(var(--gy,34px) - 17px) !important;width:34px !important;height:34px !important;margin:0 !important;translate:none !important;transition:none !important;z-index:12;border:1.5px solid rgba(244,236,220,.6) !important;background:transparent !important;color:#f4ecdc !important;box-shadow:none !important;display:flex;align-items:center;justify-content:center;padding:0;border-radius:50%;}
+#app>#mbGear{position:absolute !important;left:auto !important;bottom:auto !important;right:111px !important;top:calc(var(--gy,34px) - 17px) !important;width:34px !important;height:34px !important;margin:0 !important;translate:none !important;transition:none !important;z-index:1100;border:1.5px solid rgba(244,236,220,.6) !important;background:transparent !important;color:#f4ecdc !important;box-shadow:none !important;display:flex;align-items:center;justify-content:center;padding:0;border-radius:50%;}
 #app>#mbGear svg{width:18px !important;height:18px !important;transform:none !important;fill:none;stroke:#f4ecdc;stroke-width:1.8;}
 html.full #app>#mbGear{right:auto !important;left:12px !important;top:calc(env(safe-area-inset-top,0px) + 26px) !important;width:46px !important;height:46px !important;background:#fbf6e8 !important;border:2.5px solid #1c3d6e !important;color:#1c3d6e !important;box-shadow:0 1px 5px rgba(14,35,72,.28) !important;}
 html.full #app>#mbGear svg{width:24px !important;height:24px !important;stroke:#1c3d6e;stroke-width:1.9;}
 /* GPS pill in full screen: hidden (the alert card still warns) */
-html.full #gpsChipF{display:none !important;}
+html.full #mbox .gps-chip.gps-f.on{position:absolute !important;right:60px !important;left:auto !important;top:calc(var(--pill-top,36px) + 46px) !important;transform:translateX(50%);margin:0 !important;z-index:1100;}
 /* columns: left = layers, FULL   right = zoom */
 html #mbox #mbFull,html.full #mbox #mbFull{left:19px !important;right:auto !important;top:calc(var(--rail-y,48px) + 46px) !important;}
 /* Route info and the Plan info pill are centred on the screen */
 #mbox #fpWrap,#mbox .mb-info{left:80px !important;right:80px !important;}
 /* alert card under the circle */
 #mbox #alCard{top:34px;}
-html.full #mbox #alCard{top:calc(var(--pill-top,36px) + 50px);}
+html.full #mbox #alCard{top:calc(var(--pill-top,36px) - 10px);left:68px;right:92px;}
 /* tall gear handle (mode switch) */
 #pfSw{position:absolute;left:16px;top:58%;width:60px;height:120px;margin-top:-60px;padding:0;border:0;background:none;transform:scale(.82);transform-origin:0 50%;z-index:6;--mc:#c8a04a;-webkit-tap-highlight-color:transparent;cursor:pointer;font:inherit;}
 #pfSw.pf-on{--mc:#1c3d6e;}
@@ -2658,7 +2671,7 @@ html.full #mbox #alCard{top:calc(var(--pill-top,36px) + 50px);}
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.050 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.054 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2701,7 +2714,7 @@ html.full #mbox #alCard{top:calc(var(--pill-top,36px) + 50px);}
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.050 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.054 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5204,8 +5217,8 @@ function lsaInit(){
 let LP_OPEN=null;   // "charts" | "layers" | null
 let FP_EX=0;   // v1.09.041: how far the open Route info pill pushes the button columns down
 const COL_OFF=16, AL_H=60, AL_GAP=10; let AL_SH=0;
-function colOff(full){ return full? 56 : 30; }   // v1.09.050: the first button row starts below the mode circle (in the bar) or below the circle on the map (full screen)
-function alShNow(){ return AL.k? AL_H+AL_GAP+(document.documentElement.classList.contains("full")?50:24) : 0; }   // v1.09.050: the alert card sits under the mode circle   // v1.09.042: where the button columns start, counted from the top of the closed Route info pill
+function colOff(full){ return full? 76 : 30; }   // v1.09.054: the first button row starts below the mode circle (in the bar) or below the circle on the map (full screen)
+function alShNow(){ return AL.k? AL_H+AL_GAP+(document.documentElement.classList.contains("full")?0:24) : 0; }   // v1.09.054: the alert card sits under the mode circle   // v1.09.042: where the button columns start, counted from the top of the closed Route info pill
 const GIS_OP=(()=>{ try{ return JSON.parse(localStorage.getItem("airnotam_gis_op")||"{}")||{}; }catch(e){ return {}; } })();   // route line transparency, per route
 const lpEl=id=>document.getElementById(id);
 const lpOp=id=> id in GIS_OP ? Math.max(.1,Math.min(1,+GIS_OP[id]||1)) : 1;   // v1.08.067: the toggle switches a route on or off, the bar only softens it (10% to 100%)
@@ -5750,7 +5763,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.050 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.054 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -7172,12 +7185,13 @@ function demoTick(){
 </div></div>
 
 <script>
-/* v1.09.050: mode circle and gear live in the app frame (over the navy bar); the handle springs between Plan and Fly; the bar notch follows the bar's real height */
+/* v1.09.054: mode circle and gear live in the app frame (over the navy bar); the handle springs between Plan and Fly; the bar notch follows the bar's real height */
 (function(){
   const $=id=>document.getElementById(id), app=$("app"), root=document.documentElement;
   const mode=$("mbMode"), gear=$("mbGear");
   if(app&&mode){ app.appendChild(mode); mode.removeAttribute("onclick"); mode.setAttribute("tabindex","-1"); mode.setAttribute("aria-hidden","true"); }
   if(app&&gear){ app.appendChild(gear); }
+  const mf=document.querySelector("#mpCl .mp-face"); if(mf&&app){ const c=document.createElement("div"); c.id="pfLst"; c.setAttribute("aria-hidden","true"); const f=mf.cloneNode(true); f.removeAttribute("id"); f.querySelectorAll("[id]").forEach(e=>{ e.removeAttribute("id"); e.className=""; }); c.appendChild(f); const l=document.createElement("span"); l.className="pf-ll"; l.textContent="NOTAM"; c.appendChild(l); app.appendChild(c); }
   const sw=$("pfSw"); if(!sw) return;
   const kn=sw.querySelector(".pf-kn"), s1=sw.querySelector(".pf-s1"), s2=sw.querySelector(".pf-s2");
   const calm=()=>window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -7197,7 +7211,7 @@ function demoTick(){
     const f=modeIsFly(); t=f?1:-1; sw.setAttribute("aria-checked",f?"true":"false"); root.classList.toggle("pf-fly",f);
     if(instant||calm()){ cancelAnimationFrame(raf); p=t; v=0; paint(); } else run();
   };
-  window.pfPulse=function(fly){ if(calm()) return; setTimeout(()=>{ const m=$("mbMode"); if(!m||!m.offsetWidth) return; const c=fly?"28,61,110":"200,160,74"; try{ m.animate([{boxShadow:"0 0 0 0 rgba("+c+",.65)"},{boxShadow:"0 0 0 14px rgba("+c+",0)"}],{duration:560,easing:"ease-out"}); }catch(_){} },640); };
+  window.pfPulse=function(fly){ if(calm()) return; setTimeout(()=>{ const m=$("mbMode"); if(!m||!m.offsetWidth) return; const c=fly?"28,61,110":"200,160,74"; try{ m.animate([{boxShadow:"0 0 0 5px #fbf6e8,0 0 0 5px rgba("+c+",.65)"},{boxShadow:"0 0 0 5px #fbf6e8,0 0 0 19px rgba("+c+",0)"}],{duration:560,easing:"ease-out"}); }catch(_){} },640); };
   window.pfFullSync=function(){ try{ AL_SH=alShNow(); const mb=$("mbox"); if(mb) mb.style.setProperty("--al-sh",AL_SH+"px"); exApply(); railSync(); }catch(_){} };
   function measure(){
     try{
