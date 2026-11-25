@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.061 · built by eligrt
+     AirNotam-ISR · v1.09.062 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2620,7 +2620,7 @@ html.full #app>#mbGear svg{width:24px !important;height:24px !important;stroke:#
 /* GPS pill in full screen: hidden (the alert card still warns) */
 html.full #mbox .gps-chip.gps-f{position:absolute !important;left:50% !important;right:auto !important;top:calc(var(--pill-top,60px) + var(--al-sh,0px) - 28px) !important;transform:translateX(-50%);margin:0 !important;z-index:1100;}
 /* columns: left = layers, FULL   right = zoom */
-html #mbox #mbFull,html.full #mbox #mbFull{left:19px !important;right:auto !important;top:calc(var(--rail-y,48px) + 46px) !important;}
+html #mbox #mbFull,html.full #mbox #mbFull{left:19px !important;right:auto !important;top:var(--rail-y,48px) !important;}
 /* Route info and the Plan info pill are centred on the screen */
 #mbox .mb-info{left:80px !important;right:80px !important;}
 #mbox #fpWrap{left:10px !important;right:10px !important;}
@@ -2628,19 +2628,15 @@ html #mbox #mbFull,html.full #mbox #mbFull{left:19px !important;right:auto !impo
 #mbox #alCard{top:8px;left:10px;right:100px;height:52px;padding:6px 10px;gap:8px;}
 #alCard .al-t{font-size:14px;} #alCard .al-l{font-size:11.5px;} #alCard svg{width:20px;height:20px;}
 html.full #mbox #alCard{top:calc(var(--pill-top,60px) - 34px);left:68px;right:100px;}
-/* tall gear handle (mode switch) */
-#pfSw{position:absolute;left:16px;top:58%;width:60px;height:120px;margin-top:-60px;padding:0;border:0;background:none;transform:scale(.82);transform-origin:0 50%;z-index:6;--mc:#c8a04a;-webkit-tap-highlight-color:transparent;cursor:pointer;font:inherit;}
-#pfSw.pf-on{--mc:#1c3d6e;}
-#pfSw *{position:absolute;box-sizing:border-box;pointer-events:none;}
-#pfSw .pf-pl{inset:0;border-radius:16px;border:2.5px solid var(--mc);background:rgba(251,246,232,.96);box-shadow:0 1px 4px rgba(14,35,72,.28);}
-#pfSw .pf-l{left:0;right:0;text-align:center;font:700 9.5px/1 var(--font-mono);letter-spacing:.04em;color:var(--mc);opacity:.5;}
-#pfSw .pf-lf{top:7px;} #pfSw .pf-lp{bottom:7px;}
-#pfSw:not(.pf-on) .pf-lp,#pfSw.pf-on .pf-lf{opacity:1;}
-#pfSw .pf-slot{left:21px;top:22px;width:18px;height:76px;border-radius:7px;background:var(--mc);opacity:.10;}
-#pfSw .pf-s1,#pfSw .pf-s2{width:8px;left:26px;border-radius:4px;}
-#pfSw .pf-s1{background:#b4c9e6;} #pfSw .pf-s2{background:#e6cf9a;}
-#pfSw .pf-kn{width:32px;height:32px;left:14px;border-radius:50%;border:2.5px solid var(--mc);background:#fbf6e8;}
-#pfSw .pf-kc{left:50%;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:var(--mc);}
+/* v1.09.062: mode switch = throttle with a hand (navy FLY pill on top, amber PLAN pill below) */
+#pfSw{position:absolute;left:12px;top:58%;width:70px;height:140px;margin-top:-70px;padding:0;border:0;border-radius:0;box-shadow:none;background:none;transform:scale(.8);transform-origin:0 50%;z-index:6;-webkit-tap-highlight-color:transparent;cursor:pointer;font:inherit;display:block;}
+#pfSw svg{width:70px;height:140px;display:block;overflow:visible;pointer-events:none;filter:drop-shadow(0 1px 3px rgba(14,35,72,.35));}
+/* mode circle notch: small gap, the map shows through (option B) */
+#pfPeek{position:absolute;width:100px;height:38px;z-index:1098;pointer-events:none;overflow:hidden;clip-path:path('M4.08 38H95.92A10 10 0 0 1 86.15 30.13A37 37 0 0 0 13.85 30.13A10 10 0 0 1 4.08 38Z');background:#aad3df;display:none;}
+html.pf-peek #pfPeek{display:block;}
+html.pf-peek #pfNotch{display:none;}
+html.full #pfPeek{display:none !important;}
+#pfPeek .leaflet-control-container{display:none;}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2680,7 +2676,7 @@ html.full #mbox #alCard{top:calc(var(--pill-top,60px) - 34px);left:68px;right:10
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.061 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.062 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2723,7 +2719,7 @@ html.full #mbox #alCard{top:calc(var(--pill-top,60px) - 34px);left:68px;right:10
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.061 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.062 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -2803,7 +2799,7 @@ html.full #mbox #alCard{top:calc(var(--pill-top,60px) - 34px);left:68px;right:10
       <div id="mbPill" class="mb-pill mb-m" role="group" aria-label="סינון NOTAM לפי סוג" style="right:10px;bottom:116px"><div class="mp-clip"><button type="button" class="mp-cl" id="mpCl" aria-label="סינון NOTAM לפי סוג" aria-expanded="false" onclick="mbPillOpen()"><div class="mp-face"><span id="mpf_cvfr"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="rotate(-35 12 12)"><rect x="10.5" y="3.5" width="3" height="17.5" rx="1.5"/><rect x="2" y="9" width="20" height="3.6" rx="1.4"/><rect x="7.5" y="18" width="9" height="2.6" rx="1.2"/><rect x="8.5" y="1.6" width="7" height="1.4" rx=".7"/></g></svg></span><span id="mpf_apt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 22h20"/><path d="M6.4 17.4L4 17l-2-4 1.1-.55a2 2 0 0 1 1.8 0l.17.1a2 2 0 0 0 1.8 0L8 12 5 6l.9-.45a2 2 0 0 1 2.09.2l4.02 3a2 2 0 0 0 2.1.2l4.19-2.06a2.41 2.41 0 0 1 1.73-.17L21 7a1.4 1.4 0 0 1 .87 1.99l-.38.76c-.23.46-.6.84-1.07 1.08L7.58 17.2a2 2 0 0 1-1.22.18Z"/></svg></span><span id="mpf_hel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18M12 5v3"/><path d="M7 13a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1H7z"/><path d="M7 13H3M8 19h9"/></svg></span><span id="mpf_ins"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="17" r="1.5"/><path d="M8 13a5.5 5.5 0 0 1 8 0M5 9.5a10 10 0 0 1 14 0"/></svg></span></div></button><div class="mp-op" id="mpOp"><button type="button" class="mp-hd" aria-label="סגור" onclick="mbPillClose()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><button type="button" id="mbF_hz" class="mp-cell" aria-label="אזהרות" onclick="mbFam('hz')" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5"/><path d="M12 18v.5"/></svg><span>ALERT</span></button><button type="button" id="mbF_cvfr" class="mp-cell" aria-label="CVFR וספורט" onclick="mbFam('cvfr')" aria-pressed="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="rotate(-35 12 12)"><rect x="10.5" y="3.5" width="3" height="17.5" rx="1.5"/><rect x="2" y="9" width="20" height="3.6" rx="1.4"/><rect x="7.5" y="18" width="9" height="2.6" rx="1.2"/><rect x="8.5" y="1.6" width="7" height="1.4" rx=".7"/></g></svg><span>CVFR/LSA</span></button><button type="button" id="mbF_apt" class="mp-cell" aria-label="שדות גדולים" onclick="mbFam('apt')" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 22h20"/><path d="M6.4 17.4L4 17l-2-4 1.1-.55a2 2 0 0 1 1.8 0l.17.1a2 2 0 0 0 1.8 0L8 12 5 6l.9-.45a2 2 0 0 1 2.09.2l4.02 3a2 2 0 0 0 2.1.2l4.19-2.06a2.41 2.41 0 0 1 1.73-.17L21 7a1.4 1.4 0 0 1 .87 1.99l-.38.76c-.23.46-.6.84-1.07 1.08L7.58 17.2a2 2 0 0 1-1.22.18Z"/></svg><span>AIRPORT</span></button><button type="button" id="mbF_hel" class="mp-cell" aria-label="מסוקים" onclick="mbFam('hel')" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18M12 5v3"/><path d="M7 13a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1H7z"/><path d="M7 13H3M8 19h9"/></svg><span>HELI</span></button><button type="button" id="mbF_ins" class="mp-cell" aria-label="IFR" onclick="mbFam('ins')" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="17" r="1.5"/><path d="M8 13a5.5 5.5 0 0 1 8 0M5 9.5a10 10 0 0 1 14 0"/></svg><span>IFR</span></button><div class="mp-fb"><button type="button" class="mp-fr" id="mpTime" aria-label="זמן" onclick="mbPillTime()"><span><b id="mpTimeT">24 HR</b><small>TIME</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></button><button type="button" class="mp-fr" id="mpOnly" aria-label="רק על המסלול" aria-pressed="false" onclick="mbPillOnly()"><span>ON ROUTE<small>only</small></span><i class="rsw"></i></button></div></div></div><span class="mb-t mb-t-l" id="mbPillT">NOTAM</span></div>
       <button type="button" id="mbChart" class="mb-b mb-c mb-m" style="left:10px;bottom:44px" aria-label="מפות" onclick="lyrPanel('charts')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><path d="M3 6.5l6-2.5 6 2.5 6-2.5v13.5l-6 2.5-6-2.5-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></svg><span class="mb-t mb-t-r" id="mbChartT">CHARTS</span></button>
       <button type="button" id="mbRv" class="mb-rv mb-m" aria-label="סקירה" onclick="slotReview()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6l1.2 1.2L6.8 5M3.5 12l1.2 1.2L6.8 11M3.5 18l1.2 1.2L6.8 17"/></svg><span class="mb-t mb-t-l" id="mbRvT">REVIEW</span><span class="mb-bd" id="mbRvN"></span></button>
-      <button type="button" id="pfSw" class="mb-m" role="switch" aria-checked="false" aria-label="מצב: תכנון / טיסה" onclick="modeFlip()"><span class="pf-pl"></span><span class="pf-l pf-lf">FLY</span><span class="pf-l pf-lp">PLAN</span><span class="pf-slot"></span><span class="pf-s2"></span><span class="pf-s1"></span><span class="pf-kn"><span class="pf-kc"></span></span></button>
+      <button type="button" id="pfSw" class="mb-m" role="switch" aria-checked="false" aria-label="מצב: תכנון / טיסה" onclick="modeFlip()"><svg viewBox="0 0 70 140" aria-hidden="true"><rect class="pl" x="1.25" y="1.25" width="67.5" height="137.5" rx="17" fill="#fbf6e8" stroke="#c8a04a" stroke-width="2.5"/><rect x="28" y="30" width="14" height="80" rx="7" fill="#e9e1cc"/><rect class="sa" x="30" y="33" width="10" height="74" rx="4" fill="#e6cf9a"/><path class="es" d="M25 33H45M25 107H45" stroke="#c8a04a" stroke-width="2" stroke-linecap="round"/><rect x="9" y="5" width="52" height="18" rx="9" fill="#1c3d6e"/><text x="35" y="18.5" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="800" font-size="13" fill="#fff">FLY</text><rect x="9" y="117" width="52" height="18" rx="9" fill="#c8a04a"/><text x="35" y="130.5" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="800" font-size="13" fill="#fff">PLAN</text><g class="hd"></g></svg></button>
       <button type="button" class="mk-b mk-mode mb-m" id="mbMode" aria-label="מצב תכנון" onclick="modeFlip()"><svg viewBox="0 0 24 24" class="m" aria-hidden="true"><g transform="rotate(-38 12 12)"><rect x="1.5" y="8.3" width="21" height="7.4" rx="1.3"/><path d="M5.5 8.3v3M9 8.3v2M12.5 8.3v3M16 8.3v2M19.5 8.3v3" stroke-width="1.1"/></g><g transform="translate(15.5 14) rotate(38) translate(-12 -12)"><path d="M10 2.5h4V16l-2 4.5-2-4.5z" style="fill:#fbf0d2"/><path d="M10 6.5h4" stroke-width="1.1"/></g></svg><span class="mk-l">PLAN</span></button>
       <button type="button" class="mk-b" id="mbGear" aria-label="הגדרות" onclick="toggleSettings()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg><span class="mk-l">SETTINGS</span></button>
       <div class="mk-dock mb-m" id="mbDock" role="group" aria-label="תכנון">
@@ -5772,7 +5768,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.061 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.062 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6564,7 +6560,7 @@ function railSync(){
     mb.style.setProperty("--rail-y",(zt-mt).toFixed(1)+"px");
     mb.style.setProperty("--chip-top",(env+26-mt).toFixed(1)+"px");
     mb.style.setProperty("--pill-top",(env+60-mt).toFixed(1)+"px");
-    const lc=document.querySelector(".lyr-ctl"); if(lc&&lc.offsetParent){ const pr2=lc.offsetParent.getBoundingClientRect().top; lc.style.setProperty("top",(zt-pr2).toFixed(1)+"px","important"); }
+    const lc=document.querySelector(".lyr-ctl"); if(lc&&lc.offsetParent){ const pr2=lc.offsetParent.getBoundingClientRect().top; lc.style.setProperty("top",(zt-pr2+46).toFixed(1)+"px","important"); }
     const zl=document.querySelector(".zoom-tl"); if(zl&&zl.offsetParent){ const pr=zl.offsetParent.getBoundingClientRect().top; zl.style.setProperty("top",(zt+z.offsetHeight+2-pr).toFixed(1)+"px","important"); }
   }catch(_){}
   try{ if(typeof FAM_CTL!=="undefined"&&FAM_CTL) famPlace(); }catch(_){}
@@ -7205,13 +7201,16 @@ function demoTick(){
   if(app&&gear){ app.appendChild(gear); }
   const mf=document.querySelector("#mpCl .mp-face"); if(mf&&app){ const c=document.createElement("div"); c.id="pfLst"; c.setAttribute("aria-hidden","true"); const f=mf.cloneNode(true); f.removeAttribute("id"); f.querySelectorAll("[id]").forEach(e=>{ e.removeAttribute("id"); e.className=""; }); c.appendChild(f); const l=document.createElement("span"); l.className="pf-ll"; l.textContent="NOTAM"; c.appendChild(l); app.appendChild(c); }
   const sw=$("pfSw"); if(!sw) return;
-  const kn=sw.querySelector(".pf-kn"), s1=sw.querySelector(".pf-s1"), s2=sw.querySelector(".pf-s2");
+  const hd=sw.querySelector(".hd"), pl=sw.querySelector(".pl"), sa=sw.querySelector(".sa"), es=sw.querySelector(".es");
   const calm=()=>window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let p=-1,v=0,t=-1,raf=0,fl=null;
+  const HAND='<rect x="-12.5" y="5" width="25" height="15" rx="6" fill="#fbf6e8" stroke="MC" stroke-width="2.2"/><path d="M-7 10.5H7M-7 15H7" stroke="MC" stroke-width="1.6" stroke-linecap="round"/><g fill="TN" stroke="MC" stroke-width="1.8" stroke-linejoin="round"><rect x="-17" y="-19" width="8" height="19" rx="4"/><rect x="-8" y="-21" width="8" height="21" rx="4"/><rect x="1" y="-20" width="8" height="20" rx="4"/><rect x="10" y="-17" width="8" height="17" rx="4"/><rect x="-17.5" y="-8" width="36" height="17" rx="7"/><rect x="-25" y="-5" width="13" height="8" rx="4" transform="rotate(-38 -19 -1)"/></g>';
+  const HALO=HAND.replace(/MC/g,"#fbf6e8").replace(/TN/g,"#fbf6e8").replace(/stroke-width="([\d.]+)"/g,(m,w)=>'stroke-width="'+(+w+4)+'"');
+  let p=-1,v=0,t=-1,raf=0,fl=null,UP=54,DN=88;
   function paint(){
-    const H=120,up=38,dn=H-38,cy=(up+dn)/2-p*(dn-up)/2;
-    kn.style.top=(cy-16)+"px"; s1.style.top=cy+"px"; s1.style.height=Math.max(0,H-26-cy)+"px"; s2.style.top="26px"; s2.style.height=Math.max(0,cy-26)+"px";
-    const f=p>0; if(f!==fl){ fl=f; sw.classList.toggle("pf-on",f); }
+    const cy=(UP+DN)/2-p*(DN-UP)/2, f=p>0;
+    hd.setAttribute("transform","translate(35 "+cy+")");
+    if(f!==fl){ fl=f; const mc=f?"#1c3d6e":"#c8a04a", tn=f?"#cfdcf0":"#f3dfc0";
+      hd.innerHTML=HALO+HAND.replace(/MC/g,mc).replace(/TN/g,tn); pl.setAttribute("stroke",mc); es.setAttribute("stroke",mc); sa.setAttribute("fill",f?"#b4c9e6":"#e6cf9a"); sw.classList.toggle("pf-on",f); }
   }
   function run(){
     cancelAnimationFrame(raf); let last=performance.now();
@@ -7225,6 +7224,25 @@ function demoTick(){
   };
   window.pfPulse=function(fly){ if(calm()) return; setTimeout(()=>{ const m=$("mbMode"); if(!m||!m.offsetWidth) return; const c=fly?"28,61,110":"200,160,74"; try{ m.animate([{boxShadow:"0 0 0 5px #fbf6e8,0 0 0 5px rgba("+c+",.65)"},{boxShadow:"0 0 0 5px #fbf6e8,0 0 0 19px rgba("+c+",0)"}],{duration:560,easing:"ease-out"}); }catch(_){} },640); };
   window.pfFullSync=function(){ try{ AL_SH=alShNow(); const mb=$("mbox"); if(mb) mb.style.setProperty("--al-sh",AL_SH+"px"); exApply(); railSync(); }catch(_){} };
+  /* v1.09.062: a small copy of the map shows through the bite around the mode circle */
+  const PK=document.createElement("div"); PK.id="pfPeek"; app.appendChild(PK); let pm=null, pbase=null, pkOn=false;
+  function peekSync(){
+    try{
+      const stg=$("stage"), mapOk=typeof MAP!=="undefined"&&MAP&&stg&&stg.classList.contains("v-map")&&!root.classList.contains("full")&&!(typeof FY!=="undefined"&&FY&&(FY.on||Math.abs(FY.rot||0)>0.01))&&typeof L!=="undefined";
+      if(!mapOk){ if(pkOn){ pkOn=false; root.classList.remove("pf-peek"); } return; }
+      const ar=app.getBoundingClientRect(), m=$("meta"); if(!m||!m.offsetHeight) return;
+      const hb=m.getBoundingClientRect().bottom-ar.top;
+      PK.style.left=(ar.width-60-50)+"px"; PK.style.top=(hb-38)+"px";
+      if(!pm){ pm=L.map(PK,{zoomControl:false,attributionControl:false,dragging:false,touchZoom:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,tap:false,zoomAnimation:false,fadeAnimation:false,markerZoomAnimation:false,inertia:false,center:[31.5,35],zoom:7}); }
+      const bl=MAP_BASES&&MAP_BASES[MAP_BASE];
+      if(bl&&pbase!==MAP_BASE){ if(pbase&&pm._pkL) pm.removeLayer(pm._pkL); pm._pkL=L.tileLayer(bl._url,Object.assign({},bl.options,{attribution:""})).addTo(pm); pbase=MAP_BASE; }
+      const pr=PK.getBoundingClientRect(), mr=MAP.getContainer().getBoundingClientRect();
+      const ll=MAP.containerPointToLatLng([pr.left+pr.width/2-mr.left, pr.top+pr.height/2-mr.top]);
+      pm.setView(ll,MAP.getZoom(),{animate:false});
+      if(!pkOn){ pkOn=true; root.classList.add("pf-peek"); }
+    }catch(_){ if(pkOn){ pkOn=false; root.classList.remove("pf-peek"); } }
+  }
+  setInterval(peekSync,250); try{ document.addEventListener("pointermove",()=>{ if(pkOn) peekSync(); },{passive:true}); }catch(_){}
   function measure(){
     try{
       const ar=app.getBoundingClientRect(), m=$("meta"), g=document.querySelector(".hdr-glyph");
