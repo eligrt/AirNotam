@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.062 · built by eligrt
+     AirNotam-ISR · v1.09.063 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2637,6 +2637,16 @@ html.pf-peek #pfPeek{display:block;}
 html.pf-peek #pfNotch{display:none;}
 html.full #pfPeek{display:none !important;}
 #pfPeek .leaflet-control-container{display:none;}
+/* v1.09.063: unit sliders in settings (speed: KT / MPH, fuel: L/H / GAL/H) */
+.sl{display:inline-flex;align-items:center;gap:6px;direction:ltr;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none;}
+.sl i{position:relative;width:38px;height:22px;border-radius:11px;background:#d9cfb4;display:block;box-shadow:inset 0 0 0 1.5px #1c3d6e;transition:background .2s ease;}
+.sl i:after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fbf6e8;box-shadow:0 0 0 1.5px #1c3d6e;transition:left .2s ease;}
+.sl.r i{background:#1c3d6e;} .sl.r i:after{left:19px;}
+.sl em{font:800 11px var(--font-mono);color:#1c3d6e;font-style:normal;min-width:38px;text-align:left;}
+.sl:focus-visible i{outline:2px solid #1c3d6e;outline-offset:2px;}
+.sp-two .sp-num{gap:6px;} .sp-two .sp-num input{width:46px;}
+@media (max-width:360px){.sp-two .sp-num input{width:38px;} .sl{gap:4px;} .sl i{width:34px;} .sl.r i:after{left:15px;} .sl em{font-size:10px;min-width:34px;}}
+@media (prefers-reduced-motion:reduce){.sl i,.sl i:after{transition:none;}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2676,7 +2686,7 @@ html.full #pfPeek{display:none !important;}
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.062 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.063 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2705,8 +2715,8 @@ html.full #pfPeek{display:none !important;}
       <button type="button" class="sp-row sp-irow" id="spUpd" onclick="setRefreshData()"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></span><span class="sp-tx"><b id="spUpdT">בדוק NOTAMים חדשים</b><small><span class="rt2">נבדק לאחרונה: <span class="rtime" id="refreshTime">--:--</span> · נתוני הבסיס מ-<span class="rtime" id="dataTime">--:--</span></span></small></span><span class="sp-bar"><i></i></span></button>
       <div class="sp-grp">המטוס שלי</div>
       <div class="sp-two">
-      <div class="sp-row sp-irow sp-static" id="rteSpdBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="sp-tx"><b>מהירות שיוט</b><small id="spdSm" data-ok="לחישוב זמן הטיסה">לחישוב זמן הטיסה</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="spdIn" aria-label="מהירות שיוט בקשר" placeholder="--"><span>קשר</span></div></div>
-      <div class="sp-row sp-irow sp-static" id="rteBurnBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M4 21h12"/><path d="M15 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/><path d="M7.5 8h5"/></svg></span><span class="sp-tx"><b>צריכת דלק</b><small id="burnSm" data-ok="לחישוב כמות הדלק. הערכה בלבד, ללא רוח">לחישוב כמות הדלק. הערכה בלבד, ללא רוח</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="burnIn" aria-label="צריכת דלק בליטרים לשעה" placeholder="--"><span>ליטר לשעה</span></div></div>
+      <div class="sp-row sp-irow sp-static" id="rteSpdBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="sp-tx"><b>מהירות שיוט</b><small id="spdSm" data-ok="לחישוב זמן הטיסה">לחישוב זמן הטיסה</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="spdIn" aria-label="מהירות שיוט" placeholder="--"><div class="sl" id="uSpd" role="switch" aria-checked="false" tabindex="0" aria-label="יחידת מהירות: קשר או מייל לשעה"><i></i><em>KT</em></div></div></div>
+      <div class="sp-row sp-irow sp-static" id="rteBurnBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M4 21h12"/><path d="M15 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/><path d="M7.5 8h5"/></svg></span><span class="sp-tx"><b>צריכת דלק</b><small id="burnSm" data-ok="לחישוב כמות הדלק. הערכה בלבד, ללא רוח">לחישוב כמות הדלק. הערכה בלבד, ללא רוח</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="burnIn" aria-label="צריכת דלק לשעה" placeholder="--"><div class="sl" id="uFuel" role="switch" aria-checked="false" tabindex="0" aria-label="יחידת דלק: ליטר או גלון לשעה"><i></i><em>L/H</em></div></div></div>
       </div>
       <div class="sp-row sp-irow sp-static" id="symBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l6 17-6-4-6 4z"/></svg></span><span class="sp-tx"><b>סמל מיקום</b></span><div class="fgrace sp-corr" id="symSeg"></div></div>
       <div class="sp-grp">מסלול</div>
@@ -2719,7 +2729,7 @@ html.full #pfPeek{display:none !important;}
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.062 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.063 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -3288,6 +3298,12 @@ const ROUTE_KEY="airnotam_route";
 // v1.08.116: cruise speed (knots) and fuel burn (litres per hour) from the settings page drive the time and fuel estimate (no wind, no reserve). An empty field switches that figure off.
 function lsNum(k,def){ try{ const v=localStorage.getItem(k); if(v===null) return def; if(v==="") return null; const n=+v; return isFinite(n)&&n>0? n : def; }catch(e){ return def; } }
 let CRZ_KT=lsNum("airnotam_spd",87), BURN_LH=lsNum("airnotam_burn",18);
+// v1.09.063: units. Everything inside stays in knots and litres; only what the pilot sees and types is converted.
+const KT2MPH=1.15078, L2GAL=3.78541; let U_SPD="kt", U_FUEL="l";
+try{ U_SPD=localStorage.getItem("airnotam_uspd")==="mph"?"mph":"kt"; U_FUEL=localStorage.getItem("airnotam_ufuel")==="gal"?"gal":"l"; }catch(e){}
+const spdU=kt=>U_SPD==="mph"? kt*KT2MPH : kt, spdUnit=()=>U_SPD==="mph"?"MPH":"KT";
+const fuelU=l=>U_FUEL==="gal"? l/L2GAL : l;
+const fuelFmt=l=>{ const v=fuelU(l); return (U_FUEL==="gal"&&v<10)? v.toFixed(1) : String(Math.round(v)); };
 const IC_CLK='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
 const IC_FUEL='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M4 21h12"/><path d="M15 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/><path d="M7.5 8h5"/></svg>';
 function fmtHM(h){ const m=Math.round(h*60); return Math.floor(m/60)+":"+String(m%60).padStart(2,"0"); }
@@ -3296,7 +3312,7 @@ function routeTF(){
   if(!CRZ_KT||ROUTE.length<2) return "";
   const h=routeLenNm()/CRZ_KT;
   let t='<i class="tfi">'+IC_CLK+'<bdi dir="ltr">~'+fmtHM(h)+'</bdi></i>';
-  if(BURN_LH) t+='<i class="tfi">'+IC_FUEL+'<bdi dir="ltr">~'+Math.round(h*BURN_LH)+'</bdi> ל׳</i>';
+  if(BURN_LH) t+='<i class="tfi">'+IC_FUEL+'<bdi dir="ltr">~'+fuelFmt(h*BURN_LH)+'</bdi> '+(U_FUEL==="gal"?"gal":"ל׳")+'</i>';
   return t;
 }
 let CORR_NM=3; try{CORR_NM=+localStorage.getItem("airnotam_corr")||3;}catch(e){}
@@ -4842,20 +4858,28 @@ function cueAdd(sc){
 }
 function cueAll(){ document.querySelectorAll(".fcard,.sp-body").forEach(sc=>{ if(!sc._cue) cueAdd(sc); setTimeout(sc._cue,60); setTimeout(sc._cue,520); }); }
 function renderSettings(){ try{renderRte();}catch(_){} try{spFamSync();}catch(_){} try{spNumSync();}catch(_){} }
-function spNumSync(){ const a=document.getElementById("spdIn"), b=document.getElementById("burnIn"); if(a&&document.activeElement!==a) a.value= CRZ_KT? String(CRZ_KT) : ""; if(b&&document.activeElement!==b) b.value= BURN_LH? String(BURN_LH) : ""; }
+function spNumSync(force){ const a=document.getElementById("spdIn"), b=document.getElementById("burnIn"), r1=v=>String(+v.toFixed(1)); if(a&&(force||document.activeElement!==a)) a.value= CRZ_KT? r1(spdU(CRZ_KT)) : ""; if(b&&(force||document.activeElement!==b)) b.value= BURN_LH? r1(fuelU(BURN_LH)) : ""; spUnitUi(); }
+function spUnitUi(){ [["uSpd",U_SPD==="mph","MPH","KT"],["uFuel",U_FUEL==="gal","GAL/H","L/H"]].forEach(([id,r,t1,t0])=>{ const e=document.getElementById(id); if(!e) return; e.classList.toggle("r",r); e.setAttribute("aria-checked",r?"true":"false"); e.querySelector("em").textContent=r?t1:t0; }); }
 // v1.08.116: cruise speed and fuel burn fields: empty = that figure off; a number outside the range shows a red line and changes nothing
 function spNumInit(){
-  [["spdIn","spdSm","airnotam_spd",30,300,"הזן מהירות בין 30 ל-300 קשר",v=>{CRZ_KT=v;}],["burnIn","burnSm","airnotam_burn",1,150,"הזן מספר בין 1 ל-150 ליטר לשעה",v=>{BURN_LH=v;}]].forEach(([id,sm,key,lo,hi,msg,set])=>{
+  const spMsg=()=> U_SPD==="mph"? "הזן מהירות בין 35 ל-345 מייל לשעה" : "הזן מהירות בין 30 ל-300 קשר";
+  const fuMsg=()=> U_FUEL==="gal"? "הזן מספר בין 0.3 ל-39.6 גלון לשעה" : "הזן מספר בין 1 ל-150 ליטר לשעה";
+  [["spdIn","spdSm","airnotam_spd",30,300,spMsg,()=>U_SPD==="mph"?1/KT2MPH:1,v=>{CRZ_KT=v;}],["burnIn","burnSm","airnotam_burn",1,150,fuMsg,()=>U_FUEL==="gal"?L2GAL:1,v=>{BURN_LH=v;}]].forEach(([id,sm,key,lo,hi,msg,k,set])=>{
     const inp=document.getElementById(id), sml=document.getElementById(sm); if(!inp||!sml) return;
     const apply=()=>{
-      const t=inp.value.trim().replace(",","."), n=t===""? null : +t;
-      if(n!==null&&(!isFinite(n)||n<lo||n>hi)){ sml.textContent=msg; sml.classList.add("bad"); return; }
+      const t=inp.value.trim().replace(",","."), n0=t===""? null : +t, n=n0===null? null : +(n0*k()).toFixed(3);
+      if(n!==null&&(!isFinite(n)||n<lo-0.01||n>hi+0.01)){ sml.textContent=msg(); sml.classList.add("bad"); return; }
       sml.textContent=sml.dataset.ok; sml.classList.remove("bad");
       set(n); try{localStorage.setItem(key,n===null?"":String(n));}catch(e){}
       try{ mbSync(); }catch(_){} try{ if(DRAWING) drawUi(); }catch(_){}
     };
     inp.addEventListener("change",apply); inp.addEventListener("input",()=>{ if(sml.classList.contains("bad")) apply(); });
     inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); inp.blur(); } });
+  });
+  [["uSpd",()=>{ U_SPD=U_SPD==="mph"?"kt":"mph"; try{localStorage.setItem("airnotam_uspd",U_SPD);}catch(e){} }],["uFuel",()=>{ U_FUEL=U_FUEL==="gal"?"l":"gal"; try{localStorage.setItem("airnotam_ufuel",U_FUEL);}catch(e){} }]].forEach(([id,flip])=>{
+    const e=document.getElementById(id); if(!e) return;
+    const go=()=>{ flip(); ["spdSm","burnSm"].forEach(x=>{ const m=document.getElementById(x); if(m){ m.textContent=m.dataset.ok; m.classList.remove("bad"); } }); spNumSync(true); try{ mbSync(); }catch(_){} try{ if(DRAWING) drawUi(); }catch(_){} try{ flyPills(); }catch(_){} };
+    e.addEventListener("click",go); e.addEventListener("keydown",ev=>{ if(ev.key==="Enter"||ev.key===" "){ ev.preventDefault(); go(); } });
   });
   spNumSync();
 }
@@ -5768,7 +5792,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.062 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.063 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6996,7 +7020,7 @@ const fpDist=n=>(n<100? n.toFixed(1) : String(Math.round(n)))+"<small>NM</small>
 const fpBrg=(a,b,c,d)=>String(Math.round(gpsBrg(a,b,c,d))%360).padStart(3,"0")+"°";
 function fpHours(nm){ const v=(GP.gs!=null&&GP.gs>=30)? GP.gs : CRZ_KT; return v? nm/v : null; }
 function fpTime(h){ if(h==null) return "--"; const m=Math.round(h*60); return m<60? String(m).padStart(2,"0")+"m" : Math.floor(m/60)+"h"+String(m%60).padStart(2,"0"); }
-function fpFuel(h){ return (h==null||!BURN_LH)? "" : "≈"+Math.round(h*BURN_LH)+"L"; }
+function fpFuel(h){ return (h==null||!BURN_LH)? "" : "≈"+fuelFmt(h*BURN_LH)+(U_FUEL==="gal"?"gal":"L"); }
 const FPO={open:false};
 const FP_FLAG='<svg class="cf" viewBox="0 0 28 28" aria-hidden="true"><defs><clipPath id="fpcp"><circle cx="14" cy="14" r="12"/></clipPath></defs><g clip-path="url(#fpcp)"><rect width="28" height="28" fill="#fff"/><g fill="#0e2348"><rect x="2" y="2" width="6" height="6"/><rect x="14" y="2" width="6" height="6"/><rect x="8" y="8" width="6" height="6"/><rect x="20" y="8" width="6" height="6"/><rect x="2" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/><rect x="8" y="20" width="6" height="6"/><rect x="20" y="20" width="6" height="6"/></g></g><circle cx="14" cy="14" r="12" fill="none" stroke="#0e2348" stroke-width="2"/></svg>';
 function fpToggle(){ FPO.open=!FPO.open; try{ flyPills(); }catch(_){} try{ railSync(); }catch(_){} }
@@ -7017,7 +7041,7 @@ function flyPills(){
     const n=ROUTE.length, i=NXT.i==null? 1 : NXT.i, b=nxtNear(), gs=(GP.gs!=null&&GP.gs>=1)? Math.round(GP.gs) : "--";
     let dot="#2fa65f", txt="On route";
     if(b){ const t=b.d/CORR_NM; dot= t<=0.3? "#2fa65f" : t<=1? "#f0a51e" : "#e24646"; txt= b.d<0.1? "On route" : (b.d<10? b.d.toFixed(1) : String(Math.round(b.d)))+" NM "+(b.side>0?"right":"left")+" of route"; }
-    h+='<div class="st"><span><b style="color:'+dot+'">●</b>'+txt+'</span><span>GS '+gs+' <small>KT</small></span></div><div class="dv"></div>';
+    h+='<div class="st"><span><b style="color:'+dot+'">●</b>'+txt+'</span><span>GS '+(gs==="--"?gs:Math.round(spdU(gs)))+' <small>'+spdUnit()+'</small></span></div><div class="dv"></div>';
     if(i>=n) h+='<div class="dn">Route complete</div>';
     else {
       const wp=ROUTE[i], dN=gpsDist(P.lat,P.lon,wp[0],wp[1])/1852; let dE=dN;
