@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.066 · built by eligrt
+     AirNotam-ISR · v1.09.067 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2701,7 +2701,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.066 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.067 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2744,7 +2744,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.066 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.067 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5807,7 +5807,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.066 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.067 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -7260,7 +7260,7 @@ function demoTick(){
   function ctlBuild(){
     cMode=PM; cFly=null;
     if(PM==="pill") CS.innerHTML='<g class="pn"></g><g class="gh"></g><g class="k"></g>';
-    else if(PM==="thr") CS.innerHTML='<g class="pn"></g><rect x="28" y="30" width="14" height="80" rx="7" fill="#e9e1cc"/><rect class="sa" x="30" y="33" width="10" height="74" rx="4"/><path class="es" d="M25 33H45M25 107H45" stroke-width="2" stroke-linecap="round"/><rect x="9" y="5" width="52" height="18" rx="9" fill="#1c3d6e"/><text x="35" y="18.5" text-anchor="middle" '+MONO+' font-size="13" fill="#fff">FLY</text><rect x="9" y="117" width="52" height="18" rx="9" fill="#c8a04a"/><text x="35" y="130.5" text-anchor="middle" '+MONO+' font-size="13" fill="#fff">PLAN</text><g class="hd"></g>';
+    else if(PM==="thr") CS.innerHTML='<g class="pn"></g><rect x="32" y="40" width="6" height="56" rx="3" fill="#e9e1cc"/><g class="pfLf"></g><g class="pfLp"></g><g class="hd"></g>';
     else CS.innerHTML="";
   }
   function ctlPaint(p){
@@ -7268,14 +7268,15 @@ function demoTick(){
     const f=p>0, mc=f?M_N:M_A, tn=f?"#cfdcf0":"#f3dfc0";
     if(PM==="pill"){
       if(cFly!==f){ cFly=f; const oy=f?PY_P:PY_F, oc=f?M_A:M_N, ot=f?"PLAN":"FLY";
-        CS.querySelector(".pn").innerHTML='<rect x="0" y="0" width="70" height="146" rx="35" fill="'+M_C+'" stroke="'+mc+'" stroke-width="2.5"/><rect x="28" y="'+PY_F+'" width="14" height="'+(PY_P-PY_F)+'" rx="7" fill="'+tn+'"/>';
-        CS.querySelector(".gh").innerHTML='<g transform="translate(35 '+oy+')"><circle r="25" fill="none" stroke="'+oc+'" stroke-width="2" stroke-dasharray="4 4" opacity=".5"/><text y="4" text-anchor="middle" '+MONO+' font-size="10.5" fill="'+oc+'" opacity=".55">'+ot+'</text></g>'; }
+        CS.querySelector(".pn").innerHTML='<rect x="0" y="0" width="70" height="146" rx="35" fill="'+M_C+'" stroke="'+mc+'" stroke-width="2.5"/><rect x="32" y="66" width="6" height="14" rx="3" fill="#e9e1cc"/>';
+        CS.querySelector(".gh").innerHTML='<g transform="translate(35 '+oy+')"><circle r="25" fill="none" stroke="#b8b5a9" stroke-width="1.5" stroke-dasharray="3 4" opacity=".8"/><text y="4" text-anchor="middle" '+MONO+' font-size="10.5" fill="#b8b5a9" opacity=".9">'+ot+'</text></g>'; }
       CS.querySelector(".k").innerHTML='<g transform="translate(35 '+(PY_P+(PY_F-PY_P)*(p+1)/2).toFixed(2)+')">'+kn(f)+'</g>';
     } else {
       const hd=CS.querySelector(".hd"); hd.setAttribute("transform","translate(35 "+((54+88)/2-p*(88-54)/2).toFixed(2)+")");
       if(cFly!==f){ cFly=f; hd.innerHTML=HALO+HAND.replace(/MC/g,mc).replace(/TN/g,tn);
         CS.querySelector(".pn").innerHTML='<rect x="0" y="0" width="70" height="146" rx="18" fill="'+M_C+'" stroke="'+mc+'" stroke-width="2.5"/>';
-        CS.querySelector(".es").setAttribute("stroke",mc); CS.querySelector(".sa").setAttribute("fill",f?"#b4c9e6":"#e6cf9a"); }
+        const LB=(x,y,w,t,on,col,ty)=> on?'<rect x="9" y="'+y+'" width="52" height="18" rx="9" fill="'+col+'"/><text x="35" y="'+ty+'" text-anchor="middle" '+MONO+' font-size="13" fill="#fff">'+t+'</text>':'<rect x="10" y="'+(y+1)+'" width="50" height="16" rx="8" fill="none" stroke="#b8b5a9" stroke-width="1.5" stroke-dasharray="3 4" opacity=".8"/><text x="35" y="'+ty+'" text-anchor="middle" '+MONO+' font-size="13" fill="#b8b5a9" opacity=".9">'+t+'</text>';
+        CS.querySelector(".pfLf").innerHTML=LB(9,5,52,"FLY",f,M_N,18.5); CS.querySelector(".pfLp").innerHTML=LB(9,117,52,"PLAN",!f,M_A,130.5); }
     }
     CT.setAttribute("aria-checked",f?"true":"false");
   }
