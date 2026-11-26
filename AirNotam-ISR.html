@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.063 · built by eligrt
+     AirNotam-ISR · v1.09.064 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2647,6 +2647,20 @@ html.full #pfPeek{display:none !important;}
 .sp-two .sp-num{gap:6px;} .sp-two .sp-num input{width:46px;}
 @media (max-width:360px){.sp-two .sp-num input{width:38px;} .sl{gap:4px;} .sl i{width:34px;} .sl.r i:after{left:15px;} .sl em{font-size:10px;min-width:34px;}}
 @media (prefers-reduced-motion:reduce){.sl i,.sl i:after{transition:none;}}
+/* v1.09.064: no zoom buttons (double-tap and slide, or pinch). Three looks for the mode control, chosen in the admin sheet: today (throttle on the left + circle), pill (circle sliding in a pill), throttle (the hand throttle in the notch) */
+.leaflet-control-zoom{visibility:hidden !important;pointer-events:none !important;}
+#app>#pfCtl{position:absolute;right:25px;top:calc(var(--hb,84px) - 38px);width:70px;height:146px;z-index:1100;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none;filter:drop-shadow(0 1px 3px rgba(14,35,72,.3));display:none;}
+html.pm-pill #app>#pfCtl,html.pm-thr #app>#pfCtl{display:block;}
+#app:has(#stage:not(.v-map)) > #pfCtl{display:none !important;}
+#pfCtl svg{width:70px;height:146px;display:block;overflow:visible;pointer-events:none;}
+html.full #app>#pfCtl{top:calc(env(safe-area-inset-top,0px) + 14px);}
+html.pm-pill #pfSw,html.pm-thr #pfSw{display:none !important;}
+html.pm-pill #app>#mbMode,html.pm-thr #app>#mbMode{display:none !important;}
+html.pm-pill #mbox #fpWrap,html.pm-thr #mbox #fpWrap{right:100px !important;}
+#pfPeek.cr{background:#fbf6e8;} #pfPeek.cr .leaflet-pane{display:none;}
+.adm-seg3{display:flex;border:1.5px solid #3d7be0;border-radius:8px;overflow:hidden;flex:none;}
+.adm-seg3 button{background:transparent;color:#9db8e8;font:inherit;font-weight:700;font-size:13px;border:0;padding:9px 11px;cursor:pointer;}
+.adm-seg3 button.on{background:#3d7be0;color:#fff;}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2686,7 +2700,7 @@ html.full #pfPeek{display:none !important;}
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.063 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.064 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2729,7 +2743,7 @@ html.full #pfPeek{display:none !important;}
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.063 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.064 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5792,7 +5806,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.063 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.064 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6585,7 +6599,7 @@ function railSync(){
     mb.style.setProperty("--chip-top",(env+26-mt).toFixed(1)+"px");
     mb.style.setProperty("--pill-top",(env+60-mt).toFixed(1)+"px");
     const lc=document.querySelector(".lyr-ctl"); if(lc&&lc.offsetParent){ const pr2=lc.offsetParent.getBoundingClientRect().top; lc.style.setProperty("top",(zt-pr2+46).toFixed(1)+"px","important"); }
-    const zl=document.querySelector(".zoom-tl"); if(zl&&zl.offsetParent){ const pr=zl.offsetParent.getBoundingClientRect().top; zl.style.setProperty("top",(zt+z.offsetHeight+2-pr).toFixed(1)+"px","important"); }
+    const zl=document.querySelector(".zoom-tl"); if(zl&&zl.offsetParent){ const pr=zl.offsetParent.getBoundingClientRect().top, ct=document.getElementById("pfCtl"), nw=ct&&ct.offsetParent&&getComputedStyle(ct).display!=="none"; const yz= nw? ct.getBoundingClientRect().bottom+8 : zt+2; zl.style.setProperty("top",(yz-pr).toFixed(1)+"px","important"); }
   }catch(_){}
   try{ if(typeof FAM_CTL!=="undefined"&&FAM_CTL) famPlace(); }catch(_){}
 }
@@ -7200,6 +7214,7 @@ function demoTick(){
   <div class="adm-bd">
     <div class="adm-note">כלי פיתוח. לא מיועד לטייסים</div>
     <div class="adm-row"><span><b>מסנן צורות במפה</b><small>מופיע במפה בצד ימין למטה כשהוא פעיל</small></span><label class="adm-sw"><input type="checkbox" id="famSetA"><i></i></label></div>
+    <div class="adm-row"><span><b>מראה מתג מצב</b><small>לבדיקה בלבד</small></span><div class="adm-seg3" id="pmSeg"><button type="button" data-pm="today">היום</button><button type="button" data-pm="pill">קפסולה</button><button type="button" data-pm="thr">מצערת</button></div></div>
     <div class="adm-row"><span><b>העתק יומן אירועים</b><small>200 האירועים האחרונים, להדבקה כשיש תקלה</small></span><button type="button" class="adm-btn" id="admCopy" onclick="admCopy()">העתק</button></div>
     <div class="adm-adv" id="admAdv">
       <button type="button" class="adm-ah" onclick="admAdvToggle()" aria-expanded="false"><div><div class="adm-at"><span class="adm-ind" id="admInd"></span>ADVANCED</div><span class="adm-hint" id="admHint">&nbsp;</span></div><span class="adm-chev" id="admChev">&#9662;</span></button>
@@ -7229,8 +7244,50 @@ function demoTick(){
   const calm=()=>window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
   const HAND='<rect x="-12.5" y="5" width="25" height="15" rx="6" fill="#fbf6e8" stroke="MC" stroke-width="2.2"/><path d="M-7 10.5H7M-7 15H7" stroke="MC" stroke-width="1.6" stroke-linecap="round"/><g fill="TN" stroke="MC" stroke-width="1.8" stroke-linejoin="round"><rect x="-17" y="-19" width="8" height="19" rx="4"/><rect x="-8" y="-21" width="8" height="21" rx="4"/><rect x="1" y="-20" width="8" height="20" rx="4"/><rect x="10" y="-17" width="8" height="17" rx="4"/><rect x="-17.5" y="-8" width="36" height="17" rx="7"/><rect x="-25" y="-5" width="13" height="8" rx="4" transform="rotate(-38 -19 -1)"/></g>';
   const HALO=HAND.replace(/MC/g,"#fbf6e8").replace(/TN/g,"#fbf6e8").replace(/stroke-width="([\d.]+)"/g,(m,w)=>'stroke-width="'+(+w+4)+'"');
+  /* v1.09.064: the mode control in the notch (pill or throttle), chosen in the admin sheet */
+  const PMK="airnotam_pm"; let PM="today"; try{ const x=localStorage.getItem(PMK); if(x==="pill"||x==="thr") PM=x; }catch(_){}
+  const CT=document.createElement("div"); CT.id="pfCtl"; CT.setAttribute("role","switch"); CT.setAttribute("aria-label","מצב: תכנון / טיסה"); CT.setAttribute("aria-checked","false"); CT.setAttribute("tabindex","0");
+  CT.innerHTML='<svg viewBox="0 0 70 146" aria-hidden="true"></svg>'; app.appendChild(CT);
+  CT.addEventListener("click",()=>{ try{ modeFlip(); }catch(_){} });
+  CT.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); try{ modeFlip(); }catch(_){} } });
+  const CS=CT.querySelector("svg"); let cMode=null, cFly=null;
+  const M_N="#1c3d6e", M_A="#c8a04a", M_C="#fbf6e8", MONO='font-family="ui-monospace,Menlo,monospace" font-weight="800"';
+  const IC_P=(mc)=>'<g transform="translate(0,-4) rotate(-40)"><rect x="-13" y="-4.5" width="26" height="9" rx="2" fill="none" stroke="'+mc+'" stroke-width="2"/><path d="M-8-4.5v4M-3-4.5v3M2-4.5v4M7-4.5v3" stroke="'+mc+'" stroke-width="1.6"/></g>';
+  const IC_F=(mc)=>'<path d="M0-13L3.5-3 13 3V6L3.5 3 2.5 10 6 12.5V14.5L0 13 -6 14.5V12.5L-2.5 10 -3.5 3 -13 6V3L-3.5-3Z" fill="'+mc+'" transform="translate(0,-4) scale(.78)"/>';
+  function kn(f){ const mc=f?M_N:M_A, w=f?34:44; return '<circle r="26" fill="#fff" stroke="'+mc+'" stroke-width="3.5"/>'+(f?IC_F(mc):IC_P(mc))+'<rect x="'+(-w/2)+'" y="14" width="'+w+'" height="15" rx="7.5" fill="'+mc+'" stroke="'+M_C+'" stroke-width="2.5"/><text y="25" text-anchor="middle" '+MONO+' font-size="10.5" fill="#fff">'+(f?"FLY":"PLAN")+'</text>'; }
+  const PY_F=36, PY_P=110;
+  function ctlBuild(){
+    cMode=PM; cFly=null;
+    if(PM==="pill") CS.innerHTML='<g class="pn"></g><g class="gh"></g><g class="k"></g>';
+    else if(PM==="thr") CS.innerHTML='<g class="pn"></g><rect x="28" y="30" width="14" height="80" rx="7" fill="#e9e1cc"/><rect class="sa" x="30" y="33" width="10" height="74" rx="4"/><path class="es" d="M25 33H45M25 107H45" stroke-width="2" stroke-linecap="round"/><rect x="9" y="5" width="52" height="18" rx="9" fill="#1c3d6e"/><text x="35" y="18.5" text-anchor="middle" '+MONO+' font-size="13" fill="#fff">FLY</text><rect x="9" y="117" width="52" height="18" rx="9" fill="#c8a04a"/><text x="35" y="130.5" text-anchor="middle" '+MONO+' font-size="13" fill="#fff">PLAN</text><g class="hd"></g>';
+    else CS.innerHTML="";
+  }
+  function ctlPaint(p){
+    if(PM==="today") return; if(cMode!==PM) ctlBuild();
+    const f=p>0, mc=f?M_N:M_A, tn=f?"#cfdcf0":"#f3dfc0";
+    if(PM==="pill"){
+      if(cFly!==f){ cFly=f; const oy=f?PY_P:PY_F, oc=f?M_A:M_N, ot=f?"PLAN":"FLY";
+        CS.querySelector(".pn").innerHTML='<rect x="0" y="0" width="70" height="146" rx="35" fill="'+M_C+'" stroke="'+mc+'" stroke-width="2.5"/><rect x="28" y="'+PY_F+'" width="14" height="'+(PY_P-PY_F)+'" rx="7" fill="'+tn+'"/>';
+        CS.querySelector(".gh").innerHTML='<g transform="translate(35 '+oy+')"><circle r="25" fill="none" stroke="'+oc+'" stroke-width="2" stroke-dasharray="4 4" opacity=".5"/><text y="4" text-anchor="middle" '+MONO+' font-size="10.5" fill="'+oc+'" opacity=".55">'+ot+'</text></g>'; }
+      CS.querySelector(".k").innerHTML='<g transform="translate(35 '+(PY_P+(PY_F-PY_P)*(p+1)/2).toFixed(2)+')">'+kn(f)+'</g>';
+    } else {
+      const hd=CS.querySelector(".hd"); hd.setAttribute("transform","translate(35 "+((54+88)/2-p*(88-54)/2).toFixed(2)+")");
+      if(cFly!==f){ cFly=f; hd.innerHTML=HALO+HAND.replace(/MC/g,mc).replace(/TN/g,tn);
+        CS.querySelector(".pn").innerHTML='<rect x="0" y="0" width="70" height="146" rx="18" fill="'+M_C+'" stroke="'+mc+'" stroke-width="2.5"/>';
+        CS.querySelector(".es").setAttribute("stroke",mc); CS.querySelector(".sa").setAttribute("fill",f?"#b4c9e6":"#e6cf9a"); }
+    }
+    CT.setAttribute("aria-checked",f?"true":"false");
+  }
+  window.pmApply=function(v,keep){
+    if(v!=="pill"&&v!=="thr") v="today"; PM=v; if(!keep){ try{ localStorage.setItem(PMK,v); }catch(_){} try{ alog("mode look: "+v); }catch(_){} }
+    ["today","pill","thr"].forEach(k=>root.classList.toggle("pm-"+k,k===v)); cMode=null; ctlBuild();
+    document.querySelectorAll("#pmSeg button").forEach(b=>b.classList.toggle("on",b.dataset.pm===v));
+    try{ pfSwSync(true); }catch(_){} try{ peekSync(); }catch(_){} try{ railSync(); }catch(_){} try{ pfFullSync(); }catch(_){}
+  };
+  document.querySelectorAll("#pmSeg button").forEach(b=>b.addEventListener("click",()=>pmApply(b.dataset.pm)));
   let p=-1,v=0,t=-1,raf=0,fl=null,UP=54,DN=88;
   function paint(){
+    try{ ctlPaint(p); }catch(_){}
     const cy=(UP+DN)/2-p*(DN-UP)/2, f=p>0;
     hd.setAttribute("transform","translate(35 "+cy+")");
     if(f!==fl){ fl=f; const mc=f?"#1c3d6e":"#c8a04a", tn=f?"#cfdcf0":"#f3dfc0";
@@ -7250,23 +7307,30 @@ function demoTick(){
   window.pfFullSync=function(){ try{ AL_SH=alShNow(); const mb=$("mbox"); if(mb) mb.style.setProperty("--al-sh",AL_SH+"px"); exApply(); railSync(); }catch(_){} };
   /* v1.09.062: a small copy of the map shows through the bite around the mode circle */
   const PK=document.createElement("div"); PK.id="pfPeek"; app.appendChild(PK); let pm=null, pbase=null, pkOn=false;
+  const PKP={today:["M4.08 38H95.92A10 10 0 0 1 86.15 30.13A37 37 0 0 0 13.85 30.13A10 10 0 0 1 4.08 38Z",100,38,50],pill:["M6 46Q15 46 15.1 46A41 41 0 1 1 96.9 46Q97 46 106 46Z",112,46,56],thr:["M2 46Q15 46 15 33V24Q15 2 37 2H75Q97 2 97 24V33Q97 46 110 46Z",112,46,56]};
+  const pkOff=()=>{ if(pkOn){ pkOn=false; root.classList.remove("pf-peek"); } };
+  const pkOnF=()=>{ if(!pkOn){ pkOn=true; root.classList.add("pf-peek"); } };
   function peekSync(){
     try{
-      const stg=$("stage"), mapOk=typeof MAP!=="undefined"&&MAP&&stg&&stg.classList.contains("v-map")&&!root.classList.contains("full")&&!(typeof FY!=="undefined"&&FY&&(FY.on||Math.abs(FY.rot||0)>0.01))&&typeof L!=="undefined";
-      if(!mapOk){ if(pkOn){ pkOn=false; root.classList.remove("pf-peek"); } return; }
+      const stg=$("stage"), inMap=!!(stg&&stg.classList.contains("v-map"))&&!root.classList.contains("full");
+      const trk=typeof FY!=="undefined"&&FY&&(FY.on||Math.abs(FY.rot||0)>0.01);
+      const mapOk=inMap&&typeof MAP!=="undefined"&&MAP&&!trk&&typeof L!=="undefined", cream=inMap&&PM!=="today"&&!mapOk;
+      if(!mapOk&&!cream){ pkOff(); return; }
       const ar=app.getBoundingClientRect(), m=$("meta"); if(!m||!m.offsetHeight) return;
-      const hb=m.getBoundingClientRect().bottom-ar.top;
-      PK.style.left=(ar.width-60-50)+"px"; PK.style.top=(hb-38)+"px";
+      const hb=m.getBoundingClientRect().bottom-ar.top, g=PKP[PM];
+      PK.style.width=g[1]+"px"; PK.style.height=g[2]+"px"; PK.style.left=(ar.width-60-g[3])+"px"; PK.style.top=(hb-g[2])+"px"; PK.style.clipPath="path('"+g[0]+"')"; PK.classList.toggle("cr",cream);
+      pkOnF(); if(cream) return;
       if(!pm){ pm=L.map(PK,{zoomControl:false,attributionControl:false,dragging:false,touchZoom:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,tap:false,zoomAnimation:false,fadeAnimation:false,markerZoomAnimation:false,inertia:false,center:[31.5,35],zoom:7}); }
+      pm.invalidateSize({animate:false,pan:false});
       const bl=MAP_BASES&&MAP_BASES[MAP_BASE];
       if(bl&&pbase!==MAP_BASE){ if(pbase&&pm._pkL) pm.removeLayer(pm._pkL); pm._pkL=L.tileLayer(bl._url,Object.assign({},bl.options,{attribution:""})).addTo(pm); pbase=MAP_BASE; }
       const pr=PK.getBoundingClientRect(), mr=MAP.getContainer().getBoundingClientRect();
       const ll=MAP.containerPointToLatLng([pr.left+pr.width/2-mr.left, pr.top+pr.height/2-mr.top]);
       pm.setView(ll,MAP.getZoom(),{animate:false});
-      if(!pkOn){ pkOn=true; root.classList.add("pf-peek"); }
-    }catch(_){ if(pkOn){ pkOn=false; root.classList.remove("pf-peek"); } }
+    }catch(_){ pkOff(); }
   }
   setInterval(peekSync,250); try{ document.addEventListener("pointermove",()=>{ if(pkOn) peekSync(); },{passive:true}); }catch(_){}
+  pmApply(PM,true);
   function measure(){
     try{
       const ar=app.getBoundingClientRect(), m=$("meta"), g=document.querySelector(".hdr-glyph");
