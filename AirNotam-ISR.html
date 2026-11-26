@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.064 · built by eligrt
+     AirNotam-ISR · v1.09.065 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2649,14 +2649,15 @@ html.full #pfPeek{display:none !important;}
 @media (prefers-reduced-motion:reduce){.sl i,.sl i:after{transition:none;}}
 /* v1.09.064: no zoom buttons (double-tap and slide, or pinch). Three looks for the mode control, chosen in the admin sheet: today (throttle on the left + circle), pill (circle sliding in a pill), throttle (the hand throttle in the notch) */
 .leaflet-control-zoom{visibility:hidden !important;pointer-events:none !important;}
-#app>#pfCtl{position:absolute;right:25px;top:calc(var(--hb,84px) - 38px);width:70px;height:146px;z-index:1100;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none;filter:drop-shadow(0 1px 3px rgba(14,35,72,.3));display:none;}
+#app>#pfCtl{position:absolute;right:25px;top:calc(var(--hb,84px) - 38px);width:70px;height:146px;z-index:1100;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none;display:none;border-radius:35px;box-shadow:0 1px 4px rgba(14,35,72,.35);-webkit-transform:translateZ(0);transform:translateZ(0);will-change:transform;isolation:isolate;}
+html.pm-thr #app>#pfCtl{border-radius:18px;}
 html.pm-pill #app>#pfCtl,html.pm-thr #app>#pfCtl{display:block;}
 #app:has(#stage:not(.v-map)) > #pfCtl{display:none !important;}
 #pfCtl svg{width:70px;height:146px;display:block;overflow:visible;pointer-events:none;}
 html.full #app>#pfCtl{top:calc(env(safe-area-inset-top,0px) + 14px);}
 html.pm-pill #pfSw,html.pm-thr #pfSw{display:none !important;}
 html.pm-pill #app>#mbMode,html.pm-thr #app>#mbMode{display:none !important;}
-html.pm-pill #mbox #fpWrap,html.pm-thr #mbox #fpWrap{right:100px !important;}
+html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !important;}
 #pfPeek.cr{background:#fbf6e8;} #pfPeek.cr .leaflet-pane{display:none;}
 .adm-seg3{display:flex;border:1.5px solid #3d7be0;border-radius:8px;overflow:hidden;flex:none;}
 .adm-seg3 button{background:transparent;color:#9db8e8;font:inherit;font-weight:700;font-size:13px;border:0;padding:9px 11px;cursor:pointer;}
@@ -2700,7 +2701,7 @@ html.pm-pill #mbox #fpWrap,html.pm-thr #mbox #fpWrap{right:100px !important;}
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.064 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.065 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2743,7 +2744,7 @@ html.pm-pill #mbox #fpWrap,html.pm-thr #mbox #fpWrap{right:100px !important;}
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.064 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.065 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5806,7 +5807,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.064 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.065 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -7307,7 +7308,7 @@ function demoTick(){
   window.pfFullSync=function(){ try{ AL_SH=alShNow(); const mb=$("mbox"); if(mb) mb.style.setProperty("--al-sh",AL_SH+"px"); exApply(); railSync(); }catch(_){} };
   /* v1.09.062: a small copy of the map shows through the bite around the mode circle */
   const PK=document.createElement("div"); PK.id="pfPeek"; app.appendChild(PK); let pm=null, pbase=null, pkOn=false;
-  const PKP={today:["M4.08 38H95.92A10 10 0 0 1 86.15 30.13A37 37 0 0 0 13.85 30.13A10 10 0 0 1 4.08 38Z",100,38,50],pill:["M6 46Q15 46 15.1 46A41 41 0 1 1 96.9 46Q97 46 106 46Z",112,46,56],thr:["M2 46Q15 46 15 33V24Q15 2 37 2H75Q97 2 97 24V33Q97 46 110 46Z",112,46,56]};
+  const PKP={today:["M4.08 38H95.92A10 10 0 0 1 86.15 30.13A37 37 0 0 0 13.85 30.13A10 10 0 0 1 4.08 38Z",100,38,50],pill:["M6 46Q15 46 15.1 46A41 41 0 1 1 96.9 46Q97 46 106 46ZM20 43A36 36 0 0 1 92 43V119A36 36 0 0 1 20 119Z",112,46,56],thr:["M2 46Q15 46 15 33V24Q15 2 37 2H75Q97 2 97 24V33Q97 46 110 46ZM20 26A19 19 0 0 1 39 7H73A19 19 0 0 1 92 26V136A19 19 0 0 1 73 155H39A19 19 0 0 1 20 136Z",112,46,56]};
   const pkOff=()=>{ if(pkOn){ pkOn=false; root.classList.remove("pf-peek"); } };
   const pkOnF=()=>{ if(!pkOn){ pkOn=true; root.classList.add("pf-peek"); } };
   function peekSync(){
@@ -7318,7 +7319,7 @@ function demoTick(){
       if(!mapOk&&!cream){ pkOff(); return; }
       const ar=app.getBoundingClientRect(), m=$("meta"); if(!m||!m.offsetHeight) return;
       const hb=m.getBoundingClientRect().bottom-ar.top, g=PKP[PM];
-      PK.style.width=g[1]+"px"; PK.style.height=g[2]+"px"; PK.style.left=(ar.width-60-g[3])+"px"; PK.style.top=(hb-g[2])+"px"; PK.style.clipPath="path('"+g[0]+"')"; PK.classList.toggle("cr",cream);
+      PK.style.width=g[1]+"px"; PK.style.height=g[2]+"px"; PK.style.left=(ar.width-60-g[3])+"px"; PK.style.top=(hb-g[2])+"px"; PK.style.clipPath="path(evenodd,'"+g[0]+"')"; PK.classList.toggle("cr",cream);
       pkOnF(); if(cream) return;
       if(!pm){ pm=L.map(PK,{zoomControl:false,attributionControl:false,dragging:false,touchZoom:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,tap:false,zoomAnimation:false,fadeAnimation:false,markerZoomAnimation:false,inertia:false,center:[31.5,35],zoom:7}); }
       pm.invalidateSize({animate:false,pan:false});
