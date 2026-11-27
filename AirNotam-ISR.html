@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.074 · built by eligrt
+     AirNotam-ISR · v1.09.075 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2687,11 +2687,11 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
 #fpIn .rw .vl .v:nth-child(3){min-width:3.2em;}
 #fpIn .rw .vl .v:nth-child(4){min-width:2.8em;}
 /* v1.09.070: the pointer side of the Layers panel has tighter corners, so the pointer can sit level with the button in Plan and Fly */
-/* v1.09.074: the 8px left-corner override of v1.09.071 is removed; all four corners of the layers panel use the shared 22px radius, and the pointer is kept below the arc instead */
+/* v1.09.075: the 8px left-corner override of v1.09.071 is removed; all four corners of the layers panel use the shared 22px radius, and the pointer is kept below the arc instead */
 /* v1.09.069: the grey GPS chip sits a little higher, clear of the mode capsule */
 .strip .gps-chip{top:calc(var(--gy,34px) - 9px) !important;}   /* v1.09.071: the chip is placed from the gear height, so it is raised here */
 
-/* v1.09.074: NOTAM pill redesign (approved v12): MAP VIEW caption, FADED / SOLID switch, five on/off rows with a fixed switch and icon column */
+/* v1.09.075: NOTAM pill redesign (approved v12): MAP VIEW caption, FADED / SOLID switch, five on/off rows with a fixed switch and icon column */
 .mb-pill.open{width:180px !important;border-radius:22px !important;background:#fbf6e8 !important;border:3px solid #b94a3a !important;box-sizing:border-box !important;}
 .mb-pill.open .mp-clip{position:relative;inset:auto;overflow:visible;}
 .mb-pill.open .mp-cl{display:none;}
@@ -2715,6 +2715,9 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
 .mb-pill.open .mp-cell.on .mp-sw b{left:16px;}
 .mb-pill.open.solid .mp-cell.on{background:#f6dcd5 !important;}
 .mb-pill.open .mp-fb{border-radius:0 0 17px 17px;overflow:hidden;}
+/* v1.09.075: FULL and layers buttons sit 12px lower, so the layers pointer lines up with the layers button in Plan and Fly */
+.leaflet-control.lyr-ctl{transform:translateY(12px);}
+#mbFull{transform:translateY(12px);}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2754,7 +2757,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.074 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.075 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2797,7 +2800,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.074 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.075 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5375,9 +5378,9 @@ function lpShape(c,hr,top){
   const e=1.25, Rs=R+e, sv=bt.querySelector("svg"), p=bt.querySelector("path"), Wr=W-x0+8, bx=8+R, by=nb-R;
   bt.classList.add("on"); bt.style.left=(c.offsetLeft+x0-8)+"px"; bt.style.top=(top)+"px"; bt.style.width=(Wr+2)+"px"; bt.style.height=(nb+24)+"px"; bt.style.transformOrigin=(-39-(x0-8))+"px 30px";
   sv.setAttribute("width",Wr+2); sv.setAttribute("height",nb+24);
-  let d;
-  if(cut){ const xe=Wr-1.25, dx=xe-bx, ye=by+Math.sqrt(Math.max(0,Rs*Rs-dx*dx)); d="M"+(8-e)+" 0 V"+by+" A"+Rs+" "+Rs+" 0 0 0 "+xe.toFixed(2)+" "+ye.toFixed(2)+" V"+(ye+14).toFixed(2); }
-  else d="M"+(8-e)+" 0 V"+by+" A"+Rs+" "+Rs+" 0 0 0 "+bx+" "+(nb+e)+" H"+Wr;
+  let d; const RT=12;
+  if(cut){ const xe=Wr-1.25, dx=xe-bx, ye=by+Math.sqrt(Math.max(0,Rs*Rs-dx*dx)); d="M"+(8-e+RT)+" 0 A"+RT+" "+RT+" 0 0 0 "+(8-e)+" "+RT+" V"+by+" A"+Rs+" "+Rs+" 0 0 0 "+xe.toFixed(2)+" "+ye.toFixed(2)+" V"+(ye+14).toFixed(2); }
+  else d="M"+(8-e+RT)+" 0 A"+RT+" "+RT+" 0 0 0 "+(8-e)+" "+RT+" V"+by+" A"+Rs+" "+Rs+" 0 0 0 "+bx+" "+(nb+e)+" H"+Wr;
   p.setAttribute("d",d); p.setAttribute("stroke-linejoin","round");
 }
 function lpFadeSet(el,on){ if(!el) return; clearTimeout(el._ft); if(on){ el.classList.remove("fo"); el.classList.add("open"); } else if(el.classList.contains("open")){ el.classList.add("fo"); el._ft=setTimeout(()=>el.classList.remove("open","fo"),240); } }
@@ -5894,7 +5897,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.074 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.075 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6369,17 +6372,17 @@ function mbPillFit(){   // v1.09.012: the open popup is exactly as tall as its r
 }
 function mbPillTime(){ mbPillClose(); toggleFlightDlg(); }
 function mbPillOnly(){ mbPillArm(); mbOnlyGo(); }
-function mbPillOpen(){ if(seqOpen("pill",mbPillOpen)) return; try{gisPanelToggle(false);}catch(_){} const p=document.getElementById("mbPill"); p.classList.add("open"); document.getElementById("mbox").classList.add("pill-o"); setTimeout(()=>{ try{lpCueUpd(); mbPillFit();}catch(_){} },80); setTimeout(()=>{ try{lpCueUpd(); mbPillFit();}catch(_){} },380); document.getElementById("mpCl").setAttribute("aria-expanded","true"); mbPillArm(); }
+function mbPillOpen(){ if(seqOpen("pill",mbPillOpen)) return; try{gisPanelToggle(false);}catch(_){} const p=document.getElementById("mbPill"); p.classList.add("open"); document.getElementById("mbox").classList.add("pill-o"); requestAnimationFrame(()=>{ try{lpCueUpd(); mbPillFit();}catch(_){} }); document.getElementById("mpCl").setAttribute("aria-expanded","true"); mbPillArm(); }
 function mbPillClose(){ clearTimeout(MP_T); const p=document.getElementById("mbPill"); if(!p) return; if(p.classList.contains("open")) popNote(); p.classList.remove("open"); document.getElementById("mbox").classList.remove("pill-o"); p.style.removeProperty("height"); document.getElementById("mpCl").setAttribute("aria-expanded","false"); try{lpCueUpd();}catch(_){} }
 // v1.08.073: the pill closes when the tap is finished (finger lifted), not on touch-down, so the screen does not change under the finger and the tapped button always gets its press
 document.addEventListener("click",e=>{ const p=document.getElementById("mbPill"); if(p&&p.classList.contains("open")&&!p.contains(e.target)) mbPillClose(); },true);
 function famSave(){ try{ const o=JSON.parse(localStorage.getItem(FAM_KEY)||"null")||{}; o.cvfr=FAMC.cvfr; o.apt=FAMC.apt; o.hel=FAMC.hel; o.ins=FAMC.ins; o.hz=FAMC.hz; o.view=FAM_VIEW; if(!o.ok) o.ok=discToday(); localStorage.setItem(FAM_KEY,JSON.stringify(o)); }catch(_){} }
-function mbFam(k){   // v1.09.074: one tap = group on or off; on uses the current MAP VIEW (faded or solid)
+function mbFam(k){   // v1.09.075: one tap = group on or off; on uses the current MAP VIEW (faded or solid)
   if(document.getElementById("mbPill").classList.contains("open")) mbPillArm();
   FAMC[k]= FAMC[k]? 0 : (FAM_VIEW==="faded"?2:1);
   famSave(); render(); mbSync();
 }
-function mbView(){   // v1.09.074: FADED / SOLID switch: applies to every group that is on
+function mbView(){   // v1.09.075: FADED / SOLID switch: applies to every group that is on
   if(document.getElementById("mbPill").classList.contains("open")) mbPillArm();
   FAM_VIEW= FAM_VIEW==="faded"? "solid" : "faded";
   ["cvfr","apt","hel","ins","hz"].forEach(k=>{ if(FAMC[k]) FAMC[k]= FAM_VIEW==="faded"?2:1; });
@@ -7323,7 +7326,7 @@ function demoTick(){
   <div class="adm-bd">
     <div class="adm-note">כלי פיתוח. לא מיועד לטייסים</div>
     <div class="adm-row"><span><b>מסנן צורות במפה</b><small>מופיע במפה בצד ימין למטה כשהוא פעיל</small></span><label class="adm-sw"><input type="checkbox" id="famSetA"><i></i></label></div>
-    <div class="adm-row"><span><b>מראה מתג מצב</b><small>לבדיקה בלבד</small></span><div class="adm-seg3" id="pmSeg"><button type="button" data-pm="today">היום</button><button type="button" data-pm="pill">קפסולה</button><button type="button" data-pm="thr">מצערת</button></div></div>
+    <div class="adm-row"><span><b>מראה מתג מצב</b><small>לבדיקה בלבד</small></span><div class="adm-seg3" id="pmSeg"><button type="button" data-pm="pill">קפסולה</button></div></div>
     <div class="adm-row"><span><b>העתק יומן אירועים</b><small>200 האירועים האחרונים, להדבקה כשיש תקלה</small></span><button type="button" class="adm-btn" id="admCopy" onclick="admCopy()">העתק</button></div>
     <div class="adm-adv" id="admAdv">
       <button type="button" class="adm-ah" onclick="admAdvToggle()" aria-expanded="false"><div><div class="adm-at"><span class="adm-ind" id="admInd"></span>ADVANCED</div><span class="adm-hint" id="admHint">&nbsp;</span></div><span class="adm-chev" id="admChev">&#9662;</span></button>
@@ -7354,7 +7357,7 @@ function demoTick(){
   const HAND='<rect x="-12.5" y="5" width="25" height="15" rx="6" fill="#fbf6e8" stroke="MC" stroke-width="2.2"/><path d="M-7 10.5H7M-7 15H7" stroke="MC" stroke-width="1.6" stroke-linecap="round"/><g fill="TN" stroke="MC" stroke-width="1.8" stroke-linejoin="round"><rect x="-17" y="-19" width="8" height="19" rx="4"/><rect x="-8" y="-21" width="8" height="21" rx="4"/><rect x="1" y="-20" width="8" height="20" rx="4"/><rect x="10" y="-17" width="8" height="17" rx="4"/><rect x="-17.5" y="-8" width="36" height="17" rx="7"/><rect x="-25" y="-5" width="13" height="8" rx="4" transform="rotate(-38 -19 -1)"/></g>';
   const HALO=HAND.replace(/MC/g,"#fbf6e8").replace(/TN/g,"#fbf6e8").replace(/stroke-width="([\d.]+)"/g,(m,w)=>'stroke-width="'+(+w+4)+'"');
   /* v1.09.064: the mode control in the notch (pill or throttle), chosen in the admin sheet */
-  const PMK="airnotam_pm"; let PM="today"; try{ const x=localStorage.getItem(PMK); if(x==="pill"||x==="thr") PM=x; }catch(_){}
+  const PMK="airnotam_pm"; let PM="pill";
   const CT=document.createElement("div"); CT.id="pfCtl"; CT.setAttribute("role","switch"); CT.setAttribute("aria-label","מצב: תכנון / טיסה"); CT.setAttribute("aria-checked","false"); CT.setAttribute("tabindex","0");
   CT.innerHTML='<svg viewBox="0 0 70 146" aria-hidden="true"></svg>'; app.appendChild(CT);
   CT.addEventListener("click",()=>{ try{ modeFlip(); }catch(_){} });
@@ -7367,30 +7370,22 @@ function demoTick(){
   const PY_F=36, PY_P=110;
   function ctlBuild(){
     cMode=PM; cFly=null;
-    if(PM==="pill") CS.innerHTML='<g class="pn"></g><g class="gh"></g><g class="k"></g>';
-    else if(PM==="thr") CS.innerHTML='<g class="pn"></g><rect x="32" y="40" width="6" height="56" rx="3" fill="#e9e1cc"/><g class="pfLf"></g><g class="pfLp"></g><g class="hd"></g>';
-    else CS.innerHTML="";
+    CS.innerHTML='<g class="pn"></g><g class="gh"></g><g class="k"></g>';
   }
   function ctlPaint(p){
-    if(PM==="today") return; if(cMode!==PM) ctlBuild();
+    if(cMode!==PM) ctlBuild();
     const f=p>0, mc=f?M_N:M_A, tn=f?"#cfdcf0":"#f3dfc0";
     if(PM==="pill"){
       if(cFly!==f){ cFly=f; const oy=f?PY_P:PY_F, oc=f?M_A:M_N, ot=f?"PLAN":"FLY";
         CS.querySelector(".pn").innerHTML='<rect x="0" y="0" width="70" height="146" rx="35" fill="'+M_C+'" stroke="'+mc+'" stroke-width="2.5"/><rect x="32" y="66" width="6" height="14" rx="3" fill="#e9e1cc"/>';
         CS.querySelector(".gh").innerHTML='<g transform="translate(35 '+oy+')"><circle r="25" fill="none" stroke="#b8b5a9" stroke-width="1.5" stroke-dasharray="3 4" opacity=".8"/><text y="4" text-anchor="middle" '+MONO+' font-size="10.5" fill="#b8b5a9" opacity=".9">'+ot+'</text></g>'; }
       CS.querySelector(".k").innerHTML='<g transform="translate(35 '+(PY_P+(PY_F-PY_P)*(p+1)/2).toFixed(2)+')">'+kn(f)+'</g>';
-    } else {
-      const hd=CS.querySelector(".hd"); hd.setAttribute("transform","translate(35 "+((54+88)/2-p*(88-54)/2).toFixed(2)+")");
-      if(cFly!==f){ cFly=f; hd.innerHTML=HALO+HAND.replace(/MC/g,mc).replace(/TN/g,tn);
-        CS.querySelector(".pn").innerHTML='<rect x="0" y="0" width="70" height="146" rx="18" fill="'+M_C+'" stroke="'+mc+'" stroke-width="2.5"/>';
-        const LB=(x,y,w,t,on,col,ty)=> on?'<rect x="9" y="'+y+'" width="52" height="18" rx="9" fill="'+col+'"/><text x="35" y="'+ty+'" text-anchor="middle" '+MONO+' font-size="13" fill="#fff">'+t+'</text>':'<rect x="10" y="'+(y+1)+'" width="50" height="16" rx="8" fill="none" stroke="#b8b5a9" stroke-width="1.5" stroke-dasharray="3 4" opacity=".8"/><text x="35" y="'+ty+'" text-anchor="middle" '+MONO+' font-size="13" fill="#b8b5a9" opacity=".9">'+t+'</text>';
-        CS.querySelector(".pfLf").innerHTML=LB(9,5,52,"FLY",f,M_N,18.5); CS.querySelector(".pfLp").innerHTML=LB(9,117,52,"PLAN",!f,M_A,130.5); }
     }
     CT.setAttribute("aria-checked",f?"true":"false");
   }
   window.pmApply=function(v,keep){
-    if(v!=="pill"&&v!=="thr") v="today"; PM=v; if(!keep){ try{ localStorage.setItem(PMK,v); }catch(_){} try{ alog("mode look: "+v); }catch(_){} }
-    ["today","pill","thr"].forEach(k=>root.classList.toggle("pm-"+k,k===v)); cMode=null; ctlBuild();
+    v="pill"; PM=v; if(!keep){ try{ localStorage.setItem(PMK,v); }catch(_){} try{ alog("mode look: "+v); }catch(_){} }
+    root.classList.add("pm-pill"); cMode=null; ctlBuild();
     document.querySelectorAll("#pmSeg button").forEach(b=>b.classList.toggle("on",b.dataset.pm===v));
     try{ pfSwSync(true); }catch(_){} try{ peekSync(); }catch(_){} try{ railSync(); }catch(_){} try{ pfFullSync(); }catch(_){}
   };
@@ -7417,7 +7412,7 @@ function demoTick(){
   window.pfFullSync=function(){ try{ AL_SH=alShNow(); const mb=$("mbox"); if(mb) mb.style.setProperty("--al-sh",AL_SH+"px"); exApply(); railSync(); }catch(_){} };
   /* v1.09.062: a small copy of the map shows through the bite around the mode circle */
   const PK=document.createElement("div"); PK.id="pfPeek"; app.appendChild(PK); let pm=null, pbase=null, pkOn=false;
-  const PKP={today:["M4.08 38H95.92A10 10 0 0 1 86.15 30.13A37 37 0 0 0 13.85 30.13A10 10 0 0 1 4.08 38Z",100,38,50],pill:["M6 46Q15 46 15.1 46A41 41 0 1 1 96.9 46Q97 46 106 46ZM20 43A36 36 0 0 1 92 43V119A36 36 0 0 1 20 119Z",112,46,56],thr:["M2 46Q15 46 15 33V24Q15 2 37 2H75Q97 2 97 24V33Q97 46 110 46ZM20 26A19 19 0 0 1 39 7H73A19 19 0 0 1 92 26V136A19 19 0 0 1 73 155H39A19 19 0 0 1 20 136Z",112,46,56]};
+  const PKP={pill:["M6 46Q15 46 15.1 46A41 41 0 1 1 96.9 46Q97 46 106 46ZM20 43A36 36 0 0 1 92 43V119A36 36 0 0 1 20 119Z",112,46,56],thr:["M2 46Q15 46 15 33V24Q15 2 37 2H75Q97 2 97 24V33Q97 46 110 46ZM20 26A19 19 0 0 1 39 7H73A19 19 0 0 1 92 26V136A19 19 0 0 1 73 155H39A19 19 0 0 1 20 136Z",112,46,56]};
   const pkOff=()=>{ if(pkOn){ pkOn=false; root.classList.remove("pf-peek"); } };
   const pkOnF=()=>{ if(!pkOn){ pkOn=true; root.classList.add("pf-peek"); } };
   function peekSync(){
