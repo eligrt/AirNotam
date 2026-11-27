@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.078 · built by eligrt
+     AirNotam-ISR · v1.09.079 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2687,11 +2687,11 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
 #fpIn .rw .vl .v:nth-child(3){min-width:3.2em;}
 #fpIn .rw .vl .v:nth-child(4){min-width:2.8em;}
 /* v1.09.070: the pointer side of the Layers panel has tighter corners, so the pointer can sit level with the button in Plan and Fly */
-/* v1.09.078: the 8px left-corner override of v1.09.071 is removed; all four corners of the layers panel use the shared 22px radius, and the pointer is kept below the arc instead */
+/* v1.09.079: the 8px left-corner override of v1.09.071 is removed; all four corners of the layers panel use the shared 22px radius, and the pointer is kept below the arc instead */
 /* v1.09.069: the grey GPS chip sits a little higher, clear of the mode capsule */
 .strip .gps-chip{top:calc(var(--gy,34px) - 9px) !important;}   /* v1.09.071: the chip is placed from the gear height, so it is raised here */
 
-/* v1.09.078: NOTAM pill redesign (approved v12): MAP VIEW caption, FADED / SOLID switch, five on/off rows with a fixed switch and icon column */
+/* v1.09.079: NOTAM pill redesign (approved v12): MAP VIEW caption, FADED / SOLID switch, five on/off rows with a fixed switch and icon column */
 .mb-pill.open{width:180px !important;border-radius:22px !important;background:#fbf6e8 !important;border:3px solid #b94a3a !important;box-sizing:border-box !important;}
 .mb-pill.open .mp-clip{position:relative;inset:auto;overflow:visible;}
 .mb-pill.open .mp-cl{display:none;}
@@ -2715,7 +2715,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
 .mb-pill.open .mp-cell.on .mp-sw b{left:16px;}
 .mb-pill.open.solid .mp-cell.on{background:#f6dcd5 !important;}
 .mb-pill.open .mp-fb{border-radius:0 0 17px 17px;overflow:hidden;}
-/* v1.09.078: FULL and layers buttons sit 12px lower, so the layers pointer lines up with the layers button in Plan and Fly */
+/* v1.09.079: FULL and layers buttons sit 12px lower, so the layers pointer lines up with the layers button in Plan and Fly */
 .leaflet-control.lyr-ctl{transform:translateY(12px);}
 #mbFull{transform:translateY(12px);}
 </style>
@@ -2757,7 +2757,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.078 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.079 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2800,7 +2800,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.078 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.079 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5348,7 +5348,7 @@ function lpStatus(id,txt,err){
   ["lpSt","lpSt2"].forEach(n=>{ const s=lpEl(n); if(!s) return; s.textContent=txt||""; s.style.display=txt?"block":"none"; s.classList.toggle("er",!!err); });
   lpPlace();
 }
-// v1.09.078: the route-info box is only laid out in Plan; its bottom is kept and used in Fly too, so the panel top is the same in both modes
+// v1.09.079: the route-info box is only laid out in Plan; its bottom is kept and used in Fly too, so the panel top is the same in both modes
 let LP_FLOOR=null;
 function lpOffY(el,root){ let y=0,e=el; while(e&&e!==root){ y+=e.offsetTop; e=e.offsetParent; } return e===root? y : null; }
 function lpFloorCache(){ const mi=document.querySelector("#mbInfo .mib"), mw=document.getElementById("mbInfo"), h=lpEl("mbox"); if(!mi||!mw||!h) return; if(getComputedStyle(mw).display==="none"||!mi.offsetHeight) return; const my=lpOffY(mi,h); if(my!=null) LP_FLOOR=Math.round(my+mi.offsetHeight+6); }
@@ -5385,8 +5385,8 @@ function lpShape(c,hr,top){
   bt.classList.add("on"); bt.style.left=(c.offsetLeft+x0-8)+"px"; bt.style.top=(top)+"px"; bt.style.width=(Wr+2)+"px"; bt.style.height=(nb+24)+"px"; bt.style.transformOrigin=(-39-(x0-8))+"px 30px";
   sv.setAttribute("width",Wr+2); sv.setAttribute("height",nb+24);
   let d;
-  if(cut){ const xe=Wr-1.25, dx=xe-bx, ye=by+Math.sqrt(Math.max(0,Rs*Rs-dx*dx)); d="M"+(8-e-3)+" 0 A3 3 0 0 1 "+(8-e)+" 3 V"+by+" A"+Rs+" "+Rs+" 0 0 0 "+xe.toFixed(2)+" "+ye.toFixed(2)+" V"+(ye+14).toFixed(2); }
-  else d="M"+(8-e-3)+" 0 A3 3 0 0 1 "+(8-e)+" 3 V"+by+" A"+Rs+" "+Rs+" 0 0 0 "+bx+" "+(nb+e)+" H"+Wr;
+  if(cut){ const xe=Wr-1.25, dx=xe-bx, ye=by+Math.sqrt(Math.max(0,Rs*Rs-dx*dx)); d="M"+(8-e)+" 0 V"+by+" A"+Rs+" "+Rs+" 0 0 0 "+xe.toFixed(2)+" "+ye.toFixed(2)+" V"+(ye+14).toFixed(2); }
+  else d="M"+(8-e)+" 0 V"+by+" A"+Rs+" "+Rs+" 0 0 0 "+bx+" "+(nb+e)+" H"+Wr;
   p.setAttribute("d",d); p.setAttribute("stroke-linejoin","round");
 }
 function lpFadeSet(el,on){ if(!el) return; clearTimeout(el._ft); if(on){ el.classList.remove("fo"); el.classList.add("open"); } else if(el.classList.contains("open")){ el.classList.add("fo"); el._ft=setTimeout(()=>el.classList.remove("open","fo"),240); } }
@@ -5903,7 +5903,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.078 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.079 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6378,17 +6378,17 @@ function mbPillFit(){   // v1.09.012: the open popup is exactly as tall as its r
 }
 function mbPillTime(){ mbPillClose(); toggleFlightDlg(); }
 function mbPillOnly(){ mbPillArm(); mbOnlyGo(); }
-function mbPillOpen(){ if(seqOpen("pill",mbPillOpen)) return; try{gisPanelToggle(false);}catch(_){} const p=document.getElementById("mbPill"); p.style.transition="none"; p.style.transform=""; p.classList.remove("open"); const cw=p.offsetWidth, ch=p.offsetHeight; p.classList.add("open"); document.getElementById("mbox").classList.add("pill-o"); try{ mbPillFit(); }catch(_){} const fw=p.offsetWidth, fh=p.offsetHeight; if(cw&&ch&&fw&&fh){ p.style.transformOrigin="100% 100%"; p.style.transform="scale("+(cw/fw).toFixed(4)+","+(ch/fh).toFixed(4)+")"; void p.offsetWidth; p.style.transition=""; requestAnimationFrame(()=>{ p.style.transform="none"; }); } requestAnimationFrame(()=>{ try{lpCueUpd();}catch(_){} }); document.getElementById("mpCl").setAttribute("aria-expanded","true"); mbPillArm(); }
-function mbPillClose(){ clearTimeout(MP_T); const p=document.getElementById("mbPill"); if(!p) return; p.style.transform=""; p.style.transition=""; if(p.classList.contains("open")) popNote(); p.classList.remove("open"); document.getElementById("mbox").classList.remove("pill-o"); p.style.removeProperty("height"); document.getElementById("mpCl").setAttribute("aria-expanded","false"); try{lpCueUpd();}catch(_){} }
+function mbPillOpen(){ if(seqOpen("pill",mbPillOpen)) return; try{gisPanelToggle(false);}catch(_){} const p=document.getElementById("mbPill"); p.style.transition="none"; p.style.transform=""; p.classList.remove("open"); const cw=p.offsetWidth, ch=p.offsetHeight; p.classList.add("open"); document.getElementById("mbox").classList.add("pill-o"); { const fcx=document.querySelector(".fam-ctl"); if(fcx) fcx.classList.add("lp-hid"); } try{ mbPillFit(); }catch(_){} const fw=p.offsetWidth, fh=p.offsetHeight; if(cw&&ch&&fw&&fh){ p.style.transformOrigin="100% 100%"; p.style.transform="scale("+(cw/fw).toFixed(4)+","+(ch/fh).toFixed(4)+")"; void p.offsetWidth; p.style.transition=""; requestAnimationFrame(()=>{ p.style.transform="none"; }); } requestAnimationFrame(()=>{ try{lpCueUpd();}catch(_){} }); document.getElementById("mpCl").setAttribute("aria-expanded","true"); mbPillArm(); }
+function mbPillClose(){ clearTimeout(MP_T); const p=document.getElementById("mbPill"); if(!p) return; p.style.transform=""; p.style.transition=""; { const fcx=document.querySelector(".fam-ctl"); if(fcx) fcx.classList.remove("lp-hid"); } if(p.classList.contains("open")) popNote(); p.classList.remove("open"); document.getElementById("mbox").classList.remove("pill-o"); p.style.removeProperty("height"); document.getElementById("mpCl").setAttribute("aria-expanded","false"); try{lpCueUpd();}catch(_){} }
 // v1.08.073: the pill closes when the tap is finished (finger lifted), not on touch-down, so the screen does not change under the finger and the tapped button always gets its press
 document.addEventListener("click",e=>{ const p=document.getElementById("mbPill"); if(p&&p.classList.contains("open")&&!p.contains(e.target)) mbPillClose(); },true);
 function famSave(){ try{ const o=JSON.parse(localStorage.getItem(FAM_KEY)||"null")||{}; o.cvfr=FAMC.cvfr; o.apt=FAMC.apt; o.hel=FAMC.hel; o.ins=FAMC.ins; o.hz=FAMC.hz; o.view=FAM_VIEW; if(!o.ok) o.ok=discToday(); localStorage.setItem(FAM_KEY,JSON.stringify(o)); }catch(_){} }
-function mbFam(k){   // v1.09.078: one tap = group on or off; on uses the current MAP VIEW (faded or solid)
+function mbFam(k){   // v1.09.079: one tap = group on or off; on uses the current MAP VIEW (faded or solid)
   if(document.getElementById("mbPill").classList.contains("open")) mbPillArm();
   FAMC[k]= FAMC[k]? 0 : (FAM_VIEW==="faded"?2:1);
   famSave(); render(); mbSync();
 }
-function mbView(){   // v1.09.078: FADED / SOLID switch: applies to every group that is on
+function mbView(){   // v1.09.079: FADED / SOLID switch: applies to every group that is on
   if(document.getElementById("mbPill").classList.contains("open")) mbPillArm();
   FAM_VIEW= FAM_VIEW==="faded"? "solid" : "faded";
   ["cvfr","apt","hel","ins","hz"].forEach(k=>{ if(FAMC[k]) FAMC[k]= FAM_VIEW==="faded"?2:1; });
