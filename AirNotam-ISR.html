@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.068 · built by eligrt
+     AirNotam-ISR · v1.09.069 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2240,7 +2240,7 @@ body.lv #list{padding-bottom:86px;}
 .lcur .lp-chw .lp-bp.open{background:#dfe8f6;}
 .lcur .lp-chw .lp-bpop{position:static !important;transform:none !important;width:100% !important;flex:0 0 100%;margin:8px 0 0;box-shadow:none;border:2px solid #cfc3a5;border-radius:14px;background:#fff;}
 .lcur .lp-chw .lp-pill{height:auto;flex-wrap:wrap;gap:8px;padding:0;border:0;background:none;box-shadow:none;border-radius:0;}
-.lcur .lp-chw .lp-ck{flex:1 1 calc(50% - 4px);height:38px;border-radius:19px;border:2px solid #cfc3a5;background:#efe6cf;color:#8a7a52;font:700 14px var(--font-mono);}
+.lcur .lp-chw .lp-ck{flex:1 1 calc(33.333% - 6px);min-width:0;height:38px;border-radius:19px;border:2px solid #cfc3a5;background:#efe6cf;color:#8a7a52;font:700 14px var(--font-mono);}
 .lcur .lp-chw .lp-ck.on{background:#1c3d6e;border-color:#1c3d6e;color:#fbf6e8;}
 .lcur .lp-chw .lp-pill .lp-rs{flex:1 1 100%;margin:2px 0 0;}
 .lcur .lp-chw .lp-pic{display:none;}
@@ -2469,7 +2469,7 @@ html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top
 #fpIn .rw .vl{gap:9px;font-size:15px;}
 #fpIn .v{display:inline-flex;align-items:center;gap:3px;}
 #fpIn .v svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.7;}
-#fpIn .rw.dr .pl{font-size:11px;padding:1px 0;width:62px;box-sizing:border-box;text-align:center;letter-spacing:.02em;}   /* v1.09.068 */
+#fpIn .rw.dr .pl{font-size:10.5px;padding:1px 0;width:60px;box-sizing:border-box;text-align:center;letter-spacing:.02em;}   /* v1.09.068 */
 /* right column: settings, layers, FULL (the left column keeps the zoom level, plus and minus) */
 #mbox #mbGear{left:auto !important;right:19px !important;top:calc(var(--rail-y,72px) - 18px) !important;}
 #stage:not(.v-map) #mbGear{top:auto !important;bottom:var(--dkb);}
@@ -2668,16 +2668,19 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
 .adm-seg3 button{background:transparent;color:#9db8e8;font:inherit;font-weight:700;font-size:13px;border:0;padding:9px 11px;cursor:pointer;}
 .adm-seg3 button.on{background:#3d7be0;color:#fff;}
 /* v1.09.068: Route info rows: a little more compact, the four values (bearing, distance, time, fuel) line up in columns, DIRECT is the same width as the labels above it */
-#fpIn{padding:4px 10px 6px !important;}
-#fpIn .rw{gap:6px !important;}
-#fpIn .rw .nm{font-size:15px !important;}
-#fpIn .rw .vl{gap:5px !important;font-size:12.5px !important;}
-#fpIn .v{gap:2px !important;justify-content:flex-end;}
-#fpIn .v svg{width:11px !important;height:11px !important;}
-#fpIn .rw .vl .v:nth-child(1){min-width:44px;}
-#fpIn .rw .vl .v:nth-child(2){min-width:58px;}
-#fpIn .rw .vl .v:nth-child(3){min-width:42px;}
-#fpIn .rw .vl .v:nth-child(4){min-width:37px;}
+#fpIn{padding:4px 7px 6px !important;}
+#fpIn .rw{gap:5px !important;}
+#fpIn .rw .nm{font-size:14px !important;}
+#fpIn{--vf:14px;}
+#fpIn .rw .vl{gap:.34em !important;font-size:var(--vf) !important;flex:none;}
+#fpIn .v{gap:.15em !important;justify-content:flex-end;}
+#fpIn .v svg{width:.78em !important;height:.78em !important;}
+#fpIn .rw .vl .v:nth-child(1){min-width:3.3em;}
+#fpIn .rw .vl .v:nth-child(2){min-width:4.4em;}
+#fpIn .rw .vl .v:nth-child(3){min-width:3.2em;}
+#fpIn .rw .vl .v:nth-child(4){min-width:2.8em;}
+/* v1.09.069: the grey GPS chip sits a little higher, clear of the mode capsule */
+.strip .gps-chip{position:relative;top:-5px;}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2717,7 +2720,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.068 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.069 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2760,7 +2763,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.068 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.069 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5309,16 +5312,16 @@ function lpStatus(id,txt,err){
 function lpPlace(){   // v1.09.001: the panel opens beside the layers button, from just under the mode button down to above the dock
   const h=lpEl("mbox"), c=lpEl("lpL"); if(!h||!c) return;
   const hr=h.getBoundingClientRect(), mm=document.querySelector(".lyr-ctl"), fin=el=>{ const t=getComputedStyle(el).translate, ty=(t&&t!=="none")? (parseFloat(t.split(" ")[1])||0) : 0; return el.getBoundingClientRect().top-ty+FP_EX+AL_SH; };   // v1.09.049: the alert card pushes the columns down, so the panel and its pointer start below it   // v1.09.041: where the button will stand when the glide has ended
-  let top=Math.round((mm&&mm.offsetWidth? fin(mm)-hr.top : 16)-15);   // v1.09.068: the pointer sits level with the middle of the button
+  let top=Math.round((mm&&mm.offsetWidth? fin(mm)-FP_EX-hr.top : 16)-15);   // v1.09.069: the panel starts at the high spot even when the buttons were pushed down by Route info
   { const mi=document.querySelector("#mbInfo .mib"), mw=document.getElementById("mbInfo"); if(mi&&mw&&mw.offsetWidth&&getComputedStyle(mw).display!=="none"&&mi.offsetWidth){ top=Math.max(top,Math.round(mi.getBoundingClientRect().bottom-hr.top+8)); } }   // a clear gap under the Plan summary pill
   c.style.top=top+"px"; c.style.maxHeight=Math.max(150,Math.min(580,Math.round(hr.height-top-150)))+"px"; try{ lpShape(c,hr,top); }catch(_){}
   const f=lpEl("lpSt2"); if(f){ f.style.top=(top+c.offsetHeight+8)+"px"; f.style.display=(LP_OPEN==="layers"&&f.textContent)?"block":"none"; }
-  { const ar=lpEl("lpArr"), lb=document.querySelector(".lyr-ctl"); if(ar&&lb){ const cy=Math.round(fin(lb)-hr.top+lb.getBoundingClientRect().height/2); ar.style.top=Math.max(top+8,Math.min(top+c.offsetHeight-46,cy-10))+"px"; } }   // v1.09.004: the small pointer is back, level with the layers button
+  { const ar=lpEl("lpArr"), lb=document.querySelector(".lyr-ctl"); if(ar&&lb){ const cy=Math.round(fin(lb)-hr.top+lb.getBoundingClientRect().height/2); ar.style.top=Math.max(top+18,Math.min(top+c.offsetHeight-46,cy-10))+"px"; } }   // v1.09.004: the small pointer is back, level with the layers button
   setTimeout(lpCueUpd,30);
 }
 function lpFit(){ if(LP_OPEN==="layers") lpPlace(); }
 /* v1.09.068: the panel is a little narrower beside the NOTAM button, and its top right corner is bitten around the mode capsule (a thin strip of map shows, like the bar) */
-function lpBiteEl(){ let b=document.getElementById("lpBite"); if(!b){ const h=document.getElementById("mbox"); if(!h) return null; b=document.createElement("div"); b.id="lpBite"; b.className="lp-bite mb-m"; b.innerHTML='<svg xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="#1c3d6e" stroke-width="2.5" stroke-linecap="square"/></svg>'; const a=document.getElementById("lpArr"); h.insertBefore(b,a? a : null); } return b; }
+function lpBiteEl(){ let b=document.getElementById("lpBite"); if(!b){ const h=document.getElementById("mbox"); if(!h) return null; b=document.createElement("div"); b.id="lpBite"; b.className="lp-bite mb-m"; b.innerHTML='<svg xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="#1c3d6e" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="miter"/></svg>'; const a=document.getElementById("lpArr"); h.insertBefore(b,a? a : null); } return b; }
 function lpShape(c,hr,top){
   c.style.removeProperty("width"); c.style.removeProperty("clip-path"); const bt=lpBiteEl(); if(bt) bt.style.display="";
   const dw=c.offsetWidth, ph=c.offsetHeight, pl=hr.left+c.offsetLeft;
@@ -5382,7 +5385,7 @@ function gisPanel(){
   const cha='<div class="lp mb-m" id="lpC" style="--pc:#1c3d6e">'
     +'<div class="lp-row lp-bp" id="cpBase" role="button" tabindex="0" style="--pc:#44505c" aria-label="מפת רקע"><span class="lp-bsw '+bcur.k+'" id="cpBsw"></span><span class="lp-bnm"><i>מפת רקע</i><b id="cpBnm">'+bcur.n+'</b></span>'
       +'<svg class="lp-bi" viewBox="0 0 24 24" aria-hidden="true"><g class="a"><rect x="4" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.2"/></g><g class="b"><path d="M6 6l12 12M18 6L6 18"/></g></svg><div class="lp-bpop" id="cpPop">'+bo+'</div></div>'
-    +'<div class="lp-pill" id="cpOp"><button type="button" class="lp-ck emp" id="lsaBtn">LSA</button><button type="button" class="lp-ck emp" id="cpCvfr">CVFR</button>'
+    +'<div class="lp-pill" id="cpOp"><button type="button" class="lp-ck emp" id="lsaBtn">LSA</button><button type="button" class="lp-ck emp" id="cpCvfr">CVFR</button><button type="button" class="lp-ck emp" id="cpHel">HEL</button>'
       +'<input type="range" class="lp-rs" id="lsaOp" min="0" max="100" value="100" data-rgb="28,61,110" aria-label="שקיפות המפה"><span id="lsaOpv" hidden></span>'+icMap+'</div>'
     +'<div class="lp-lks" id="cpLinks"><button type="button" class="lp-lk" id="lsaRe">החלף LSA</button><button type="button" class="lp-lk" id="lsaDel">מחק LSA</button></div>'
     +'<div class="lp-st" id="lsaSt"></div><div class="lp-st" id="lpSt"></div></div>';
@@ -5849,7 +5852,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.068 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.069 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -7114,10 +7117,24 @@ function flyPills(){
     h+='<div class="rw dr"><span class="pl">DIRECT</span>'+vl(fpBrg(P.lat,P.lon,T.lat,T.lon),nm,hh,fpFuel(hh))+'</div>';
   }
   if(wait) h='<div class="dn" style="text-align:center">Pending GPS fix...</div>';
-  B.innerHTML=h;
+  B.innerHTML=h; try{ fpFit(); }catch(_){}
   const fullM=document.documentElement.classList.contains("full"), opSh=(FPO.open&&!(AL.k&&alShNow()))? (fullM?28:28) : 0;   // v1.09.061: the open pill starts below the mode circle
   mb.style.setProperty("--op-sh",opSh+"px");
   if(LP_OPEN&&FP_EX>0){ /* v1.09.068: layers opened over an open Route info: the buttons stay where they are */ } else fpEx((FPO.open&&!LP_OPEN)? Math.max(0,Math.round(B.offsetHeight+34-colOff(fullM)+opSh)) : 0);   // how far the open pill pushes the button columns down
+}
+let FPF_KEY="", FPF_V=14;
+function fpFit(){   // v1.09.069: the Route info numbers get the largest size that still fits on every row
+  const fp=document.getElementById("fpIn"); if(!fp||!fp.offsetWidth) return;
+  const key=fp.innerHTML+"|"+fp.offsetWidth;
+  if(key===FPF_KEY){ fp.style.setProperty("--vf",FPF_V+"px"); return; }
+  const rows=[...fp.querySelectorAll(".rw")]; if(!rows.length) return;
+  let f=15.5;
+  for(;f>11;f-=0.25){
+    fp.style.setProperty("--vf",f+"px");
+    const ok=rows.every(r=>{ const v=r.querySelector(".vl"); if(!v) return true; return v.getBoundingClientRect().right<=r.getBoundingClientRect().right+0.5; });
+    if(ok) break;
+  }
+  FPF_KEY=key; FPF_V=f;
 }
 function fpEx(v){   // the columns glide down with the pill (CSS translate); the shape filter follows them
   if(v===FP_EX) return; FP_EX=v; exApply();
