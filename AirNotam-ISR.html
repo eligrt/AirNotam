@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.072 · built by eligrt
+     AirNotam-ISR · v1.09.073 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2690,6 +2690,31 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
 .lcur{border-top-left-radius:8px !important;border-bottom-left-radius:8px !important;}   /* v1.09.071: 8px, so the pointer starts on the straight part of the border */
 /* v1.09.069: the grey GPS chip sits a little higher, clear of the mode capsule */
 .strip .gps-chip{top:calc(var(--gy,34px) - 9px) !important;}   /* v1.09.071: the chip is placed from the gear height, so it is raised here */
+
+/* v1.09.073: NOTAM pill redesign (approved v12): MAP VIEW caption, FADED / SOLID switch, five on/off rows with a fixed switch and icon column */
+.mb-pill.open{width:180px !important;border-radius:20px !important;background:#fbf6e8 !important;border:3px solid #b94a3a !important;box-sizing:border-box !important;}
+.mb-pill.open .mp-clip{position:relative;inset:auto;overflow:visible;}
+.mb-pill.open .mp-cl{display:none;}
+.mb-pill.open .mp-op{position:relative;inset:auto;opacity:1 !important;pointer-events:auto !important;display:flex;flex-direction:column;direction:rtl;}
+.mb-pill.open .mp-hd{height:24px;border-bottom:1.5px solid rgba(185,74,58,.35);}
+.mv-cap{font:800 9px/1 var(--font-mono,monospace);letter-spacing:.08em;color:#8a7a52;text-align:center;padding:7px 0 6px;direction:ltr;}
+.mv-seg{position:relative;display:flex;width:calc(100% - 20px);height:28px;margin:0 10px 8px;padding:0;border:0;border-radius:14px;background:#f1e6cc;box-sizing:border-box;overflow:hidden;cursor:pointer;direction:ltr;}
+.mv-seg span{flex:1 1 50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;font:800 10px/1 var(--font-mono,monospace);letter-spacing:.04em;color:#8a7a52;}
+.mv-pin{position:absolute;top:2px;bottom:2px;left:2px;width:calc(50% - 4px);border-radius:12px;background:#b94a3a;transition:left .2s ease;}
+.mb-pill.open.solid .mv-pin{left:50%;}
+.mb-pill.open.faded #mvF,.mb-pill.open.solid #mvS{color:#fbf6e8;}
+.mb-pill.open .mp-cell{display:grid !important;grid-template-columns:34px minmax(0,1fr) 20px;align-items:center;column-gap:8px;height:42px !important;padding:0 10px !important;box-sizing:border-box;direction:ltr;width:100%;border:0;background:#fbf6e8 !important;color:#b5b0a8 !important;font:400 12px/1 var(--font-ui,sans-serif) !important;text-align:left;}
+.mb-pill.open .mp-cell+.mp-cell{border-top:1px solid rgba(185,74,58,.2);}
+.mb-pill.open .mp-cell span:not(.mp-sw){white-space:nowrap;overflow:hidden;direction:ltr;text-align:left;flex:none;}
+.mb-pill.open .mp-cell svg{width:18px;height:18px;justify-self:center;color:#b5b0a8;}
+.mp-sw{position:relative;display:block;width:34px;height:20px;border-radius:10px;background:#e0d6bf;box-sizing:border-box;}
+.mp-sw b{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:left .2s ease;}
+.mb-pill.open .mp-cell.on{color:#b94a3a !important;font-weight:700;}
+.mb-pill.open .mp-cell.on svg{color:#b94a3a;}
+.mb-pill.open .mp-cell.on .mp-sw{background:#b94a3a;}
+.mb-pill.open .mp-cell.on .mp-sw b{left:16px;}
+.mb-pill.open.solid .mp-cell.on{background:#f6dcd5 !important;}
+.mb-pill.open .mp-fb{border-radius:0 0 17px 17px;overflow:hidden;}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2729,7 +2754,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.072 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.073 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2772,7 +2797,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.072 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.073 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -2849,7 +2874,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
       <button type="button" id="mbDraw" class="mb-b mb-n mb-m" style="left:10px;bottom:218px" aria-label="מסלול" onclick="mbDrawGo()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><path d="M13 12l.8-3 6.7-7 2.5 2.5-7 6.7z"/><circle cx="3.5" cy="21" r="1.8"/><path d="M4.6 19.4L7 13.5L10 19.5L13 12"/></svg><span class="mb-t mb-t-r" id="mbDrawT">DRAW</span></button>
       <button type="button" id="mbOnly" class="mb-b mb-n mb-m" style="left:10px;bottom:160px" aria-label="רק מסלול" onclick="mbOnlyGo()" aria-pressed="false"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><path d="M8 15.5l3-4.2 2.2 2.2 3-4"/></svg><span class="mb-t mb-t-r" id="mbOnlyT">ALL</span></button>
       <button type="button" id="mbTime" class="mb-b mb-n mb-m" style="left:10px;bottom:102px" aria-label="זמן" onclick="mbTimeGo()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span class="mb-t mb-t-r" id="mbTimeT">24 HR</span></button>
-      <div id="mbPill" class="mb-pill mb-m" role="group" aria-label="סינון NOTAM לפי סוג" style="right:10px;bottom:116px"><div class="mp-clip"><button type="button" class="mp-cl" id="mpCl" aria-label="סינון NOTAM לפי סוג" aria-expanded="false" onclick="mbPillOpen()"><div class="mp-face"><span id="mpf_cvfr"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="rotate(-35 12 12)"><rect x="10.5" y="3.5" width="3" height="17.5" rx="1.5"/><rect x="2" y="9" width="20" height="3.6" rx="1.4"/><rect x="7.5" y="18" width="9" height="2.6" rx="1.2"/><rect x="8.5" y="1.6" width="7" height="1.4" rx=".7"/></g></svg></span><span id="mpf_apt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 22h20"/><path d="M6.4 17.4L4 17l-2-4 1.1-.55a2 2 0 0 1 1.8 0l.17.1a2 2 0 0 0 1.8 0L8 12 5 6l.9-.45a2 2 0 0 1 2.09.2l4.02 3a2 2 0 0 0 2.1.2l4.19-2.06a2.41 2.41 0 0 1 1.73-.17L21 7a1.4 1.4 0 0 1 .87 1.99l-.38.76c-.23.46-.6.84-1.07 1.08L7.58 17.2a2 2 0 0 1-1.22.18Z"/></svg></span><span id="mpf_hel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18M12 5v3"/><path d="M7 13a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1H7z"/><path d="M7 13H3M8 19h9"/></svg></span><span id="mpf_ins"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="17" r="1.5"/><path d="M8 13a5.5 5.5 0 0 1 8 0M5 9.5a10 10 0 0 1 14 0"/></svg></span></div></button><div class="mp-op" id="mpOp"><button type="button" class="mp-hd" aria-label="סגור" onclick="mbPillClose()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><button type="button" id="mbF_hz" class="mp-cell" aria-label="אזהרות" onclick="mbFam('hz')" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5"/><path d="M12 18v.5"/></svg><span>ALERT</span></button><button type="button" id="mbF_cvfr" class="mp-cell" aria-label="CVFR וספורט" onclick="mbFam('cvfr')" aria-pressed="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="rotate(-35 12 12)"><rect x="10.5" y="3.5" width="3" height="17.5" rx="1.5"/><rect x="2" y="9" width="20" height="3.6" rx="1.4"/><rect x="7.5" y="18" width="9" height="2.6" rx="1.2"/><rect x="8.5" y="1.6" width="7" height="1.4" rx=".7"/></g></svg><span>CVFR/LSA</span></button><button type="button" id="mbF_apt" class="mp-cell" aria-label="שדות גדולים" onclick="mbFam('apt')" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 22h20"/><path d="M6.4 17.4L4 17l-2-4 1.1-.55a2 2 0 0 1 1.8 0l.17.1a2 2 0 0 0 1.8 0L8 12 5 6l.9-.45a2 2 0 0 1 2.09.2l4.02 3a2 2 0 0 0 2.1.2l4.19-2.06a2.41 2.41 0 0 1 1.73-.17L21 7a1.4 1.4 0 0 1 .87 1.99l-.38.76c-.23.46-.6.84-1.07 1.08L7.58 17.2a2 2 0 0 1-1.22.18Z"/></svg><span>AIRPORT</span></button><button type="button" id="mbF_hel" class="mp-cell" aria-label="מסוקים" onclick="mbFam('hel')" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18M12 5v3"/><path d="M7 13a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1H7z"/><path d="M7 13H3M8 19h9"/></svg><span>HELI</span></button><button type="button" id="mbF_ins" class="mp-cell" aria-label="IFR" onclick="mbFam('ins')" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="17" r="1.5"/><path d="M8 13a5.5 5.5 0 0 1 8 0M5 9.5a10 10 0 0 1 14 0"/></svg><span>IFR</span></button><div class="mp-fb"><button type="button" class="mp-fr" id="mpTime" aria-label="זמן" onclick="mbPillTime()"><span><b id="mpTimeT">24 HR</b><small>TIME</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></button><button type="button" class="mp-fr" id="mpOnly" aria-label="רק על המסלול" aria-pressed="false" onclick="mbPillOnly()"><span>ON ROUTE<small>only</small></span><i class="rsw"></i></button></div></div></div><span class="mb-t mb-t-l" id="mbPillT">NOTAM</span></div>
+      <div id="mbPill" class="mb-pill mb-m" role="group" aria-label="סינון NOTAM לפי סוג" style="right:10px;bottom:116px"><div class="mp-clip"><button type="button" class="mp-cl" id="mpCl" aria-label="סינון NOTAM לפי סוג" aria-expanded="false" onclick="mbPillOpen()"><div class="mp-face"><span id="mpf_cvfr"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="rotate(-35 12 12)"><rect x="10.5" y="3.5" width="3" height="17.5" rx="1.5"/><rect x="2" y="9" width="20" height="3.6" rx="1.4"/><rect x="7.5" y="18" width="9" height="2.6" rx="1.2"/><rect x="8.5" y="1.6" width="7" height="1.4" rx=".7"/></g></svg></span><span id="mpf_apt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 22h20"/><path d="M6.4 17.4L4 17l-2-4 1.1-.55a2 2 0 0 1 1.8 0l.17.1a2 2 0 0 0 1.8 0L8 12 5 6l.9-.45a2 2 0 0 1 2.09.2l4.02 3a2 2 0 0 0 2.1.2l4.19-2.06a2.41 2.41 0 0 1 1.73-.17L21 7a1.4 1.4 0 0 1 .87 1.99l-.38.76c-.23.46-.6.84-1.07 1.08L7.58 17.2a2 2 0 0 1-1.22.18Z"/></svg></span><span id="mpf_hel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18M12 5v3"/><path d="M7 13a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1H7z"/><path d="M7 13H3M8 19h9"/></svg></span><span id="mpf_ins"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="17" r="1.5"/><path d="M8 13a5.5 5.5 0 0 1 8 0M5 9.5a10 10 0 0 1 14 0"/></svg></span></div></button><div class="mp-op" id="mpOp"><button type="button" class="mp-hd" aria-label="סגור" onclick="mbPillClose()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="mv-cap">MAP VIEW</div><button type="button" class="mv-seg" id="mpView" aria-label="FADED / SOLID" onclick="mbView()"><i class="mv-pin"></i><span id="mvF">FADED</span><span id="mvS">SOLID</span></button><button type="button" id="mbF_hz" class="mp-cell" aria-label="אזהרות" onclick="mbFam('hz')" aria-pressed="false"><i class="mp-sw"><b></b></i><span>ALERT</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5"/><path d="M12 18v.5"/></svg></button><button type="button" id="mbF_cvfr" class="mp-cell" aria-label="CVFR וספורט" onclick="mbFam('cvfr')" aria-pressed="false"><i class="mp-sw"><b></b></i><span>CVFR/LSA</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="rotate(-35 12 12)"><rect x="10.5" y="3.5" width="3" height="17.5" rx="1.5"/><rect x="2" y="9" width="20" height="3.6" rx="1.4"/><rect x="7.5" y="18" width="9" height="2.6" rx="1.2"/><rect x="8.5" y="1.6" width="7" height="1.4" rx=".7"/></g></svg></button><button type="button" id="mbF_apt" class="mp-cell" aria-label="שדות גדולים" onclick="mbFam('apt')" aria-pressed="false"><i class="mp-sw"><b></b></i><span>AIRPORT</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 22h20"/><path d="M6.4 17.4L4 17l-2-4 1.1-.55a2 2 0 0 1 1.8 0l.17.1a2 2 0 0 0 1.8 0L8 12 5 6l.9-.45a2 2 0 0 1 2.09.2l4.02 3a2 2 0 0 0 2.1.2l4.19-2.06a2.41 2.41 0 0 1 1.73-.17L21 7a1.4 1.4 0 0 1 .87 1.99l-.38.76c-.23.46-.6.84-1.07 1.08L7.58 17.2a2 2 0 0 1-1.22.18Z"/></svg></button><button type="button" id="mbF_hel" class="mp-cell" aria-label="מסוקים" onclick="mbFam('hel')" aria-pressed="false"><i class="mp-sw"><b></b></i><span>HELI</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18M12 5v3"/><path d="M7 13a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1H7z"/><path d="M7 13H3M8 19h9"/></svg></button><button type="button" id="mbF_ins" class="mp-cell" aria-label="IFR" onclick="mbFam('ins')" aria-pressed="false"><i class="mp-sw"><b></b></i><span>IFR</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="17" r="1.5"/><path d="M8 13a5.5 5.5 0 0 1 8 0M5 9.5a10 10 0 0 1 14 0"/></svg></button><div class="mp-fb"><button type="button" class="mp-fr" id="mpTime" aria-label="זמן" onclick="mbPillTime()"><span><b id="mpTimeT">24 HR</b><small>TIME</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></button><button type="button" class="mp-fr" id="mpOnly" aria-label="רק על המסלול" aria-pressed="false" onclick="mbPillOnly()"><span>ON ROUTE<small>only</small></span><i class="rsw"></i></button></div></div></div><span class="mb-t mb-t-l" id="mbPillT">NOTAM</span></div>
       <button type="button" id="mbChart" class="mb-b mb-c mb-m" style="left:10px;bottom:44px" aria-label="מפות" onclick="lyrPanel('charts')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><path d="M3 6.5l6-2.5 6 2.5 6-2.5v13.5l-6 2.5-6-2.5-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></svg><span class="mb-t mb-t-r" id="mbChartT">CHARTS</span></button>
       <button type="button" id="mbRv" class="mb-rv mb-m" aria-label="סקירה" onclick="slotReview()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-3px)"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6l1.2 1.2L6.8 5M3.5 12l1.2 1.2L6.8 11M3.5 18l1.2 1.2L6.8 17"/></svg><span class="mb-t mb-t-l" id="mbRvT">REVIEW</span><span class="mb-bd" id="mbRvN"></span></button>
       <button type="button" id="pfSw" class="mb-m" role="switch" aria-checked="false" aria-label="מצב: תכנון / טיסה" onclick="modeFlip()"><svg viewBox="0 0 70 140" aria-hidden="true"><rect class="pl" x="1.25" y="1.25" width="67.5" height="137.5" rx="17" fill="#fbf6e8" stroke="#c8a04a" stroke-width="2.5"/><rect x="28" y="30" width="14" height="80" rx="7" fill="#e9e1cc"/><rect class="sa" x="30" y="33" width="10" height="74" rx="4" fill="#e6cf9a"/><path class="es" d="M25 33H45M25 107H45" stroke="#c8a04a" stroke-width="2" stroke-linecap="round"/><rect x="9" y="5" width="52" height="18" rx="9" fill="#1c3d6e"/><text x="35" y="18.5" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="800" font-size="13" fill="#fff">FLY</text><rect x="9" y="117" width="52" height="18" rx="9" fill="#c8a04a"/><text x="35" y="130.5" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-weight="800" font-size="13" fill="#fff">PLAN</text><g class="hd"></g></svg></button>
@@ -3017,10 +3042,11 @@ const ST_LBL={new:"טרם נקרא",chg:"עודכן, בדוק שוב",ok:"קרא
 // The 4 first-launch / הגדרות choices live in airnotam_fam = {cvfr, apt, hel, ins, ok}. Principle: hide only what a NOTAM is ABOUT; unsure = show.
 // One NOTAM can belong to several families (an ILS at LLBG is both apt and ins): it hides as soon as ANY of its families is unticked.
 let FAMC={cvfr:1,apt:0,hel:0,ins:0,hz:1};   // v1.08.108: each type is 0 = off, 1 = shown, 2 = faded (shown, but pale); hz = the ALERT group: every NOTAM that fits none of the four types
+let FAM_VIEW="solid";
 function famLoad(){
   try{
     const f=JSON.parse(localStorage.getItem("airnotam_fam")||"null");
-    if(f){ const v=x=>x===2?2:x?1:0; FAMC={cvfr:v(f.cvfr),apt:v(f.apt),hel:v(f.hel),ins:v(f.ins),hz:f.hz===undefined?1:v(f.hz)}; }
+    if(f){ const v=x=>x===2?2:x?1:0; FAMC={cvfr:v(f.cvfr),apt:v(f.apt),hel:v(f.hel),ins:v(f.ins),hz:f.hz===undefined?1:v(f.hz)}; FAM_VIEW=f.view==="faded"?"faded":"solid"; if(FAM_VIEW==="faded") ["cvfr","apt","hel","ins","hz"].forEach(k=>{ if(FAMC[k]) FAMC[k]=2; }); }
   }catch(_){}
 }
 famLoad();
@@ -4790,7 +4816,7 @@ function lnchShow(){
 }
 function lnchGo(){
   let ok=discToday(); try{ const o=JSON.parse(localStorage.getItem(FAM_KEY)||"null"); if(o&&o.ok) ok=o.ok; }catch(_){}
-  const fam={cvfr:FAMC.cvfr,apt:FAMC.apt,hel:FAMC.hel,ins:FAMC.ins,hz:FAMC.hz,ok:discToday()};
+  const fam={cvfr:FAMC.cvfr,apt:FAMC.apt,hel:FAMC.hel,ins:FAMC.ins,hz:FAMC.hz,view:FAM_VIEW,ok:discToday()};
   try{ localStorage.setItem(FAM_KEY,JSON.stringify(fam)); localStorage.setItem(DISC_KEY,discToday()); }catch(e){}
   clearInterval(LNCH_POLL); document.getElementById("lnch").classList.remove("show");
   alog("launch card done: "+JSON.stringify(fam));
@@ -5868,7 +5894,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.072 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.073 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6347,11 +6373,17 @@ function mbPillOpen(){ if(seqOpen("pill",mbPillOpen)) return; try{gisPanelToggle
 function mbPillClose(){ clearTimeout(MP_T); const p=document.getElementById("mbPill"); if(!p) return; if(p.classList.contains("open")) popNote(); p.classList.remove("open"); document.getElementById("mbox").classList.remove("pill-o"); p.style.removeProperty("height"); document.getElementById("mpCl").setAttribute("aria-expanded","false"); try{lpCueUpd();}catch(_){} }
 // v1.08.073: the pill closes when the tap is finished (finger lifted), not on touch-down, so the screen does not change under the finger and the tapped button always gets its press
 document.addEventListener("click",e=>{ const p=document.getElementById("mbPill"); if(p&&p.classList.contains("open")&&!p.contains(e.target)) mbPillClose(); },true);
-function mbFam(k){
+function famSave(){ try{ const o=JSON.parse(localStorage.getItem(FAM_KEY)||"null")||{}; o.cvfr=FAMC.cvfr; o.apt=FAMC.apt; o.hel=FAMC.hel; o.ins=FAMC.ins; o.hz=FAMC.hz; o.view=FAM_VIEW; if(!o.ok) o.ok=discToday(); localStorage.setItem(FAM_KEY,JSON.stringify(o)); }catch(_){} }
+function mbFam(k){   // v1.09.073: one tap = group on or off; on uses the current MAP VIEW (faded or solid)
   if(document.getElementById("mbPill").classList.contains("open")) mbPillArm();
-  FAMC[k]= FAMC[k]===1?2 : FAMC[k]===2?0 : 1;   // v1.08.108: one tap = shown -> faded -> off -> shown
-  try{ const o=JSON.parse(localStorage.getItem(FAM_KEY)||"null")||{}; o.cvfr=FAMC.cvfr; o.apt=FAMC.apt; o.hel=FAMC.hel; o.ins=FAMC.ins; o.hz=FAMC.hz; if(!o.ok) o.ok=discToday(); localStorage.setItem(FAM_KEY,JSON.stringify(o)); }catch(_){}
-  render(); mbSync();
+  FAMC[k]= FAMC[k]? 0 : (FAM_VIEW==="faded"?2:1);
+  famSave(); render(); mbSync();
+}
+function mbView(){   // v1.09.073: FADED / SOLID switch: applies to every group that is on
+  if(document.getElementById("mbPill").classList.contains("open")) mbPillArm();
+  FAM_VIEW= FAM_VIEW==="faded"? "solid" : "faded";
+  ["cvfr","apt","hel","ins","hz"].forEach(k=>{ if(FAMC[k]) FAMC[k]= FAM_VIEW==="faded"?2:1; });
+  famSave(); render(); mbSync();
 }
 
 // v1.08.022: short screens: the two button columns close up (never below 48px apart) so nothing overlaps; normal phones keep the usual spacing
@@ -6406,7 +6438,8 @@ function mbSync(){
   if(timeMode==="flight"&&!flightValid(FLIGHT)){ renderFlightBar(); try{render();}catch(_){} }   // v1.08.023: a custom range ends when the planned landing has passed
   const H=winH(); q("mbTimeT").textContent= timeMode==="flight"? "CUSTOM" : H===0? "ALL" : H+" HR";
   { const pt=q("mpTimeT"); if(pt) pt.textContent=mpTimeTxt(q("mbTimeT").textContent); const po=q("mpOnly"); if(po){ po.classList.toggle("on",ro); po.classList.remove("dis"); po.setAttribute("aria-pressed",ro?"true":"false"); } }
-  [["hz","mbF_hz"],["cvfr","mbF_cvfr"],["apt","mbF_apt"],["hel","mbF_hel"],["ins","mbF_ins"]].forEach(([k,id])=>{ const v=FAMC[k]; q(id).classList.toggle("on",v===1); q(id).classList.toggle("fd",v===2); q(id).setAttribute("aria-pressed",v===1?"true":v===2?"mixed":"false"); const f=document.getElementById("mpf_"+k); if(f){ f.classList.toggle("o",!v); f.classList.toggle("f",v===2); } });
+  [["hz","mbF_hz"],["cvfr","mbF_cvfr"],["apt","mbF_apt"],["hel","mbF_hel"],["ins","mbF_ins"]].forEach(([k,id])=>{ const v=FAMC[k]; q(id).classList.toggle("on",v!==0); q(id).classList.remove("fd"); q(id).setAttribute("aria-pressed",v?"true":"false"); const f=document.getElementById("mpf_"+k); if(f){ f.classList.toggle("o",!v); f.classList.toggle("f",v===2); } });
+  q("mbPill").classList.toggle("faded",FAM_VIEW==="faded"); q("mbPill").classList.toggle("solid",FAM_VIEW!=="faded");
   q("mbPill").classList.toggle("alloff",!(FAMC.cvfr||FAMC.apt||FAMC.hel||FAMC.ins));
   q("mbPill").classList.toggle("glow",!FAMC.hz);   // v1.08.108: ALERT off (or everything off) = a steady red ring, so a pilot cannot forget NOTAMs are hidden; no mark is added to the closed pill
   { const m3=q("mi3"); m3.hidden=true; }   /* v1.08.110: the red banner listing the off/faded groups is gone; the glow ring, the pill icons and the hidden count say it */
