@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.067 · built by eligrt
+     AirNotam-ISR · v1.09.068 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -1698,6 +1698,10 @@ body.lv #list{padding-top:62px;}
 /* v1.08.068: a pointer at the layers button, like the other popups; a clear gap to the DRAW / ALL buttons; a divider under the two route rows */
 .lp-arr{left:56px;top:0;display:none;z-index:6;}
 .lp-arr.open{display:block;}
+.lp-bite{position:absolute;display:none;pointer-events:none;z-index:6;}
+.lp-bite.on.open{display:block;animation:lcIn .32s cubic-bezier(.3,.8,.3,1);}
+.lp-bite.fo{opacity:0;transition:opacity .2s ease;}
+.lp-bite svg{display:block;overflow:visible;}
 /* v1.08.074: layers and charts panels fade in, and fade out before the next popup opens */
 /* v1.08.075: the same glide as the red pill: the layers panel grows out of the layers button, the charts panel out of the charts button, and each shrinks back */
 @keyframes lcIn{from{opacity:0;transform:translateX(-10px) scale(.72)}to{opacity:1;transform:none}}
@@ -2465,7 +2469,7 @@ html.full.gps-vis #fpWrap{top:var(--pill-top,calc(52px + env(safe-area-inset-top
 #fpIn .rw .vl{gap:9px;font-size:15px;}
 #fpIn .v{display:inline-flex;align-items:center;gap:3px;}
 #fpIn .v svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.7;}
-#fpIn .rw.dr .pl{font-size:13px;padding:1px 8px;}
+#fpIn .rw.dr .pl{font-size:11px;padding:1px 0;width:62px;box-sizing:border-box;text-align:center;letter-spacing:.02em;}   /* v1.09.068 */
 /* right column: settings, layers, FULL (the left column keeps the zoom level, plus and minus) */
 #mbox #mbGear{left:auto !important;right:19px !important;top:calc(var(--rail-y,72px) - 18px) !important;}
 #stage:not(.v-map) #mbGear{top:auto !important;bottom:var(--dkb);}
@@ -2589,7 +2593,8 @@ html.full #mbox .gps-chip.gps-f.search{background:#fbf3dc !important;border-colo
 html.full #mbox .gps-chip.gps-f.fix{background:#c9f2d6 !important;border-color:#16a34a !important;color:#0b6b2c !important;box-shadow:0 0 10px 3px rgba(22,200,80,.85) !important;}
 @keyframes gpsGlowA{0%,100%{box-shadow:0 0 0 0 rgba(224,166,58,0);opacity:.75}50%{box-shadow:0 0 10px 3px rgba(224,166,58,.75);opacity:1}}
 @media (prefers-reduced-motion:reduce){html.gps-vis .strip .gps-chip.search{animation:none !important;box-shadow:0 0 8px 2px rgba(224,166,58,.7) !important;}}
-.metabar.hdr-meta{padding-right:112px !important;}
+.metabar.hdr-meta{padding-right:106px !important;}
+.metabar.hdr-meta .mb-txt{white-space:nowrap;}
 .strip .gps-chip{position:absolute !important;right:60px !important;left:auto !important;top:var(--gy,34px) !important;transform:translate(50%,-50%) !important;margin:0 !important;}
 #pfNotch{position:absolute;right:0;top:calc(var(--hb,84px) - 31px);pointer-events:none;z-index:1099;}
 #pfNotch path{fill:var(--paper-hi);}
@@ -2662,6 +2667,17 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
 .adm-seg3{display:flex;border:1.5px solid #3d7be0;border-radius:8px;overflow:hidden;flex:none;}
 .adm-seg3 button{background:transparent;color:#9db8e8;font:inherit;font-weight:700;font-size:13px;border:0;padding:9px 11px;cursor:pointer;}
 .adm-seg3 button.on{background:#3d7be0;color:#fff;}
+/* v1.09.068: Route info rows: a little more compact, the four values (bearing, distance, time, fuel) line up in columns, DIRECT is the same width as the labels above it */
+#fpIn{padding:4px 10px 6px !important;}
+#fpIn .rw{gap:6px !important;}
+#fpIn .rw .nm{font-size:15px !important;}
+#fpIn .rw .vl{gap:5px !important;font-size:12.5px !important;}
+#fpIn .v{gap:2px !important;justify-content:flex-end;}
+#fpIn .v svg{width:11px !important;height:11px !important;}
+#fpIn .rw .vl .v:nth-child(1){min-width:44px;}
+#fpIn .rw .vl .v:nth-child(2){min-width:58px;}
+#fpIn .rw .vl .v:nth-child(3){min-width:42px;}
+#fpIn .rw .vl .v:nth-child(4){min-width:37px;}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2701,7 +2717,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.067 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.068 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2744,7 +2760,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.067 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.068 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -4564,7 +4580,7 @@ function applyData(data,save,savedAt,later){
   if(save){try{localStorage.setItem(SNAP_KEY,JSON.stringify(SNAP));}catch(e){}}
   const gen=SNAP.generatedAt?new Date(SNAP.generatedAt):null;
   document.getElementById("meta").className="metabar hdr-meta";
-  document.getElementById("meta").innerHTML=staleLine(gen,SNAP.count);
+  document.getElementById("meta").innerHTML=staleLine(gen,SNAP.count); try{ metaFit(); }catch(_){}
   tlsBanner(SNAP.tlsVerified);
   const rt=document.getElementById("refreshTime"); if(rt) rt.textContent=fmtLocalHM(new Date(SNAP.savedAt));
   const dt=document.getElementById("dataTime"); if(dt) dt.textContent= gen? fmtLocalHM(gen) : "--:--";
@@ -4594,8 +4610,15 @@ function fmtLocalHM(d){
     return d.toTimeString().slice(0,5);
   }
 }
+function metaFit(){   // v1.09.068: the data note is always one line: the text shrinks a little on narrow screens
+  const m=document.getElementById("meta"), t=m&&m.querySelector(".mb-txt"); if(!t||!m.offsetWidth) return;
+  t.style.fontSize=""; const cs=getComputedStyle(m), dot=m.querySelector(".stale-dot");
+  const av=m.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)-(dot?dot.offsetWidth+10:0);
+  let fs=parseFloat(getComputedStyle(t).fontSize); while(t.getBoundingClientRect().width>av&&fs>8.5){ fs-=0.25; t.style.fontSize=fs+"px"; }
+}
+setInterval(()=>{ try{ metaFit(); }catch(_){} },1500); window.addEventListener("resize",()=>{ try{ metaFit(); }catch(_){} });
 function staleLine(gen,count){
-  if(!gen) return `<span class="stale-dot stale-old"></span><span class="mb-txt">בסיס נתוני נוטאם IAA · <span class="stale-warn">עדכון לא ידוע</span></span>`;
+  if(!gen) return `<span class="stale-dot stale-old"></span><span class="mb-txt">נתוני NOTAM · <span class="stale-warn">עדכון לא ידוע</span></span>`;
   const mins=Math.round((Date.now()-gen.getTime())/60000);
   // v1.07.044: one short line in every state (the strip never changes height); the colour carries the age: up to 3 h green, up to 6 h amber, more than 6 h red (dot and text)
   let cls,old="";
@@ -4605,7 +4628,7 @@ function staleLine(gen,count){
   const ago = mins<60? `לפני ${mins} דק'` : `לפני ${Math.floor(mins/60)} שע'`;
   const hm=fmtLocalHM(gen);
   return `<span class="stale-dot ${cls}"></span>`
-       + `<span class="mb-txt${old}">בסיס נתוני נוטאם IAA עדכני לשעה ${hm} LT (${ago})</span>`;
+       + `<span class="mb-txt${old}">נתוני NOTAM תקפים ל-${String(gen.getDate()).padStart(2,"0")}.${String(gen.getMonth()+1).padStart(2,"0")} ${hm} (${ago})</span>`;   // v1.09.068: one line, date and hour, how long ago in brackets
 }
 
 
@@ -5286,13 +5309,32 @@ function lpStatus(id,txt,err){
 function lpPlace(){   // v1.09.001: the panel opens beside the layers button, from just under the mode button down to above the dock
   const h=lpEl("mbox"), c=lpEl("lpL"); if(!h||!c) return;
   const hr=h.getBoundingClientRect(), mm=document.querySelector(".lyr-ctl"), fin=el=>{ const t=getComputedStyle(el).translate, ty=(t&&t!=="none")? (parseFloat(t.split(" ")[1])||0) : 0; return el.getBoundingClientRect().top-ty+FP_EX+AL_SH; };   // v1.09.049: the alert card pushes the columns down, so the panel and its pointer start below it   // v1.09.041: where the button will stand when the glide has ended
-  const top=Math.round((mm&&mm.offsetWidth? fin(mm)-hr.top : 16)-12);
-  c.style.top=top+"px"; c.style.maxHeight=Math.max(150,Math.min(580,Math.round(hr.height-top-150)))+"px";
+  let top=Math.round((mm&&mm.offsetWidth? fin(mm)-hr.top : 16)-15);   // v1.09.068: the pointer sits level with the middle of the button
+  { const mi=document.querySelector("#mbInfo .mib"), mw=document.getElementById("mbInfo"); if(mi&&mw&&mw.offsetWidth&&getComputedStyle(mw).display!=="none"&&mi.offsetWidth){ top=Math.max(top,Math.round(mi.getBoundingClientRect().bottom-hr.top+8)); } }   // a clear gap under the Plan summary pill
+  c.style.top=top+"px"; c.style.maxHeight=Math.max(150,Math.min(580,Math.round(hr.height-top-150)))+"px"; try{ lpShape(c,hr,top); }catch(_){}
   const f=lpEl("lpSt2"); if(f){ f.style.top=(top+c.offsetHeight+8)+"px"; f.style.display=(LP_OPEN==="layers"&&f.textContent)?"block":"none"; }
-  { const ar=lpEl("lpArr"), lb=document.querySelector(".lyr-ctl"); if(ar&&lb){ const cy=Math.round(fin(lb)-hr.top+lb.getBoundingClientRect().height/2); ar.style.top=Math.max(top+26,Math.min(top+c.offsetHeight-46,cy-10))+"px"; } }   // v1.09.004: the small pointer is back, level with the layers button
+  { const ar=lpEl("lpArr"), lb=document.querySelector(".lyr-ctl"); if(ar&&lb){ const cy=Math.round(fin(lb)-hr.top+lb.getBoundingClientRect().height/2); ar.style.top=Math.max(top+8,Math.min(top+c.offsetHeight-46,cy-10))+"px"; } }   // v1.09.004: the small pointer is back, level with the layers button
   setTimeout(lpCueUpd,30);
 }
 function lpFit(){ if(LP_OPEN==="layers") lpPlace(); }
+/* v1.09.068: the panel is a little narrower beside the NOTAM button, and its top right corner is bitten around the mode capsule (a thin strip of map shows, like the bar) */
+function lpBiteEl(){ let b=document.getElementById("lpBite"); if(!b){ const h=document.getElementById("mbox"); if(!h) return null; b=document.createElement("div"); b.id="lpBite"; b.className="lp-bite mb-m"; b.innerHTML='<svg xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="#1c3d6e" stroke-width="2.5" stroke-linecap="square"/></svg>'; const a=document.getElementById("lpArr"); h.insertBefore(b,a? a : null); } return b; }
+function lpShape(c,hr,top){
+  c.style.removeProperty("width"); c.style.removeProperty("clip-path"); const bt=lpBiteEl(); if(bt) bt.style.display="";
+  const dw=c.offsetWidth, ph=c.offsetHeight, pl=hr.left+c.offsetLeft;
+  const np=document.getElementById("mbPill");
+  if(np&&np.offsetWidth){ const pr=np.getBoundingClientRect(); if(hr.top+top+ph>pr.top-4){ const av=Math.floor(pr.left-8-pl); if(av>=230&&av<dw) c.style.setProperty("width",av+"px","important"); } }
+  const W=c.offsetWidth, H=c.offsetHeight, ct=document.getElementById("pfCtl"), on=ct&&ct.offsetWidth&&getComputedStyle(ct).display!=="none";
+  if(!on||!bt){ if(bt) bt.classList.remove("on"); return; }
+  const cr=ct.getBoundingClientRect(), G=7, x0=Math.round(cr.left-G-pl), nb=Math.round(cr.bottom+G-(hr.top+top));
+  if(x0>=W-6||nb<=4||x0<40){ bt.classList.remove("on"); return; }
+  const r=document.documentElement.classList.contains("pm-thr")?18:35, R=Math.min(r+G,nb);
+  c.style.setProperty("clip-path","path('M-60 -60 H"+x0+" V"+(nb-R)+" A"+R+" "+R+" 0 0 0 "+(x0+R)+" "+nb+" H"+(W+60)+" V"+(H+60)+" H-60 Z')");
+  const e=1.25, sv=bt.querySelector("svg"), p=bt.querySelector("path");
+  bt.classList.add("on"); bt.style.left=(c.offsetLeft+x0-8)+"px"; bt.style.top=(top)+"px"; bt.style.width=(W-x0+8)+"px"; bt.style.height=(nb+10)+"px"; bt.style.transformOrigin=(-39-(x0-8))+"px 30px";
+  sv.setAttribute("width",W-x0+8); sv.setAttribute("height",nb+10);
+  p.setAttribute("d","M"+(8-e)+" 0 V"+(nb-R)+" A"+(R+e)+" "+(R+e)+" 0 0 0 "+(8+R)+" "+(nb+e)+" H"+(W-x0+8));
+}
 function lpFadeSet(el,on){ if(!el) return; clearTimeout(el._ft); if(on){ el.classList.remove("fo"); el.classList.add("open"); } else if(el.classList.contains("open")){ el.classList.add("fo"); el._ft=setTimeout(()=>el.classList.remove("open","fo"),240); } }
 function lyrSet(w){
   w=w||null; if(w==="charts") w="layers";   // v1.09.001: the charts button is gone, the charts live at the top of the layers panel
@@ -5300,7 +5342,7 @@ function lyrSet(w){
   if(w){ if(seqOpen(w,()=>lyrSet(w))) return; try{closeCurtains();}catch(_){} if(MAP) MAP.closePopup(); }   // v1.08.074: the open popup fades out first
   if(LP_OPEN&&LP_OPEN!==w) popNote();
   LP_OPEN=w; try{ lpCueUpd(); setTimeout(lpCueUpd,80); setTimeout(lpCueUpd,420); }catch(_){}   // v1.09.003: the scroll chevron follows the panel (gone the moment it closes)
-  const L1=lpEl("lpL"), C1=lpEl("lpC"); lpFadeSet(L1,w==="layers"); const A1=lpEl("lpArr"); lpFadeSet(A1,w==="layers"); lpFadeSet(C1,w==="charts");
+  const L1=lpEl("lpL"), C1=lpEl("lpC"); lpFadeSet(L1,w==="layers"); const A1=lpEl("lpArr"); lpFadeSet(A1,w==="layers"); try{ lpFadeSet(lpBiteEl(),w==="layers"); }catch(_){} lpFadeSet(C1,w==="charts");
   const mb=lpEl("mbox"); if(mb) mb.classList.toggle("pl-open",!!w);
   try{ flyPills(); }catch(_){}   // v1.09.041: the Route info pill fades out together with the panel opening (and back in when it closes); the columns glide with it
   if(w==="layers") lpPlace();
@@ -5807,7 +5849,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.067 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.068 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -7050,7 +7092,7 @@ function flyPills(){
   const showD=on&&DIR.on&&!!DIR.tgt, showR=on&&rtGood(), wait=modeIsFly()&&!GP.pos&&rtGood();   // v1.09.061: with no GPS fix the pill still shows, with a waiting note
   if(!(showD||showR||wait)){ w.style.display="none"; fpEx(0); return; }
   w.style.display="flex"; w.classList.toggle("op",FPO.open); w.classList.toggle("gone",!!LP_OPEN);
-  const P=GP.pos, vi=(ic,x)=>'<span class="v">'+FP_IC[ic]+'<bdi>'+x+'</bdi></span>', vl=(br,dist,h,fuel)=>'<span class="vl">'+vi("brg",br)+vi("dst",fpDist(dist))+vi("clk",fpTime(h))+(fuel?vi("fuel",fuel):"")+'</span>';
+  const P=GP.pos, vi=(ic,x)=>'<span class="v">'+FP_IC[ic]+'<bdi>'+x+'</bdi></span>', vl=(br,dist,h,fuel)=>'<span class="vl">'+vi("brg",br)+vi("dst",fpDist(dist))+vi("clk",fpTime(h))+(fuel?vi("fuel",fuel):'<span class="v"></span>')+'</span>';
   let h="";
   if(showR){
     const n=ROUTE.length, i=NXT.i==null? 1 : NXT.i, b=nxtNear(), gs=(GP.gs!=null&&GP.gs>=1)? Math.round(GP.gs) : "--";
@@ -7075,7 +7117,7 @@ function flyPills(){
   B.innerHTML=h;
   const fullM=document.documentElement.classList.contains("full"), opSh=(FPO.open&&!(AL.k&&alShNow()))? (fullM?28:28) : 0;   // v1.09.061: the open pill starts below the mode circle
   mb.style.setProperty("--op-sh",opSh+"px");
-  fpEx((FPO.open&&!LP_OPEN)? Math.max(0,Math.round(B.offsetHeight+34-colOff(fullM)+opSh)) : 0);   // how far the open pill pushes the button columns down
+  if(LP_OPEN&&FP_EX>0){ /* v1.09.068: layers opened over an open Route info: the buttons stay where they are */ } else fpEx((FPO.open&&!LP_OPEN)? Math.max(0,Math.round(B.offsetHeight+34-colOff(fullM)+opSh)) : 0);   // how far the open pill pushes the button columns down
 }
 function fpEx(v){   // the columns glide down with the pill (CSS translate); the shape filter follows them
   if(v===FP_EX) return; FP_EX=v; exApply();
