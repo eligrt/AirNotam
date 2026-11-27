@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.070 · built by eligrt
+     AirNotam-ISR · v1.09.071 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2680,9 +2680,9 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
 #fpIn .rw .vl .v:nth-child(3){min-width:3.2em;}
 #fpIn .rw .vl .v:nth-child(4){min-width:2.8em;}
 /* v1.09.070: the pointer side of the Layers panel has tighter corners, so the pointer can sit level with the button in Plan and Fly */
-.lcur{border-top-left-radius:14px !important;border-bottom-left-radius:14px !important;}
+.lcur{border-top-left-radius:8px !important;border-bottom-left-radius:8px !important;}   /* v1.09.071: 8px, so the pointer starts on the straight part of the border */
 /* v1.09.069: the grey GPS chip sits a little higher, clear of the mode capsule */
-.strip .gps-chip{position:relative;top:-5px;}
+.strip .gps-chip{top:calc(var(--gy,34px) - 9px) !important;}   /* v1.09.071: the chip is placed from the gear height, so it is raised here */
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -2722,7 +2722,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.070 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.071 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2765,7 +2765,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.070 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.071 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5318,7 +5318,7 @@ function lpPlace(){   // v1.09.001: the panel opens beside the layers button, fr
   { const mi=document.querySelector("#mbInfo .mib"), mw=document.getElementById("mbInfo"); if(mi&&mw&&mw.offsetWidth&&getComputedStyle(mw).display!=="none"&&mi.offsetWidth){ top=Math.max(top,Math.round(mi.getBoundingClientRect().bottom-hr.top+6)); } }   // a clear gap under the Plan summary pill
   c.style.top=top+"px"; c.style.maxHeight=Math.max(150,Math.min(580,Math.round(hr.height-top-150)))+"px"; try{ lpShape(c,hr,top); }catch(_){}
   const f=lpEl("lpSt2"); if(f){ f.style.top=(top+c.offsetHeight+8)+"px"; f.style.display=(LP_OPEN==="layers"&&f.textContent)?"block":"none"; }
-  { const ar=lpEl("lpArr"), lb=document.querySelector(".lyr-ctl"); if(ar&&lb){ const cy=Math.round(fin(lb)-hr.top+lb.getBoundingClientRect().height/2); ar.style.top=Math.max(top+10,Math.min(top+c.offsetHeight-46,cy-10))+"px"; } }   // v1.09.004: the small pointer is back, level with the layers button
+  { const ar=lpEl("lpArr"), lb=document.querySelector(".lyr-ctl"); if(ar&&lb){ const cy=Math.round(fin(lb)-hr.top+lb.getBoundingClientRect().height/2); ar.style.top=Math.max(top+11,Math.min(top+c.offsetHeight-46,cy-10))+"px"; } }   // v1.09.004: the small pointer is back, level with the layers button
   setTimeout(lpCueUpd,30);
 }
 function lpFit(){ if(LP_OPEN==="layers") lpPlace(); }
@@ -5861,7 +5861,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.070 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.071 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
