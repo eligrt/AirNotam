@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.077 · built by eligrt
+     AirNotam-ISR · v1.09.078 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2687,11 +2687,11 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
 #fpIn .rw .vl .v:nth-child(3){min-width:3.2em;}
 #fpIn .rw .vl .v:nth-child(4){min-width:2.8em;}
 /* v1.09.070: the pointer side of the Layers panel has tighter corners, so the pointer can sit level with the button in Plan and Fly */
-/* v1.09.077: the 8px left-corner override of v1.09.071 is removed; all four corners of the layers panel use the shared 22px radius, and the pointer is kept below the arc instead */
+/* v1.09.078: the 8px left-corner override of v1.09.071 is removed; all four corners of the layers panel use the shared 22px radius, and the pointer is kept below the arc instead */
 /* v1.09.069: the grey GPS chip sits a little higher, clear of the mode capsule */
 .strip .gps-chip{top:calc(var(--gy,34px) - 9px) !important;}   /* v1.09.071: the chip is placed from the gear height, so it is raised here */
 
-/* v1.09.077: NOTAM pill redesign (approved v12): MAP VIEW caption, FADED / SOLID switch, five on/off rows with a fixed switch and icon column */
+/* v1.09.078: NOTAM pill redesign (approved v12): MAP VIEW caption, FADED / SOLID switch, five on/off rows with a fixed switch and icon column */
 .mb-pill.open{width:180px !important;border-radius:22px !important;background:#fbf6e8 !important;border:3px solid #b94a3a !important;box-sizing:border-box !important;}
 .mb-pill.open .mp-clip{position:relative;inset:auto;overflow:visible;}
 .mb-pill.open .mp-cl{display:none;}
@@ -2715,7 +2715,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
 .mb-pill.open .mp-cell.on .mp-sw b{left:16px;}
 .mb-pill.open.solid .mp-cell.on{background:#f6dcd5 !important;}
 .mb-pill.open .mp-fb{border-radius:0 0 17px 17px;overflow:hidden;}
-/* v1.09.077: FULL and layers buttons sit 12px lower, so the layers pointer lines up with the layers button in Plan and Fly */
+/* v1.09.078: FULL and layers buttons sit 12px lower, so the layers pointer lines up with the layers button in Plan and Fly */
 .leaflet-control.lyr-ctl{transform:translateY(12px);}
 #mbFull{transform:translateY(12px);}
 </style>
@@ -2757,7 +2757,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.077 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.078 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2800,7 +2800,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.077 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.078 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5348,13 +5348,16 @@ function lpStatus(id,txt,err){
   ["lpSt","lpSt2"].forEach(n=>{ const s=lpEl(n); if(!s) return; s.textContent=txt||""; s.style.display=txt?"block":"none"; s.classList.toggle("er",!!err); });
   lpPlace();
 }
+// v1.09.078: the route-info box is only laid out in Plan; its bottom is kept and used in Fly too, so the panel top is the same in both modes
+let LP_FLOOR=null;
+function lpOffY(el,root){ let y=0,e=el; while(e&&e!==root){ y+=e.offsetTop; e=e.offsetParent; } return e===root? y : null; }
+function lpFloorCache(){ const mi=document.querySelector("#mbInfo .mib"), mw=document.getElementById("mbInfo"), h=lpEl("mbox"); if(!mi||!mw||!h) return; if(getComputedStyle(mw).display==="none"||!mi.offsetHeight) return; const my=lpOffY(mi,h); if(my!=null) LP_FLOOR=Math.round(my+mi.offsetHeight+6); }
 function lpPlace(){   // v1.09.001: the panel opens beside the layers button, from just under the mode button down to above the dock
   const h=lpEl("mbox"), c=lpEl("lpL"); if(!h||!c) return;
   const hr=h.getBoundingClientRect(), mm=document.querySelector(".lyr-ctl"), fin=el=>{ const t=getComputedStyle(el).translate, ty=(t&&t!=="none")? (parseFloat(t.split(" ")[1])||0) : 0; return el.getBoundingClientRect().top-ty+FP_EX+AL_SH; };   // v1.09.049: the alert card pushes the columns down, so the panel and its pointer start below it   // v1.09.041: where the button will stand when the glide has ended
-  const offY=(el,root)=>{ let y=0,e=el; while(e&&e!==root){ y+=e.offsetTop; e=e.offsetParent; } return e===root? y : null; };
-  const oy=mm&&mm.offsetWidth? offY(mm,h) : null;
+  const oy=mm&&mm.offsetWidth? lpOffY(mm,h) : null;
   let top=Math.round((mm&&mm.offsetWidth? (oy!=null? oy+12+AL_SH : fin(mm)-FP_EX-hr.top) : 16)-15);   // v1.09.069: the panel starts at the high spot even when the buttons were pushed down by Route info
-  { const mi=document.querySelector("#mbInfo .mib"), mw=document.getElementById("mbInfo"); if(mi&&mw&&mw.offsetWidth&&getComputedStyle(mw).display!=="none"&&mi.offsetWidth){ const my=offY(mi,h); top=Math.max(top, my!=null? Math.round(my+mi.offsetHeight+6) : Math.round(mi.getBoundingClientRect().bottom-hr.top+6)); } }   // a clear gap under the Plan summary pill
+  { const mi=document.querySelector("#mbInfo .mib"), mw=document.getElementById("mbInfo"); lpFloorCache(); if(LP_FLOOR!=null) top=Math.max(top,LP_FLOOR); }   // a clear gap under the Plan summary pill
   c.style.top=top+"px"; c.style.maxHeight=Math.max(150,Math.min(580,Math.round(hr.height-top-150)))+"px"; try{ lpShape(c,hr,top); }catch(_){}
   const f=lpEl("lpSt2"); if(f){ f.style.top=(top+c.offsetHeight+8)+"px"; f.style.display=(LP_OPEN==="layers"&&f.textContent)?"block":"none"; }
   { const ar=lpEl("lpArr"), lb=document.querySelector(".lyr-ctl"); if(ar&&lb){ const cy=Math.round(fin(lb)-hr.top+lb.getBoundingClientRect().height/2); ar.style.top=Math.max(top+26,Math.min(top+c.offsetHeight-46,cy-10))+"px"; } }   // v1.09.004: the small pointer is back, level with the layers button
@@ -5372,18 +5375,18 @@ function lpShape(c,hr,top){
   if(!on||!bt){ if(bt) bt.classList.remove("on"); return; }
   const cr=ct.getBoundingClientRect(), G=7, x0=Math.round(cr.left-G-pl), nb=Math.round(cr.bottom+G-(hr.top+top));
   if(x0>=W-6||nb<=4||x0<40){ bt.classList.remove("on"); return; }
-  const r=document.documentElement.classList.contains("pm-thr")?15:22, R=Math.max(6,Math.min(r+G,nb,W-x0-12));
+  const r=document.documentElement.classList.contains("pm-thr")?15:22, R=Math.min(r+G,nb);
   // v1.09.070: the curve is a quarter circle around the capsule; when the panel's right edge comes before the curve ends, the curve stops exactly on that edge (no tail)
-  const cxp=x0+R, dxp=W-cxp, cut=false, yW=cut? (nb-R)+Math.sqrt(R*R-dxp*dxp) : nb;
+  const cxp=x0+R, dxp=W-cxp, cut=dxp<R, yW=cut? (nb-R)+Math.sqrt(R*R-dxp*dxp) : nb;
   const clip= cut ? "M-60 -60 H"+x0+" V"+(nb-R)+" A"+R+" "+R+" 0 0 0 "+W+" "+yW.toFixed(2)+" V"+(H+60)+" H-60 Z"
-                  : "M-60 -60 H"+x0+" V"+(nb-R)+" A"+R+" "+R+" 0 0 0 "+cxp+" "+nb+" H"+(W-12)+" A12 12 0 0 1 "+W+" "+(nb+12)+" V"+(H+60)+" H-60 Z";
+                  : "M-60 -60 H"+x0+" V"+(nb-R)+" A"+R+" "+R+" 0 0 0 "+cxp+" "+nb+" H"+(W+60)+" V"+(H+60)+" H-60 Z";
   c.style.setProperty("clip-path","path('"+clip+"')");
   const e=1.25, Rs=R+e, sv=bt.querySelector("svg"), p=bt.querySelector("path"), Wr=W-x0+8, bx=8+R, by=nb-R;
   bt.classList.add("on"); bt.style.left=(c.offsetLeft+x0-8)+"px"; bt.style.top=(top)+"px"; bt.style.width=(Wr+2)+"px"; bt.style.height=(nb+24)+"px"; bt.style.transformOrigin=(-39-(x0-8))+"px 30px";
   sv.setAttribute("width",Wr+2); sv.setAttribute("height",nb+24);
-  // v1.09.077: two rounded joins - a fillet into the top border (bends inward) and a fillet into the right border
-  const RT=12, RF=12, XR=Wr-1.25, yb=nb+e;
-  let d="M"+(8-e-RT)+" 0 A"+RT+" "+RT+" 0 0 1 "+(8-e)+" "+RT+" V"+by+" A"+Rs+" "+Rs+" 0 0 0 "+bx+" "+yb+" H"+(XR-RF)+" A"+RF+" "+RF+" 0 0 1 "+XR+" "+(yb+RF);
+  let d;
+  if(cut){ const xe=Wr-1.25, dx=xe-bx, ye=by+Math.sqrt(Math.max(0,Rs*Rs-dx*dx)); d="M"+(8-e-3)+" 0 A3 3 0 0 1 "+(8-e)+" 3 V"+by+" A"+Rs+" "+Rs+" 0 0 0 "+xe.toFixed(2)+" "+ye.toFixed(2)+" V"+(ye+14).toFixed(2); }
+  else d="M"+(8-e-3)+" 0 A3 3 0 0 1 "+(8-e)+" 3 V"+by+" A"+Rs+" "+Rs+" 0 0 0 "+bx+" "+(nb+e)+" H"+Wr;
   p.setAttribute("d",d); p.setAttribute("stroke-linejoin","round");
 }
 function lpFadeSet(el,on){ if(!el) return; clearTimeout(el._ft); if(on){ el.classList.remove("fo"); el.classList.add("open"); } else if(el.classList.contains("open")){ el.classList.add("fo"); el._ft=setTimeout(()=>el.classList.remove("open","fo"),240); } }
@@ -5900,7 +5903,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.077 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.078 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6380,12 +6383,12 @@ function mbPillClose(){ clearTimeout(MP_T); const p=document.getElementById("mbP
 // v1.08.073: the pill closes when the tap is finished (finger lifted), not on touch-down, so the screen does not change under the finger and the tapped button always gets its press
 document.addEventListener("click",e=>{ const p=document.getElementById("mbPill"); if(p&&p.classList.contains("open")&&!p.contains(e.target)) mbPillClose(); },true);
 function famSave(){ try{ const o=JSON.parse(localStorage.getItem(FAM_KEY)||"null")||{}; o.cvfr=FAMC.cvfr; o.apt=FAMC.apt; o.hel=FAMC.hel; o.ins=FAMC.ins; o.hz=FAMC.hz; o.view=FAM_VIEW; if(!o.ok) o.ok=discToday(); localStorage.setItem(FAM_KEY,JSON.stringify(o)); }catch(_){} }
-function mbFam(k){   // v1.09.077: one tap = group on or off; on uses the current MAP VIEW (faded or solid)
+function mbFam(k){   // v1.09.078: one tap = group on or off; on uses the current MAP VIEW (faded or solid)
   if(document.getElementById("mbPill").classList.contains("open")) mbPillArm();
   FAMC[k]= FAMC[k]? 0 : (FAM_VIEW==="faded"?2:1);
   famSave(); render(); mbSync();
 }
-function mbView(){   // v1.09.077: FADED / SOLID switch: applies to every group that is on
+function mbView(){   // v1.09.078: FADED / SOLID switch: applies to every group that is on
   if(document.getElementById("mbPill").classList.contains("open")) mbPillArm();
   FAM_VIEW= FAM_VIEW==="faded"? "solid" : "faded";
   ["cvfr","apt","hel","ins","hz"].forEach(k=>{ if(FAMC[k]) FAMC[k]= FAM_VIEW==="faded"?2:1; });
