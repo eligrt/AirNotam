@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.071 · built by eligrt
+     AirNotam-ISR · v1.09.072 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2652,6 +2652,13 @@ html.full #pfPeek{display:none !important;}
 .sp-two .sp-num{gap:6px;} .sp-two .sp-num input{width:46px;}
 @media (max-width:360px){.sp-two .sp-num input{width:38px;} .sl{gap:4px;} .sl i{width:34px;} .sl.r i:after{left:15px;} .sl em{font-size:10px;min-width:34px;}}
 @media (prefers-reduced-motion:reduce){.sl i,.sl i:after{transition:none;}}
+/* v1.09.072: the unit switch shows both units, one at each end; the active one is dark and bold, the other one is soft */
+.sl{gap:5px;}
+.sl em{font:700 10.5px var(--font-mono);min-width:0;text-align:center;color:#a79d86;transition:color .2s ease;}
+.sl em.on{font-weight:800;color:#1c3d6e;}
+.sl em.e0{min-width:25px;text-align:right;} .sl em.e1{min-width:38px;text-align:left;}
+.sl i{background:#e6dcc2;} .sl.r i{background:#e6dcc2;}
+.sl i:after{background:#1c3d6e;box-shadow:none;}
 /* v1.09.064: no zoom buttons (double-tap and slide, or pinch). Three looks for the mode control, chosen in the admin sheet: today (throttle on the left + circle), pill (circle sliding in a pill), throttle (the hand throttle in the notch) */
 .leaflet-control-zoom{visibility:hidden !important;pointer-events:none !important;}
 #app>#pfCtl{position:absolute;right:25px;top:calc(var(--hb,84px) - 38px);width:70px;height:146px;z-index:1100;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none;display:none;border-radius:35px;box-shadow:0 1px 4px rgba(14,35,72,.35);-webkit-transform:translateZ(0);transform:translateZ(0);will-change:transform;isolation:isolate;}
@@ -2722,7 +2729,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.071 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.072 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2751,8 +2758,8 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
       <button type="button" class="sp-row sp-irow" id="spUpd" onclick="setRefreshData()"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></span><span class="sp-tx"><b id="spUpdT">בדוק NOTAMים חדשים</b><small><span class="rt2">נבדק לאחרונה: <span class="rtime" id="refreshTime">--:--</span> · נתוני הבסיס מ-<span class="rtime" id="dataTime">--:--</span></span></small></span><span class="sp-bar"><i></i></span></button>
       <div class="sp-grp">המטוס שלי</div>
       <div class="sp-two">
-      <div class="sp-row sp-irow sp-static" id="rteSpdBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="sp-tx"><b>מהירות שיוט</b><small id="spdSm" data-ok="לחישוב זמן הטיסה">לחישוב זמן הטיסה</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="spdIn" aria-label="מהירות שיוט" placeholder="--"><div class="sl" id="uSpd" role="switch" aria-checked="false" tabindex="0" aria-label="יחידת מהירות: קשר או מייל לשעה"><i></i><em>KT</em></div></div></div>
-      <div class="sp-row sp-irow sp-static" id="rteBurnBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M4 21h12"/><path d="M15 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/><path d="M7.5 8h5"/></svg></span><span class="sp-tx"><b>צריכת דלק</b><small id="burnSm" data-ok="לחישוב כמות הדלק. הערכה בלבד, ללא רוח">לחישוב כמות הדלק. הערכה בלבד, ללא רוח</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="burnIn" aria-label="צריכת דלק לשעה" placeholder="--"><div class="sl" id="uFuel" role="switch" aria-checked="false" tabindex="0" aria-label="יחידת דלק: ליטר או גלון לשעה"><i></i><em>L/H</em></div></div></div>
+      <div class="sp-row sp-irow sp-static" id="rteSpdBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="sp-tx"><b>מהירות שיוט</b><small id="spdSm" data-ok="לחישוב זמן הטיסה">לחישוב זמן הטיסה</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="spdIn" aria-label="מהירות שיוט" placeholder="--"><div class="sl" id="uSpd" role="switch" aria-checked="false" tabindex="0" aria-label="יחידת מהירות: קשר או מייל לשעה"><em class="e0">KT</em><i></i><em class="e1">MPH</em></div></div></div>
+      <div class="sp-row sp-irow sp-static" id="rteBurnBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M4 21h12"/><path d="M15 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/><path d="M7.5 8h5"/></svg></span><span class="sp-tx"><b>צריכת דלק</b><small id="burnSm" data-ok="לחישוב כמות הדלק. הערכה בלבד, ללא רוח">לחישוב כמות הדלק. הערכה בלבד, ללא רוח</small></span><div class="sp-num"><input type="text" inputmode="decimal" id="burnIn" aria-label="צריכת דלק לשעה" placeholder="--"><div class="sl" id="uFuel" role="switch" aria-checked="false" tabindex="0" aria-label="יחידת דלק: ליטר או גלון לשעה"><em class="e0">L/H</em><i></i><em class="e1">GAL/H</em></div></div></div>
       </div>
       <div class="sp-row sp-irow sp-static" id="symBox"><span class="sp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l6 17-6-4-6 4z"/></svg></span><span class="sp-tx"><b>סמל מיקום</b></span><div class="fgrace sp-corr" id="symSeg"></div></div>
       <div class="sp-grp">מסלול</div>
@@ -2765,7 +2772,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.071 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.072 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -4902,7 +4909,7 @@ function cueAdd(sc){
 function cueAll(){ document.querySelectorAll(".fcard,.sp-body").forEach(sc=>{ if(!sc._cue) cueAdd(sc); setTimeout(sc._cue,60); setTimeout(sc._cue,520); }); }
 function renderSettings(){ try{renderRte();}catch(_){} try{spFamSync();}catch(_){} try{spNumSync();}catch(_){} }
 function spNumSync(force){ const a=document.getElementById("spdIn"), b=document.getElementById("burnIn"), r1=v=>String(+v.toFixed(1)); if(a&&(force||document.activeElement!==a)) a.value= CRZ_KT? r1(spdU(CRZ_KT)) : ""; if(b&&(force||document.activeElement!==b)) b.value= BURN_LH? r1(fuelU(BURN_LH)) : ""; spUnitUi(); }
-function spUnitUi(){ [["uSpd",U_SPD==="mph","MPH","KT"],["uFuel",U_FUEL==="gal","GAL/H","L/H"]].forEach(([id,r,t1,t0])=>{ const e=document.getElementById(id); if(!e) return; e.classList.toggle("r",r); e.setAttribute("aria-checked",r?"true":"false"); e.querySelector("em").textContent=r?t1:t0; }); }
+function spUnitUi(){ [["uSpd",U_SPD==="mph"],["uFuel",U_FUEL==="gal"]].forEach(([id,r])=>{ const e=document.getElementById(id); if(!e) return; e.classList.toggle("r",r); e.setAttribute("aria-checked",r?"true":"false"); const a=e.querySelector(".e0"), b=e.querySelector(".e1"); if(a) a.classList.toggle("on",!r); if(b) b.classList.toggle("on",r); }); }   // v1.09.072: both units are always visible; the active one is highlighted
 // v1.08.116: cruise speed and fuel burn fields: empty = that figure off; a number outside the range shows a red line and changes nothing
 function spNumInit(){
   const spMsg=()=> U_SPD==="mph"? "הזן מהירות בין 35 ל-345 מייל לשעה" : "הזן מהירות בין 30 ל-300 קשר";
@@ -4922,7 +4929,7 @@ function spNumInit(){
   [["uSpd",()=>{ U_SPD=U_SPD==="mph"?"kt":"mph"; try{localStorage.setItem("airnotam_uspd",U_SPD);}catch(e){} }],["uFuel",()=>{ U_FUEL=U_FUEL==="gal"?"l":"gal"; try{localStorage.setItem("airnotam_ufuel",U_FUEL);}catch(e){} }]].forEach(([id,flip])=>{
     const e=document.getElementById(id); if(!e) return;
     const go=()=>{ flip(); ["spdSm","burnSm"].forEach(x=>{ const m=document.getElementById(x); if(m){ m.textContent=m.dataset.ok; m.classList.remove("bad"); } }); spNumSync(true); try{ mbSync(); }catch(_){} try{ if(DRAWING) drawUi(); }catch(_){} try{ flyPills(); }catch(_){} };
-    e.addEventListener("click",go); e.addEventListener("keydown",ev=>{ if(ev.key==="Enter"||ev.key===" "){ ev.preventDefault(); go(); } });
+    e.addEventListener("click",ev=>{ const t=ev.target.closest&&ev.target.closest("em"); const r=e.classList.contains("r"); if(t&&((t.classList.contains("e1")&&r)||(t.classList.contains("e0")&&!r))) return; go(); }); e.addEventListener("keydown",ev=>{ if(ev.key==="Enter"||ev.key===" "){ ev.preventDefault(); go(); } });
   });
   spNumSync();
 }
@@ -5861,7 +5868,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.071 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.072 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
