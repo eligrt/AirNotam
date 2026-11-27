@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ═══════════════════════════════════════
-     AirNotam-ISR · v1.09.076 · built by eligrt
+     AirNotam-ISR · v1.09.077 · built by eligrt
      ═══════════════════════════════════════ -->
 <html lang="he" dir="rtl">
 <head>
@@ -2687,11 +2687,11 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
 #fpIn .rw .vl .v:nth-child(3){min-width:3.2em;}
 #fpIn .rw .vl .v:nth-child(4){min-width:2.8em;}
 /* v1.09.070: the pointer side of the Layers panel has tighter corners, so the pointer can sit level with the button in Plan and Fly */
-/* v1.09.076: the 8px left-corner override of v1.09.071 is removed; all four corners of the layers panel use the shared 22px radius, and the pointer is kept below the arc instead */
+/* v1.09.077: the 8px left-corner override of v1.09.071 is removed; all four corners of the layers panel use the shared 22px radius, and the pointer is kept below the arc instead */
 /* v1.09.069: the grey GPS chip sits a little higher, clear of the mode capsule */
 .strip .gps-chip{top:calc(var(--gy,34px) - 9px) !important;}   /* v1.09.071: the chip is placed from the gear height, so it is raised here */
 
-/* v1.09.076: NOTAM pill redesign (approved v12): MAP VIEW caption, FADED / SOLID switch, five on/off rows with a fixed switch and icon column */
+/* v1.09.077: NOTAM pill redesign (approved v12): MAP VIEW caption, FADED / SOLID switch, five on/off rows with a fixed switch and icon column */
 .mb-pill.open{width:180px !important;border-radius:22px !important;background:#fbf6e8 !important;border:3px solid #b94a3a !important;box-sizing:border-box !important;}
 .mb-pill.open .mp-clip{position:relative;inset:auto;overflow:visible;}
 .mb-pill.open .mp-cl{display:none;}
@@ -2715,7 +2715,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
 .mb-pill.open .mp-cell.on .mp-sw b{left:16px;}
 .mb-pill.open.solid .mp-cell.on{background:#f6dcd5 !important;}
 .mb-pill.open .mp-fb{border-radius:0 0 17px 17px;overflow:hidden;}
-/* v1.09.076: FULL and layers buttons sit 12px lower, so the layers pointer lines up with the layers button in Plan and Fly */
+/* v1.09.077: FULL and layers buttons sit 12px lower, so the layers pointer lines up with the layers button in Plan and Fly */
 .leaflet-control.lyr-ctl{transform:translateY(12px);}
 #mbFull{transform:translateY(12px);}
 </style>
@@ -2757,7 +2757,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
     <div class="sp-title">AirNotam</div><div class="sp-tag">Only what matters</div>
     <div class="sp-line1"><span id="splL1"></span></div><div class="sp-line2">WHERE · WHEN · REVIEW</div></div>
     <div class="lsa-skip">tap to skip</div>
-    <div class="sp-ver" id="splVer">v1.09.076 · by eligrt</div></div>
+    <div class="sp-ver" id="splVer">v1.09.077 · by eligrt</div></div>
   <div class="disc lnch" id="lnch"><div class="dcard">
     <div class="dbanner"><img id="lnchImg" alt=""><div class="dname">AirNotam-ISR</div></div>
     <div class="dbody"><div class="dbd">
@@ -2800,7 +2800,7 @@ html.pm-pill #mbox #fpWrap.op,html.pm-thr #mbox #fpWrap.op{right:100px !importan
   </div>
 
   <div class="strip lsa-hdr">
-    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.076 · by eligrt</p></div></div>
+    <div class="hdr-rail"><span class="hdr-glyph"><img id="nIcon" alt="" style="width:100%;height:100%;display:block;object-fit:cover"></span><div class="hdr-title"><h1>AirNotam</h1><p id="hdrVer">v1.09.077 · by eligrt</p></div></div>
     <div class="vtoggle">
       <button class="on" id="vMap" onclick="setView('map')">מפה <span class="vt-cnt" id="mapCnt"></span></button>
       <button id="vList" onclick="setView('list')">רשימה</button>
@@ -5354,7 +5354,7 @@ function lpPlace(){   // v1.09.001: the panel opens beside the layers button, fr
   const offY=(el,root)=>{ let y=0,e=el; while(e&&e!==root){ y+=e.offsetTop; e=e.offsetParent; } return e===root? y : null; };
   const oy=mm&&mm.offsetWidth? offY(mm,h) : null;
   let top=Math.round((mm&&mm.offsetWidth? (oy!=null? oy+12+AL_SH : fin(mm)-FP_EX-hr.top) : 16)-15);   // v1.09.069: the panel starts at the high spot even when the buttons were pushed down by Route info
-  { const mi=document.querySelector("#mbInfo .mib"), mw=document.getElementById("mbInfo"); if(mi&&mw&&mw.offsetWidth&&getComputedStyle(mw).display!=="none"&&mi.offsetWidth){ top=Math.max(top,Math.round(mi.getBoundingClientRect().bottom-hr.top+6)); } }   // a clear gap under the Plan summary pill
+  { const mi=document.querySelector("#mbInfo .mib"), mw=document.getElementById("mbInfo"); if(mi&&mw&&mw.offsetWidth&&getComputedStyle(mw).display!=="none"&&mi.offsetWidth){ const my=offY(mi,h); top=Math.max(top, my!=null? Math.round(my+mi.offsetHeight+6) : Math.round(mi.getBoundingClientRect().bottom-hr.top+6)); } }   // a clear gap under the Plan summary pill
   c.style.top=top+"px"; c.style.maxHeight=Math.max(150,Math.min(580,Math.round(hr.height-top-150)))+"px"; try{ lpShape(c,hr,top); }catch(_){}
   const f=lpEl("lpSt2"); if(f){ f.style.top=(top+c.offsetHeight+8)+"px"; f.style.display=(LP_OPEN==="layers"&&f.textContent)?"block":"none"; }
   { const ar=lpEl("lpArr"), lb=document.querySelector(".lyr-ctl"); if(ar&&lb){ const cy=Math.round(fin(lb)-hr.top+lb.getBoundingClientRect().height/2); ar.style.top=Math.max(top+26,Math.min(top+c.offsetHeight-46,cy-10))+"px"; } }   // v1.09.004: the small pointer is back, level with the layers button
@@ -5381,7 +5381,7 @@ function lpShape(c,hr,top){
   const e=1.25, Rs=R+e, sv=bt.querySelector("svg"), p=bt.querySelector("path"), Wr=W-x0+8, bx=8+R, by=nb-R;
   bt.classList.add("on"); bt.style.left=(c.offsetLeft+x0-8)+"px"; bt.style.top=(top)+"px"; bt.style.width=(Wr+2)+"px"; bt.style.height=(nb+24)+"px"; bt.style.transformOrigin=(-39-(x0-8))+"px 30px";
   sv.setAttribute("width",Wr+2); sv.setAttribute("height",nb+24);
-  // v1.09.076: two rounded joins - a fillet into the top border (bends inward) and a fillet into the right border
+  // v1.09.077: two rounded joins - a fillet into the top border (bends inward) and a fillet into the right border
   const RT=12, RF=12, XR=Wr-1.25, yb=nb+e;
   let d="M"+(8-e-RT)+" 0 A"+RT+" "+RT+" 0 0 1 "+(8-e)+" "+RT+" V"+by+" A"+Rs+" "+Rs+" 0 0 0 "+bx+" "+yb+" H"+(XR-RF)+" A"+RF+" "+RF+" 0 0 1 "+XR+" "+(yb+RF);
   p.setAttribute("d",d); p.setAttribute("stroke-linejoin","round");
@@ -5900,7 +5900,7 @@ function admCopy(){
 // start-up: was the previous session cut off (page killed / reloaded while open) or ended normally?
 (function(){
   let prev=null; try{prev=localStorage.getItem("airnotam_alive");}catch(e){}
-  alog("START v1.09.076 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
+  alog("START v1.09.077 · previous session: "+(prev==="1"?"CUT OFF while visible (crash / forced reload)":prev==="h"?"ended in background":"ended normally"));
   try{alog(diagLine());}catch(e){}
   const set=v=>{try{localStorage.setItem("airnotam_alive",v);}catch(e){}};
   set("1"); let closed=false;
@@ -6380,12 +6380,12 @@ function mbPillClose(){ clearTimeout(MP_T); const p=document.getElementById("mbP
 // v1.08.073: the pill closes when the tap is finished (finger lifted), not on touch-down, so the screen does not change under the finger and the tapped button always gets its press
 document.addEventListener("click",e=>{ const p=document.getElementById("mbPill"); if(p&&p.classList.contains("open")&&!p.contains(e.target)) mbPillClose(); },true);
 function famSave(){ try{ const o=JSON.parse(localStorage.getItem(FAM_KEY)||"null")||{}; o.cvfr=FAMC.cvfr; o.apt=FAMC.apt; o.hel=FAMC.hel; o.ins=FAMC.ins; o.hz=FAMC.hz; o.view=FAM_VIEW; if(!o.ok) o.ok=discToday(); localStorage.setItem(FAM_KEY,JSON.stringify(o)); }catch(_){} }
-function mbFam(k){   // v1.09.076: one tap = group on or off; on uses the current MAP VIEW (faded or solid)
+function mbFam(k){   // v1.09.077: one tap = group on or off; on uses the current MAP VIEW (faded or solid)
   if(document.getElementById("mbPill").classList.contains("open")) mbPillArm();
   FAMC[k]= FAMC[k]? 0 : (FAM_VIEW==="faded"?2:1);
   famSave(); render(); mbSync();
 }
-function mbView(){   // v1.09.076: FADED / SOLID switch: applies to every group that is on
+function mbView(){   // v1.09.077: FADED / SOLID switch: applies to every group that is on
   if(document.getElementById("mbPill").classList.contains("open")) mbPillArm();
   FAM_VIEW= FAM_VIEW==="faded"? "solid" : "faded";
   ["cvfr","apt","hel","ins","hz"].forEach(k=>{ if(FAMC[k]) FAMC[k]= FAM_VIEW==="faded"?2:1; });
@@ -7329,7 +7329,6 @@ function demoTick(){
   <div class="adm-bd">
     <div class="adm-note">כלי פיתוח. לא מיועד לטייסים</div>
     <div class="adm-row"><span><b>מסנן צורות במפה</b><small>מופיע במפה בצד ימין למטה כשהוא פעיל</small></span><label class="adm-sw"><input type="checkbox" id="famSetA"><i></i></label></div>
-    <div class="adm-row"><span><b>מראה מתג מצב</b><small>לבדיקה בלבד</small></span><div class="adm-seg3" id="pmSeg"><button type="button" data-pm="pill">קפסולה</button></div></div>
     <div class="adm-row"><span><b>העתק יומן אירועים</b><small>200 האירועים האחרונים, להדבקה כשיש תקלה</small></span><button type="button" class="adm-btn" id="admCopy" onclick="admCopy()">העתק</button></div>
     <div class="adm-adv" id="admAdv">
       <button type="button" class="adm-ah" onclick="admAdvToggle()" aria-expanded="false"><div><div class="adm-at"><span class="adm-ind" id="admInd"></span>ADVANCED</div><span class="adm-hint" id="admHint">&nbsp;</span></div><span class="adm-chev" id="admChev">&#9662;</span></button>
